@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07130D">
+<title>Φυλλάδια Μαθήματος 2ου — Ε.Ε.Τ. ΕΠΑΛ · «Βιβλιογραφική Έρευνα & Benchmark»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@600;700;800;900&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
+<style>
+/* ================= SCREEN TOKENS ================= */
+:root{
+  --desk0:#07130D; --desk1:#0C2117; --desk2:#123527;
+  --paper:#FDFBF4; --paper2:#F5EEDC; --ink:#241A0E; --ink2:#6B5A40; --ink3:#9C8B6C;
+  --pline:#D9CCB1; --pline2:#C4B491;
+  --red:#FF4B3E; --blue:#3D7BFF; --cyan:#39C6FF; --lime:#A6F431; --green:#2FD97B;
+  --amber:#FFB020; --magenta:#FF5EC8;
+  --ok:#1E9E5A; --warn:#D98200; --bad:#D6402E; --info:#2E6BE4;
+  --disp:'Fira Sans Condensed','Roboto Condensed',system-ui,sans-serif;
+  --body:'Inter','Noto Sans',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --topH:66px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--desk0);color:#EAF6EC;min-height:100vh}
+/* ---------- layered desk background ---------- */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg .base{position:absolute;inset:0;background:
+  radial-gradient(1100px 640px at 8% -8%, rgba(255,75,62,.15), transparent 60%),
+  radial-gradient(1000px 760px at 104% 12%, rgba(61,123,255,.17), transparent 60%),
+  radial-gradient(900px 900px at 50% 118%, rgba(18,133,76,.24), transparent 62%),
+  linear-gradient(160deg,#0A1B11 0%, #07130D 46%, #0B2015 100%)}
+.bg .grid{position:absolute;inset:0;opacity:.5;background:
+  repeating-linear-gradient(0deg, rgba(160,230,190,.05) 0 1px, transparent 1px 52px),
+  repeating-linear-gradient(90deg, rgba(160,230,190,.05) 0 1px, transparent 1px 52px)}
+.bg .orb{position:absolute;border-radius:50%;filter:blur(72px);opacity:.5;mix-blend-mode:screen}
+.bg .o1{width:46vmin;height:46vmin;left:-9vmin;top:-7vmin;background:radial-gradient(circle,#FF4B3E,transparent 70%);animation:dr1 26s ease-in-out infinite alternate}
+.bg .o2{width:54vmin;height:54vmin;right:-13vmin;top:22vh;background:radial-gradient(circle,#3D7BFF,transparent 70%);animation:dr2 32s ease-in-out infinite alternate}
+.bg .o3{width:60vmin;height:44vmin;left:24vw;bottom:-18vmin;background:radial-gradient(circle,#12854C,transparent 70%);animation:dr1 38s ease-in-out infinite alternate-reverse}
+.bg .grain{position:absolute;inset:0;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E")}
+@keyframes dr1{to{transform:translate(8vmin,6vmin) scale(1.12)}}
+@keyframes dr2{to{transform:translate(-7vmin,9vmin) scale(1.08)}}
+/* ---------- scrollbars ---------- */
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-track{background:#0A1D13}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#12854C,#0E5C36);border-radius:8px;border:2px solid #0A1D13}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,var(--lime),#12854C)}
+*{scrollbar-width:thin;scrollbar-color:#12854C #0A1D13}
+/* ---------- top bar ---------- */
+#topbar{position:fixed;top:0;left:0;right:0;height:var(--topH);z-index:60;display:flex;align-items:center;gap:10px;
+  padding:0 clamp(10px,1.6vw,22px);background:rgba(7,19,13,.86);backdrop-filter:blur(12px);border-bottom:1px solid rgba(150,225,180,.18)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:800;font-size:1.05rem;letter-spacing:.04em;white-space:nowrap}
+.brand .ball{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 32% 30%,#F3C784,#C98A3E 65%,#8A5A22);box-shadow:0 0 0 2px rgba(255,255,255,.15),0 4px 12px rgba(0,0,0,.5);animation:spin 9s linear infinite;flex:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.brand small{display:block;font-family:var(--body);font-weight:600;font-size:.72rem;color:#9DBBA6;letter-spacing:.02em}
+#navchips{display:flex;gap:6px;flex:1;overflow-x:auto;padding:6px 2px;scrollbar-width:none}
+#navchips::-webkit-scrollbar{display:none}
+.nchip{flex:none;display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:7px 13px;border-radius:999px;cursor:pointer;
+  border:1.5px solid rgba(150,225,180,.25);background:rgba(18,44,30,.55);color:#EAF6EC;font-family:var(--body);font-weight:800;font-size:.82rem;transition:.16s;text-decoration:none}
+.nchip i{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c);flex:none}
+.nchip:hover{border-color:var(--c);transform:translateY(-1px)}
+.nchip.on{background:var(--c);color:#08130C;border-color:transparent;box-shadow:0 4px 16px color-mix(in srgb,var(--c) 45%, transparent)}
+.nchip.on i{background:#08130C;box-shadow:none}
+.tbtn{min-width:46px;height:46px;border-radius:12px;border:1.5px solid rgba(150,225,180,.3);background:rgba(18,44,30,.6);color:#EAF6EC;
+  font-size:1.05rem;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:.16s;padding:0 13px;font-family:var(--body);font-weight:800;white-space:nowrap}
+.tbtn:hover{border-color:var(--lime);background:rgba(30,66,44,.8)}
+.tbtn:active{transform:scale(.94)}
+.tbtn .tl{font-size:.82rem}
+.tbtn.hot{background:linear-gradient(135deg,var(--lime),var(--green));color:#0A1A08;border-color:transparent;box-shadow:0 6px 18px rgba(166,244,49,.3)}
+.tbtn.hot:hover{filter:brightness(1.07)}
+#saveInd{display:flex;align-items:center;gap:7px;font-size:.78rem;font-weight:700;color:#9DBBA6;white-space:nowrap}
+#saveInd .dot{width:9px;height:9px;border-radius:50%;background:#3E5A48;transition:.3s}
+#saveInd.flash .dot{background:var(--lime);box-shadow:0 0 10px var(--lime)}
+#saveInd.flash{color:var(--lime)}
+/* ---------- hero ---------- */
+#hero{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:calc(var(--topH) + 34px) clamp(14px,3vw,32px) 10px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-weight:800;letter-spacing:.16em;font-size:.78rem;color:var(--cyan);border:1px solid rgba(57,198,255,.4);padding:7px 15px;border-radius:999px;background:rgba(57,198,255,.08)}
+#hero h1{font-family:var(--disp);font-weight:900;font-size:clamp(2.2rem,5.4vw,4.4rem);line-height:1;margin:14px 0 6px;
+  background:linear-gradient(100deg,#FFFFFF 18%,#A6F431 55%,#39C6FF 92%);-webkit-background-clip:text;background-clip:text;color:transparent}
+#hero .hsub{font-family:var(--disp);font-weight:800;font-size:clamp(1.15rem,2.2vw,1.8rem);color:var(--amber)}
+#hero .hdesc{color:#B9D4C0;font-size:clamp(.95rem,1.3vw,1.12rem);line-height:1.55;max-width:760px;margin-top:10px}
+.hstats{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0 18px}
+.hchip{display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border-radius:999px;border:1px solid rgba(150,225,180,.28);background:rgba(18,44,30,.55);font-weight:700;font-size:.9rem}
+.hactions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.bigbtn{min-height:56px;padding:13px 26px;border-radius:15px;border:none;cursor:pointer;font-family:var(--disp);font-weight:800;font-size:1.15rem;letter-spacing:.03em;display:inline-flex;align-items:center;gap:10px;transition:.16s}
+.bigbtn:active{transform:scale(.95)}
+.bb-hot{background:linear-gradient(135deg,var(--red),#FF8A00);color:#fff;box-shadow:0 10px 26px rgba(255,75,62,.35)}
+.bb-hot:hover{filter:brightness(1.08)}
+.bb-lime{background:linear-gradient(135deg,var(--lime),var(--green));color:#0A1A08;box-shadow:0 8px 22px rgba(166,244,49,.25)}
+.bb-ghost{background:rgba(18,44,30,.55);border:2px solid rgba(150,225,180,.3);color:#EAF6EC}
+.bb-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+.htip{font-size:.85rem;color:#9DBBA6;font-weight:600;line-height:1.5;max-width:760px}
+.htip b{color:var(--lime)}
+/* distribution guide */
+.guide{margin:22px 0 8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.gcard{background:linear-gradient(165deg,rgba(22,52,36,.75),rgba(11,28,19,.85));border:1px solid rgba(150,225,180,.18);border-left:5px solid var(--c);border-radius:14px;padding:13px 15px;display:flex;flex-direction:column;gap:6px;transition:.18s}
+.gcard:hover{transform:translateY(-3px);border-color:var(--c);box-shadow:0 12px 28px rgba(0,0,0,.4)}
+.gcard .gt{display:flex;align-items:center;gap:9px;font-family:var(--disp);font-weight:900;font-size:1.02rem}
+.gcard .gn{background:var(--c);color:#08130C;font-size:.75rem;padding:3px 9px;border-radius:999px;font-family:var(--body);font-weight:900;flex:none}
+.gcard .gm{font-size:.8rem;color:#9DBBA6;font-weight:600;line-height:1.45}
+.gcard .gm b{color:#EAF6EC}
+.gcard .ga{display:flex;gap:7px;margin-top:auto;padding-top:6px}
+.gcard .ga button{flex:1;min-height:38px;border-radius:10px;border:1.5px solid rgba(150,225,180,.28);background:rgba(10,26,17,.6);color:#EAF6EC;font-weight:800;font-size:.8rem;cursor:pointer;transition:.15s;font-family:var(--body)}
+.gcard .ga button:hover{border-color:var(--c);color:var(--c)}
+/* ---------- sheets stack ---------- */
+#stack{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:34px;padding:26px 10px 90px}
+.sheet-slot{width:210mm;max-width:none;scroll-margin-top:calc(var(--topH) + 16px)}
+/* screen toolbar above each sheet */
+.sheet-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;padding:0 2px}
+.st-num{font-family:var(--disp);font-weight:900;font-size:1rem;background:var(--c);color:#08130C;padding:5px 13px;border-radius:999px;letter-spacing:.05em}
+.st-title{font-family:var(--disp);font-weight:800;font-size:1.05rem;color:#EAF6EC}
+.st-copies{font-size:.75rem;font-weight:800;color:#9DBBA6;border:1px dashed rgba(150,225,180,.35);padding:4px 10px;border-radius:999px}
+.st-prog{flex:1;min-width:70px;height:8px;border-radius:99px;background:rgba(18,44,30,.8);border:1px solid rgba(150,225,180,.2);overflow:hidden}
+.st-prog i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--c),var(--lime));transition:width .35s;border-radius:99px}
+.st-pct{font-family:var(--mono);font-weight:800;font-size:.78rem;color:#9DBBA6;min-width:38px;text-align:right}
+.st-btn{min-height:42px;padding:8px 15px;border-radius:11px;border:1.5px solid rgba(150,225,180,.3);background:rgba(18,44,30,.6);color:#EAF6EC;font-weight:800;font-size:.85rem;cursor:pointer;transition:.15s;font-family:var(--body);display:inline-flex;align-items:center;gap:7px}
+.st-btn:hover{border-color:var(--lime);color:var(--lime)}
+.st-btn.print:hover{border-color:var(--cyan);color:var(--cyan)}
+/* ================= THE PAPER SHEET ================= */
+.sheet{width:210mm;min-height:297mm;background:var(--paper);color:var(--ink);border-radius:5px;border:1px solid #E7DCC4;
+  box-shadow:0 2px 0 rgba(255,255,255,.5) inset,0 24px 60px rgba(0,0,0,.55),0 6px 18px rgba(0,0,0,.4);
+  padding:11mm 12mm 9mm;position:relative;font-size:10.5pt;line-height:1.42;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sheet::before{content:'';position:absolute;top:0;left:0;right:0;height:4mm;background:linear-gradient(90deg,var(--acc),color-mix(in srgb,var(--acc) 55%, #FFB020));border-radius:5px 5px 0 0}
+.a1{--acc:#0E7A46;--accT:rgba(14,122,70,.10)}
+.a2{--acc:#2E6BE4;--accT:rgba(46,107,228,.10)}
+.a3{--acc:#C81E8A;--accT:rgba(200,30,138,.09)}
+.a4{--acc:#D98200;--accT:rgba(217,130,0,.12)}
+.a5{--acc:#D6402E;--accT:rgba(214,64,46,.10)}
+.a6{--acc:#7A3FF2;--accT:rgba(122,63,242,.09)}
+.a7{--acc:#3E5A66;--accT:rgba(62,90,102,.12)}
+/* sheet header */
+.sh-gov{text-align:center;font-size:7.6pt;font-weight:800;letter-spacing:.14em;color:var(--ink2);margin:2mm 0 3mm}
+.sh-band{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:2.2px solid var(--acc);border-bottom:1px solid var(--pline);padding:2.2mm 0}
+.sh-tag{font-family:var(--disp);font-weight:900;font-size:15pt;letter-spacing:.06em;color:var(--acc)}
+.sh-course{font-size:8pt;font-weight:800;color:var(--ink2);text-align:right;line-height:1.35}
+.sh-title{font-family:var(--disp);font-weight:900;font-size:16.5pt;line-height:1.1;margin:3mm 0 1mm;letter-spacing:.01em}
+.sh-sub{font-size:9.5pt;font-weight:700;color:var(--ink2);margin-bottom:3mm}
+/* meta fields */
+.sh-meta{display:flex;gap:5mm;flex-wrap:wrap;background:var(--accT);border:1px solid var(--pline);border-radius:3mm;padding:2.4mm 3.5mm;margin-bottom:3.5mm}
+.fld{display:flex;align-items:baseline;gap:2mm;flex:1;min-width:40mm}
+.fld .fl{font-weight:800;font-size:9.5pt;white-space:nowrap;color:var(--ink)}
+.fld input{flex:1;min-width:20mm}
+/* generic inputs on paper */
+.sheet input[type=text]{font-family:var(--body);font-size:10.5pt;font-weight:600;color:var(--ink);background:transparent;border:none;border-bottom:1.6px dotted var(--pline2);padding:1mm .5mm .6mm;outline:none;transition:.15s;width:100%}
+.sheet input[type=text]:focus{border-bottom:1.6px solid var(--acc);background:color-mix(in srgb,var(--acc) 6%, transparent)}
+.sheet input::placeholder,.sheet textarea::placeholder{color:#BCAB8C;font-weight:500;font-style:italic}
+.sheet select{font-family:var(--body);font-size:9.5pt;font-weight:700;color:var(--ink);background:transparent;border:none;border-bottom:1.6px dotted var(--pline2);padding:.8mm 0;outline:none;cursor:pointer;width:100%}
+.sheet select:focus{border-bottom:1.6px solid var(--acc)}
+/* lined writing areas */
+.area{margin:1.6mm 0}
+.area .al{display:flex;align-items:center;gap:2mm;font-weight:800;font-size:9.8pt;margin-bottom:1mm}
+.area .al .hint{font-weight:600;font-size:8pt;color:var(--ink3);font-style:italic}
+textarea.lined{width:100%;font-family:var(--body);font-size:10.5pt;font-weight:600;color:var(--ink);line-height:7mm;min-height:14mm;
+  background:repeating-linear-gradient(transparent 0 calc(7mm - 1.6px), var(--pline) calc(7mm - 1.6px) 7mm);
+  border:none;outline:none;resize:none;overflow:hidden;padding:0 .5mm;display:block}
+textarea.lined:focus{background:repeating-linear-gradient(transparent 0 calc(7mm - 1.6px), color-mix(in srgb,var(--acc) 45%, var(--pline)) calc(7mm - 1.6px) 7mm)}
+/* numbered badges */
+.nb{flex:none;width:6.2mm;height:6.2mm;border-radius:50%;background:var(--acc);color:#fff;font-weight:900;font-size:9pt;display:inline-flex;align-items:center;justify-content:center;font-family:var(--disp)}
+/* info / note boxes */
+.sh-info{display:flex;gap:2.5mm;align-items:flex-start;background:var(--accT);border-left:3px solid var(--acc);border-radius:2mm;padding:2.2mm 3mm;font-size:9pt;font-weight:600;line-height:1.45;margin-bottom:3mm}
+.sh-note{display:flex;gap:2.5mm;align-items:flex-start;background:#F3ECD9;border:1px dashed var(--pline2);border-radius:2mm;padding:2.4mm 3mm;font-size:8.6pt;font-weight:600;line-height:1.45;color:var(--ink2);margin-top:3.5mm}
+.sh-note b{color:var(--ink)}
+.sh-page{margin-top:2.6mm;padding-top:1.8mm;border-top:1px solid var(--pline);display:flex;justify-content:space-between;font-size:7.4pt;font-weight:700;color:var(--ink3);letter-spacing:.05em}
+/* ---------- Φ1 source blocks ---------- */
+.src-block{border:1.4px solid var(--pline);border-radius:3mm;padding:2.6mm 3.2mm 2.2mm;margin-bottom:3mm;break-inside:avoid;background:#fff}
+.src-block .sb-head{display:flex;align-items:center;gap:2.5mm;font-family:var(--disp);font-weight:900;font-size:11.5pt;color:var(--acc);margin-bottom:1.6mm}
+.src-block .sb-head .rule{flex:1;height:1px;background:var(--pline)}
+.sf{display:flex;align-items:baseline;gap:2mm;margin:1.1mm 0}
+.sf .sl{font-weight:800;font-size:9.3pt;white-space:nowrap;min-width:33mm;display:flex;align-items:center;gap:1.6mm}
+.sf .sl .em{font-size:9pt}
+.sf-row{display:flex;gap:5mm}
+.sf-row .sf{flex:1}
+.src-block textarea.lined{min-height:14mm}
+.addsrc{display:flex;gap:8px;flex-wrap:wrap;margin:2mm 0 1mm}
+.addsrc button{min-height:40px;padding:8px 16px;border-radius:11px;border:1.5px dashed var(--pline2);background:#F7F1E1;color:var(--ink2);font-weight:800;font-size:.85rem;cursor:pointer;font-family:var(--body);transition:.15s}
+.addsrc button:hover{border-color:var(--acc);color:var(--acc);border-style:solid}
+.extra-src{display:none}
+.extra-src.show{display:block;animation:fadein .4s both}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* ---------- Φ2 criteria ---------- */
+.q-block{border:1.4px solid var(--pline);border-radius:3mm;padding:2.4mm 3.2mm;margin-bottom:2.6mm;break-inside:avoid;background:#fff}
+.q-block .qt{display:flex;gap:2.5mm;align-items:flex-start;font-weight:800;font-size:10.5pt}
+.q-block .qh{font-size:8.4pt;font-weight:600;color:var(--ink2);margin:.8mm 0 1.6mm 8.7mm}
+.opts{display:flex;gap:3mm;flex-wrap:wrap;margin-left:8.7mm}
+.opt{position:relative;display:inline-flex;align-items:center;gap:2mm;cursor:pointer;font-weight:700;font-size:9.5pt;padding:1.4mm 3mm;border:1.4px solid var(--pline2);border-radius:2mm;background:#FBF7EC;transition:.14s;user-select:none}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .box{width:4.6mm;height:4.6mm;border:1.6px solid var(--ink3);border-radius:1.2mm;background:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:8pt;color:transparent;transition:.14s;flex:none}
+.opt:hover{border-color:var(--acc)}
+.opt input:checked~.box{background:var(--oc,var(--acc));border-color:var(--oc,var(--acc));color:#fff}
+.opt input:checked~.box::after{content:'✓';font-weight:900}
+.opt:has(input:checked){border-color:var(--oc,var(--acc));background:color-mix(in srgb,var(--oc,var(--acc)) 10%, #fff);box-shadow:0 1px 0 color-mix(in srgb,var(--oc,var(--acc)) 30%, transparent)}
+.opt.o-nai{--oc:#1E9E5A}.opt.o-oxi{--oc:#D6402E}.opt.o-mid{--oc:#D98200}
+.opt input:focus-visible~.box{outline:2px solid var(--info);outline-offset:2px}
+/* golden rule + live result */
+.gold{border:2px solid var(--warn);border-radius:3mm;background:rgba(217,130,0,.08);padding:2.6mm 3.4mm;margin-top:3mm;break-inside:avoid}
+.gold .gt{font-family:var(--disp);font-weight:900;font-size:11pt;color:var(--warn);display:flex;align-items:center;gap:2mm;margin-bottom:1mm}
+.gold p{font-size:9.2pt;font-weight:600;line-height:1.5}
+.f2live{display:flex;align-items:center;gap:3mm;margin-top:2mm;flex-wrap:wrap}
+.f2meter{flex:1;min-width:40mm;height:3.4mm;border-radius:99px;background:#EAE1CB;border:1px solid var(--pline2);overflow:hidden}
+.f2meter i{display:block;height:100%;width:0%;background:linear-gradient(90deg,#D6402E,#D98200,#1E9E5A);transition:width .4s;border-radius:99px}
+#f2result{font-family:var(--disp);font-weight:900;font-size:10pt;padding:1.2mm 3.4mm;border-radius:99px;background:#EAE1CB;color:var(--ink2);border:1.4px solid var(--pline2);white-space:nowrap}
+#f2result.good{background:rgba(30,158,90,.14);color:var(--ok);border-color:var(--ok)}
+#f2result.bad{background:rgba(214,64,46,.12);color:var(--bad);border-color:var(--bad)}
+#f2result.warn{background:rgba(217,130,0,.14);color:var(--warn);border-color:var(--warn)}
+/* ---------- Φ3 benchmark table ---------- */
+table.bench{width:100%;border-collapse:collapse;margin:2mm 0 3mm;break-inside:avoid}
+table.bench th,table.bench td{border:1.2px solid var(--pline2);padding:1.6mm 2mm;vertical-align:middle}
+table.bench thead th{background:var(--accT);font-family:var(--disp);font-weight:900;font-size:9.6pt;color:var(--acc);text-align:left}
+table.bench thead th input{font-weight:800;font-size:9.4pt;border-bottom:1.4px dotted var(--pline2)}
+table.bench thead th .bh{display:block;font-size:7.4pt;font-weight:800;color:var(--ink2);letter-spacing:.06em;margin-bottom:.6mm}
+table.bench td.rowlab{font-weight:800;font-size:9.3pt;background:#F7F1E1;white-space:nowrap;width:34mm}
+table.bench td.rowlab .em{margin-right:1.4mm}
+table.bench td input{font-size:9.6pt}
+table.bench th.own,table.bench td.own{background:rgba(217,130,0,.12)}
+table.bench th.own{color:var(--warn)}
+table.bench td.own input{font-weight:800}
+/* ---------- Φ4 / Φ5 sections ---------- */
+.sec{margin-bottom:3.2mm;break-inside:avoid}
+.sec .st{display:flex;align-items:center;gap:2.5mm;font-weight:800;font-size:10.5pt;margin-bottom:1.2mm}
+.sec .st small{font-weight:600;font-size:8.2pt;color:var(--ink3);font-style:italic}
+.decgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3mm}
+.dec{position:relative;cursor:pointer;border:1.6px solid var(--pline2);border-radius:2.6mm;padding:2.4mm 2.6mm;background:#FBF7EC;transition:.15s;text-align:center;display:block}
+.dec input{position:absolute;opacity:0;pointer-events:none}
+.dec .di{font-size:15pt;display:block}
+.dec b{font-family:var(--disp);font-weight:900;font-size:9.8pt;display:block;margin:1mm 0;letter-spacing:.03em}
+.dec small{font-size:7.8pt;font-weight:600;color:var(--ink2);line-height:1.35;display:block}
+.dec:hover{border-color:var(--dc)}
+.dec:has(input:checked){border-color:var(--dc);background:color-mix(in srgb,var(--dc) 10%, #fff);box-shadow:0 0 0 1.5px var(--dc)}
+.dec:has(input:checked) b{color:var(--dc)}
+.dec.d-ok{--dc:#1E9E5A}.dec.d-ch{--dc:#D98200}.dec.d-open{--dc:#2E6BE4}
+.pillrow{display:flex;gap:3mm;flex-wrap:wrap}
+.pill{--oc:var(--acc)}
+.moodrow .opt{font-size:9.3pt}
+/* ---------- Φ6 feedback ---------- */
+.fb-block{border:1.4px solid var(--pline);border-left:4px solid var(--fc);border-radius:2.6mm;padding:2.4mm 3.2mm;margin-bottom:3mm;background:#fff;break-inside:avoid}
+.fb-block .ft{display:flex;align-items:baseline;gap:2.5mm;font-family:var(--disp);font-weight:900;font-size:11.5pt;color:var(--fc);margin-bottom:.6mm}
+.fb-block .ft small{font-family:var(--body);font-weight:600;font-size:8.2pt;color:var(--ink2)}
+.fb-block .starter{font-size:8.4pt;font-weight:600;font-style:italic;color:var(--ink3);margin-bottom:1mm}
+.fb1{--fc:#1E9E5A}.fb2{--fc:#2E6BE4}.fb3{--fc:#D98200}
+/* ---------- Φ7 observation ---------- */
+table.obs{width:100%;border-collapse:collapse;margin:2mm 0 3mm;break-inside:avoid}
+table.obs th,table.obs td{border:1.2px solid var(--pline2);padding:1.8mm 2mm;vertical-align:middle}
+table.obs thead th{background:var(--accT);font-family:var(--disp);font-weight:900;font-size:9.2pt;color:var(--acc);text-align:left}
+table.obs td.idx{font-family:var(--mono);font-weight:800;text-align:center;width:8mm;background:#F7F1E1}
+.rate{display:flex;gap:1.2mm}
+.rate button{width:6.4mm;height:6.4mm;border-radius:1.4mm;border:1.3px solid var(--pline2);background:#fff;color:var(--ink3);font-weight:900;font-size:8pt;cursor:pointer;font-family:var(--mono);transition:.12s;padding:0}
+.rate button:hover{border-color:var(--acc);color:var(--acc)}
+.rate button.fill{background:var(--acc);border-color:var(--acc);color:#fff}
+.chkgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.6mm 5mm;margin:1.6mm 0 2mm}
+.chk{position:relative;display:flex;align-items:flex-start;gap:2.2mm;cursor:pointer;font-weight:700;font-size:9.3pt;line-height:1.35;padding:1mm 0;user-select:none}
+.chk input{position:absolute;opacity:0;pointer-events:none}
+.chk .box{flex:none;width:4.8mm;height:4.8mm;border:1.6px solid var(--ink3);border-radius:1.2mm;background:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:8.4pt;color:transparent;transition:.14s;margin-top:.3mm}
+.chk:hover .box{border-color:var(--acc)}
+.chk input:checked~.box{background:var(--ok);border-color:var(--ok);color:#fff}
+.chk input:checked~.box::after{content:'✓';font-weight:900}
+.chk input:checked~.ct{color:var(--ok)}
+/* ---------- toast ---------- */
+#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,140%);z-index:90;display:flex;align-items:center;gap:13px;
+  background:linear-gradient(135deg,#173B28,#0E2418);border:1.5px solid var(--lime);border-radius:15px;padding:12px 18px;max-width:min(640px,92vw);
+  box-shadow:0 18px 44px rgba(0,0,0,.6);transition:transform .4s cubic-bezier(.2,.9,.25,1.15)}
+#toast.show{transform:translate(-50%,0)}
+#toast .ti{font-size:1.4rem}
+#toast .tt{font-weight:800;font-size:.95rem}
+#toast .ts{font-size:.8rem;color:#9DBBA6;font-weight:600}
+#toastAct{min-height:38px;padding:7px 15px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--lime),var(--green));color:#0A1A08;font-weight:900;font-size:.82rem;cursor:pointer;font-family:var(--body);display:none}
+#toastAct.show{display:block}
+/* ---------- footer ---------- */
+#pagefoot{position:relative;z-index:2;text-align:center;padding:0 16px 46px;color:#9DBBA6;font-size:.85rem;font-weight:600;line-height:1.6}
+#pagefoot b{color:var(--lime)}
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .brand small{display:none}
+  .tbtn .tl{display:none}
+  #saveInd span{display:none}
+  .decgrid{grid-template-columns:1fr}
+  .chkgrid{grid-template-columns:1fr}
+  .sf-row{flex-direction:column;gap:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .bg .orb,.brand .ball{animation:none!important}
+  html{scroll-behavior:auto}
+}
+/* ================= PRINT ================= */
+@page{size:A4;margin:11mm 12mm}
+@media print{
+  body{background:#fff!important}
+  .bg,#topbar,#hero,.sheet-tools,.addsrc,#toast,#pagefoot,.f2meter{display:none!important}
+  #stack{display:block;padding:0;gap:0}
+  .sheet-slot{width:auto!important;zoom:1!important;margin:0;break-after:page}
+  .sheet-slot:last-child{break-after:auto}
+  .sheet{width:auto;min-height:auto;border:none;border-radius:0;box-shadow:none;padding:0;margin:0;font-size:10.5pt}
+  .sheet::before{display:none}
+  .sh-gov{margin-top:0}
+  .sheet input[type=text],.sheet select{border-bottom:1.6px dotted #B7A886}
+  textarea.lined{background:repeating-linear-gradient(transparent 0 calc(7mm - 1.6px), #D9CCB1 calc(7mm - 1.6px) 7mm)!important}
+  .extra-src:not(.show){display:none!important}
+  body.print-one .sheet-slot{display:none!important}
+  body.print-one .sheet-slot.print-target{display:block!important;break-after:auto}
+  .opt,.dec,.chk,.rate button,.src-block,.q-block,.fb-block,.gold,.sh-meta,.sh-info,.sh-note,table.bench thead th,table.bench td.rowlab,table.bench th.own,table.bench td.own,table.obs thead th,table.obs td.idx,.nb,.sh-tag,.f2meter,#f2result{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sheet input:focus,.sheet textarea:focus{background:transparent}
+}
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true"><div class="base"></div><div class="grid"></div><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="grain"></div></div>
+
+<!-- ================= TOP BAR ================= -->
+<header id="topbar">
+  <div class="brand"><span class="ball"></span><span>Ε.Ε.Τ. · ΦΥΛΛΑΔΙΑ ΜΑΘΗΜΑΤΟΣ 2ου<small>ΕΠΑΛ Σάμου · 2026–27</small></span></div>
+  <nav id="navchips" aria-label="Πλοήγηση φυλλαδίων">
+    <a class="nchip" style="--c:#2FD97B" href="#slot1" data-nav="1"><i></i>Φ1 · Πηγές</a>
+    <a class="nchip" style="--c:#6FA0FF" href="#slot2" data-nav="2"><i></i>Φ2 · Αξιοπιστία</a>
+    <a class="nchip" style="--c:#FF5EC8" href="#slot3" data-nav="3"><i></i>Φ3 · Benchmark</a>
+    <a class="nchip" style="--c:#FFB020" href="#slot4" data-nav="4"><i></i>Φ4 · Υπόθεση</a>
+    <a class="nchip" style="--c:#FF7A6E" href="#slot5" data-nav="5"><i></i>Φ5 · Exit</a>
+    <a class="nchip" style="--c:#B08CFF" href="#slot6" data-nav="6"><i></i>Φ6 · Feedback</a>
+    <a class="nchip" style="--c:#8FB0BE" href="#slot7" data-nav="7"><i></i>Φ7 · Παρατήρηση</a>
+  </nav>
+  <div id="saveInd"><span class="dot"></span><span>Αυτόματη αποθήκευση</span></div>
+  <button class="tbtn" id="btnToday" title="Συμπλήρωση σημερινής ημερομηνίας σε όλα τα φυλλάδια">📅<span class="tl">Σήμερα</span></button>
+  <button class="tbtn" id="btnSound" title="Ήχος on/off" aria-pressed="true">🔊</button>
+  <button class="tbtn" id="btnClearAll" title="Καθάρισμα όλων των πεδίων">🧹</button>
+  <button class="tbtn hot" id="btnPrintAll" title="Εκτύπωση όλων των φυλλαδίων (7 σελίδες A4)">🖨<span class="tl">ΟΛΑ</span></button>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="hero">
+  <span class="eyebrow">⚽ ΕΡΕΥΝΗΤΙΚΗ ΕΡΓΑΣΙΑ ΣΤΗΝ ΤΕΧΝΟΛΟΓΙΑ · ΠΟΔΟΣΦΑΙΡΑΚΙ 1 Μ.</span>
+  <h1>ΤΑ ΦΥΛΛΑΔΙΑ ΤΟΥ ΜΑΘΗΜΑΤΟΣ 2ου</h1>
+  <div class="hsub">🔎 «Βιβλιογραφική Έρευνα &amp; Benchmark» — και τα 7 φύλλα, μαζί</div>
+  <p class="hdesc">Έτοιμα για <b style="color:var(--lime)">εκτύπωση &amp; διανομή</b> σε A4. Συμπληρώστε τα και στην οθόνη — αποθηκεύονται αυτόματα και τυπώνονται <b style="color:var(--cyan)">ακριβώς όπως τα βλέπετε</b>. Το Φυλλάδιο 2 βγάζει μόνο του το αποτέλεσμα του «χρυσού κανόνα 4/5».</p>
+  <div class="hstats">
+    <span class="hchip">📄 7 φυλλάδια · 7 σελίδες A4</span>
+    <span class="hchip">👥 15 μαθητές · 5 ομάδες × 3</span>
+    <span class="hchip">🖨 41 αντίτυπα για όλη την τάξη</span>
+    <span class="hchip">⏱ 1 διδακτική ώρα (45΄)</span>
+  </div>
+  <div class="hactions">
+    <button class="bigbtn bb-hot" id="btnPrintAll2">🖨 ΕΚΤΥΠΩΣΗ ΟΛΩΝ — 7 ΣΕΛΙΔΕΣ</button>
+    <button class="bigbtn bb-ghost" id="btnJump1">⬇ Πάμε στα φυλλάδια</button>
+  </div>
+  <p class="htip">💡 <b>Συμβουλή εκτύπωσης:</b> στον διάλογο του εκτυπωτή ενεργοποίησε την επιλογή <b>«Γραφικά φόντου / Background graphics»</b> για να τυπωθούν τα χρώματα και τα κουτάκια επιλογών. Χρειάζεστε πολλά αντίτυπα από ένα φύλλο; Χρησιμοποίησε το 🖨 πάνω από το κάθε φυλλάδιο και βάλε αριθμό αντιτύπων.</p>
+
+  <div class="guide" id="guide">
+    <div class="gcard" style="--c:#2FD97B"><div class="gt"><span class="gn">Φ1</span>Καταγραφή Πηγών</div><div class="gm">🕐 <b>Φάση 2</b> (11΄–32΄) · 👥 κάθε ομάδα<br>🖨 <b>5 αντίτυπα</b> · ≥3 πηγές ανά ομάδα</div><div class="ga"><button data-goto="1">⬇ Μετάβαση</button><button data-gprint="1">🖨 Εκτύπωση</button></div></div>
+    <div class="gcard" style="--c:#6FA0FF"><div class="gt"><span class="gn">Φ2</span>Κριτήρια Αξιοπιστίας</div><div class="gm">🕐 <b>Φάση 1 «You Do»</b> &amp; Φάση 2 · 👥 κάθε ομάδα<br>🖨 <b>5+ αντίτυπα</b> · 5 έλεγχοι + κανόνας 4/5</div><div class="ga"><button data-goto="2">⬇ Μετάβαση</button><button data-gprint="2">🖨 Εκτύπωση</button></div></div>
+    <div class="gcard" style="--c:#FF5EC8"><div class="gt"><span class="gn">Φ3</span>Πίνακας Benchmark</div><div class="gm">🕐 <b>Φάση 2</b> — ειδική αποστολή · 👥 <b>Ομάδα 5</b><br>🖨 <b>1 αντίτυπο</b> · χρήση στο Μάθημα 3</div><div class="ga"><button data-goto="3">⬇ Μετάβαση</button><button data-gprint="3">🖨 Εκτύπωση</button></div></div>
+    <div class="gcard" style="--c:#FFB020"><div class="gt"><span class="gn">Φ4</span>Αναθεώρηση Υπόθεσης</div><div class="gm">🕐 <b>Φάση 4</b> (40΄–45΄) · 👥 κάθε ομάδα<br>🖨 <b>5 αντίτυπα</b> · + αντιγραφή στο Ημερολόγιο</div><div class="ga"><button data-goto="4">⬇ Μετάβαση</button><button data-gprint="4">🖨 Εκτύπωση</button></div></div>
+    <div class="gcard" style="--c:#FF7A6E"><div class="gt"><span class="gn">Φ5</span>Φύλλο Εξόδου</div><div class="gm">🕐 <b>Έξοδος</b> · 👤 <b>ατομικά</b> κάθε μαθητής<br>🖨 <b>15 αντίτυπα</b> · παράδοση στον εκπαιδευτικό</div><div class="ga"><button data-goto="5">⬇ Μετάβαση</button><button data-gprint="5">🖨 Εκτύπωση</button></div></div>
+    <div class="gcard" style="--c:#B08CFF"><div class="gt"><span class="gn">Φ6</span>Peer Feedback</div><div class="gm">🕐 <b>Φάση 3</b> (32΄–40΄) · 👥 ομάδα-παρατηρητής<br>🖨 <b>5 αντίτυπα</b> · 3 προτάσεις ανά παρουσίαση</div><div class="ga"><button data-goto="6">⬇ Μετάβαση</button><button data-gprint="6">🖨 Εκτύπωση</button></div></div>
+    <div class="gcard" style="--c:#8FB0BE"><div class="gt"><span class="gn">Φ7</span>Καρτέλα Παρατήρησης</div><div class="gm">🕐 <b>Μετά το μάθημα</b> · 👨‍🏫 εκπαιδευτικός<br>🖨 <b>5 αντίτυπα</b> · ατομικός φάκελος (30%)</div><div class="ga"><button data-goto="7">⬇ Μετάβαση</button><button data-gprint="7">🖨 Εκτύπωση</button></div></div>
+  </div>
+</section>
+
+<!-- ================= SHEETS ================= -->
+<main id="stack">
+
+<!-- ========== ΦΥΛΛΑΔΙΟ 1 ========== -->
+<div class="sheet-slot" id="slot1" data-sheet="1" style="--c:#2FD97B">
+  <div class="sheet-tools">
+    <span class="st-num">Φ1</span><span class="st-title">Καταγραφή Πηγών</span><span class="st-copies">×5 αντίτυπα</span>
+    <div class="st-prog"><i></i></div><span class="st-pct">0%</span>
+    <button class="st-btn print" data-print="1">🖨 Εκτύπωση</button>
+    <button class="st-btn" data-reset="1">↺ Καθάρισμα</button>
+  </div>
+  <section class="sheet a1" id="sheet1">
+    <div class="sh-gov">ΕΛΛΗΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ — ΥΠ.ΠΑΙ.Θ.Α. · ΕΠΑΛ — ΣΧΟΛΙΚΟ ΕΤΟΣ 2026–2027</div>
+    <div class="sh-band"><span class="sh-tag">ΦΥΛΛΑΔΙΟ 1</span><span class="sh-course">Μάθημα: Ε.Ε.Τ. — Μάθημα 2ο<br>«Βιβλιογραφική Έρευνα &amp; Benchmark»</span></div>
+    <h2 class="sh-title">📚 ΦΥΛΛΟ ΚΑΤΑΓΡΑΦΗΣ ΠΗΓΩΝ</h2>
+    <p class="sh-sub">Τουλάχιστον 3 αξιόπιστες πηγές ανά ομάδα</p>
+    <div class="sh-meta">
+      <label class="fld" style="max-width:52mm"><span class="fl">👥 Ομάδα:</span><input type="text" id="f1-group" data-save placeholder="π.χ. Ομάδα 1"></label>
+      <label class="fld" style="max-width:60mm"><span class="fl">📅 Ημερομηνία:</span><input type="text" id="f1-date" data-save data-date placeholder="ηη/μμ/εεεε"></label>
+      <label class="fld" style="flex-basis:100%"><span class="fl">🔍 Ερευνητικό ερώτημα:</span><input type="text" id="f1-question" data-save placeholder="Το ερώτημα της ομάδας μας από το Μάθημα 1ο…"></label>
+    </div>
+    <div class="sh-info">✅ <span><b>Τι σημαίνει «καλή καταγραφή»;</b> Τίτλος + Σύνδεσμος + Συγγραφέας + Ημερομηνία + Εύρημα + Αιτιολόγηση αξιοπιστίας. Κάθε πεδίο συμπληρωμένο — όχι μισά!</span></div>
+
+    <div class="src-block">
+      <div class="sb-head"><span class="nb">1</span>📋 ΠΗΓΗ 1<span class="rule"></span></div>
+      <div class="sf"><span class="sl"><span class="em">📄</span>Τίτλος:</span><input type="text" id="f1-s1-title" data-save></div>
+      <div class="sf"><span class="sl"><span class="em">🔗</span>Σύνδεσμος (URL):</span><input type="text" id="f1-s1-url" data-save placeholder="https://…"></div>
+      <div class="sf-row">
+        <div class="sf"><span class="sl"><span class="em">👤</span>Συγγραφέας / Φορέας:</span><input type="text" id="f1-s1-author" data-save></div>
+        <div class="sf" style="max-width:62mm"><span class="sl" style="min-width:auto"><span class="em">📅</span>Ημερομηνία:</span><input type="text" id="f1-s1-date" data-save placeholder="μμ/εεεε"></div>
+      </div>
+      <div class="area"><div class="al"><span class="em">💡</span>Τι βρήκαμε (βασικό εύρημα):</div><textarea class="lined" id="f1-s1-find" data-save rows="2"></textarea></div>
+      <div class="area"><div class="al"><span class="em">✅</span>Αξιόπιστη γιατί;</div><textarea class="lined" id="f1-s1-why" data-save rows="2"></textarea></div>
+    </div>
+
+    <div class="src-block">
+      <div class="sb-head"><span class="nb">2</span>📋 ΠΗΓΗ 2<span class="rule"></span></div>
+      <div class="sf"><span class="sl"><span class="em">📄</span>Τίτλος:</span><input type="text" id="f1-s2-title" data-save></div>
+      <div class="sf"><span class="sl"><span class="em">🔗</span>Σύνδεσμος (URL):</span><input type="text" id="f1-s2-url" data-save placeholder="https://…"></div>
+      <div class="sf-row">
+        <div class="sf"><span class="sl"><span class="em">👤</span>Συγγραφέας / Φορέας:</span><input type="text" id="f1-s2-author" data-save></div>
+        <div class="sf" style="max-width:62mm"><span class="sl" style="min-width:auto"><span class="em">📅</span>Ημερομηνία:</span><input type="text" id="f1-s2-date" data-save placeholder="μμ/εεεε"></div>
+      </div>
+      <div class="area"><div class="al"><span class="em">💡</span>Τι βρήκαμε (βασικό εύρημα):</div><textarea class="lined" id="f1-s2-find" data-save rows="2"></textarea></div>
+      <div class="area"><div class="al"><span class="em">✅</span>Αξιόπιστη γιατί;</div><textarea class="lined" id="f1-s2-why" data-save rows="2"></textarea></div>
+    </div>
+
+    <div class="src-block">
+      <div class="sb-head"><span class="nb">3</span>📋 ΠΗΓΗ 3<span class="rule"></span></div>
+      <div class="sf"><span class="sl"><span class="em">📄</span>Τίτλος:</span><input type="text" id="f1-s3-title" data-save></div>
+      <div class="sf"><span class="sl"><span class="em">🔗</span>Σύνδεσμος (URL):</span><input type="text" id="f1-s3-url" data-save placeholder="https://…"></div>
+      <div class="sf-row">
+        <div class="sf"><span class="sl"><span class="em">👤</span>Συγγραφέας / Φορέας:</span><input type="text" id="f1-s3-author" data-save></div>
+        <div class="sf" style="max-width:62mm"><span class="sl" style="min-width:auto"><span class="em">📅</span>Ημερομηνία:</span><input type="text" id="f1-s3-date" data-save placeholder="μμ/εεεε"></div>
+      </div>
+      <div class="area"><div class="al"><span class="em">💡</span>Τι βρήκαμε (βασικό εύρημα):</div><textarea class="lined" id="f1-s3-find" data-save rows="2"></textarea></div>
+      <div class="area"><div class="al"><span class="em">✅</span>Αξιόπιστη γιατί;</div><textarea class="lined" id="f1-s3-why" data-save rows="2"></textarea></div>
+    </div>
+
+    <div class="src-block extra-src" id="extra4">
+      <div class="sb-head"><span class="nb">4</span>📋 ΠΗΓΗ 4 <span style="font-family:var(--body);font-size:8pt;font-weight:800;color:var(--warn)">🟧 ΕΠΕΚΤΑΣΗ</span><span class="rule"></span></div>
+      <div class="sf"><span class="sl"><span class="em">📄</span>Τίτλος:</span><input type="text" id="f1-s4-title" data-save></div>
+      <div class="sf"><span class="sl"><span class="em">🔗</span>Σύνδεσμος (URL):</span><input type="text" id="f1-s4-url" data-save placeholder="https://…"></div>
+      <div class="sf-row">
+        <div class="sf"><span class="sl"><span class="em">👤</span>Συγγραφέας / Φορέας:</span><input type="text" id="f1-s4-author" data-save></div>
+        <div class="sf" style="max-width:62mm"><span class="sl" style="min-width:auto"><span class="em">📅</span>Ημερομηνία:</span><input type="text" id="f1-s4-date" data-save placeholder="μμ/εεεε"></div>
+      </div>
+      <div class="area"><div class="al"><span class="em">💡</span>Τι βρήκαμε (βασικό εύρημα):</div><textarea class="lined" id="f1-s4-find" data-save rows="2"></textarea></div>
+      <div class="area"><div class="al"><span class="em">✅</span>Αξιόπιστη γιατί; <span class="hint">Εντόπισες αντίφαση ή προκατάληψη; Σημείωσέ την!</span></div><textarea class="lined" id="f1-s4-why" data-save rows="2"></textarea></div>
+    </div>
+
+    <div class="src-block extra-src" id="extra5">
+      <div class="sb-head"><span class="nb">5</span>📋 ΠΗΓΗ 5 <span style="font-family:var(--body);font-size:8pt;font-weight:800;color:var(--warn)">🟧 ΕΠΕΚΤΑΣΗ</span><span class="rule"></span></div>
+      <div class="sf"><span class="sl"><span class="em">📄</span>Τίτλος:</span><input type="text" id="f1-s5-title" data-save></div>
+      <div class="sf"><span class="sl"><span class="em">🔗</span>Σύνδεσμος (URL):</span><input type="text" id="f1-s5-url" data-save placeholder="https://…"></div>
+      <div class="sf-row">
+        <div class="sf"><span class="sl"><span class="em">👤</span>Συγγραφέας / Φορέας:</span><input type="text" id="f1-s5-author" data-save></div>
+        <div class="sf" style="max-width:62mm"><span class="sl" style="min-width:auto"><span class="em">📅</span>Ημερομηνία:</span><input type="text" id="f1-s5-date" data-save placeholder="μμ/εεεε"></div>
+      </div>
+      <div class="area"><div class="al"><span class="em">💡</span>Τι βρήκαμε (βασικό εύρημα):</div><textarea class="lined" id="f1-s5-find" data-save rows="2"></textarea></div>
+      <div class="area"><div class="al"><span class="em">✅</span>Αξιόπιστη γιατί;</div><textarea class="lined" id="f1-s5-why" data-save rows="2"></textarea></div>
+    </div>
+
+    <div class="addsrc">
+      <button id="addSrc4">➕ Προσθήκη Πηγής 4 (Επέκταση)</button>
+      <button id="addSrc5">➕ Προσθήκη Πηγής 5 (Επέκταση)</button>
+    </div>
+
+    <div class="sh-note">📌 <span><b>Οδηγία:</b> Κάθε ομάδα συμπληρώνει τουλάχιστον 3 πηγές. Μια πηγή είναι αξιόπιστη αν ο συγγραφέας/φορέας είναι γνωστός, ο σκοπός είναι ενημερωτικός (όχι διαφημιστικός) και υπάρχει ημερομηνία. Αν βρεθεί πληροφορία σε φόρουμ, <b>διασταυρώνεται με 2 ανεξάρτητες πηγές</b>.</span></div>
+    <div class="sh-page"><span>ΕΠΑΛ Σάμου · Ε.Ε.Τ. — Μάθημα 2ο «Βιβλιογραφική Έρευνα &amp; Benchmark»</span><span>Φυλλάδιο 1 / 7</span></div>
+  </section>
+</div>
+
+<!-- ========== ΦΥΛΛΑΔΙΟ 2 ========== -->
+<div class="sheet-slot" id="slot2" data-sheet="2" style="--c:#6FA0FF">
+  <div class="sheet-tools">
+    <span class="st-num">Φ2</span><span class="st-title">Κριτήρια Αξιοπιστίας</span><span class="st-copies">×5+ αντίτυπα</span>
+    <div class="st-prog"><i></i></div><span class="st-pct">0%</span>
+    <button class="st-btn print" data-print="2">🖨 Εκτύπωση</button>
+    <button class="st-btn" data-reset="2">↺ Καθάρισμα</button>
+  </div>
+  <section class="sheet a2" id="sheet2">
+    <div class="sh-gov">ΕΛΛΗΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ — ΥΠ.ΠΑΙ.Θ.Α. · ΕΠΑΛ — ΣΧΟΛΙΚΟ ΕΤΟΣ 2026–2027</div>
+    <div class="sh-band"><span class="sh-tag">ΦΥΛΛΑΔΙΟ 2</span><span class="sh-course">Μάθημα: Ε.Ε.Τ. — Μάθημα 2ο<br>«Βιβλιογραφική Έρευνα &amp; Benchmark»</span></div>
+    <h2 class="sh-title">🔍 ΚΡΙΤΗΡΙΑ ΑΞΙΟΠΙΣΤΙΑΣ ΠΗΓΩΝ</h2>
+    <p class="sh-sub">Πώς ελέγχω αν μια πηγή είναι έγκυρη — 5 ερωτήματα ελέγχου</p>
+    <div class="sh-meta">
+      <label class="fld" style="max-width:52mm"><span class="fl">👥 Ομάδα:</span><input type="text" id="f2-group" data-save></label>
+      <label class="fld" style="max-width:60mm"><span class="fl">📅 Ημερομηνία:</span><input type="text" id="f2-date" data-save data-date placeholder="ηη/μμ/εεεε"></label>
+      <label class="fld" style="flex-basis:100%"><span class="fl">🔗 Πηγή που ελέγχω:</span><input type="text" id="f2-source" data-save placeholder="Τίτλος ή URL της πηγής…"></label>
+    </div>
+
+    <div class="q-block">
+      <div class="qt"><span class="nb">1</span>Ποιος είναι ο συγγραφέας / φορέας;</div>
+      <div class="qh">Γνωστός οργανισμός / κατασκευαστής / πανεπιστήμιο;</div>
+      <div class="opts">
+        <label class="opt o-nai"><input type="radio" name="f2q1" id="f2q1a" value="nai" data-save><span class="box"></span>Ναι</label>
+        <label class="opt o-oxi"><input type="radio" name="f2q1" id="f2q1b" value="oxi" data-save><span class="box"></span>Όχι</label>
+        <label class="opt o-mid"><input type="radio" name="f2q1" id="f2q1c" value="mid" data-save><span class="box"></span>Άγνωστος</label>
+      </div>
+    </div>
+    <div class="q-block">
+      <div class="qt"><span class="nb">2</span>Ποιος είναι ο σκοπός;</div>
+      <div class="qh">Ενημέρωση / εκπαίδευση — όχι πώληση ή διαφήμιση;</div>
+      <div class="opts">
+        <label class="opt o-nai"><input type="radio" name="f2q2" id="f2q2a" value="nai" data-save><span class="box"></span>Ναι</label>
+        <label class="opt o-oxi"><input type="radio" name="f2q2" id="f2q2b" value="oxi" data-save><span class="box"></span>Όχι</label>
+        <label class="opt o-mid"><input type="radio" name="f2q2" id="f2q2c" value="mid" data-save><span class="box"></span>Αμφίβολο</label>
+      </div>
+    </div>
+    <div class="q-block">
+      <div class="qt"><span class="nb">3</span>Υπάρχει ημερομηνία;</div>
+      <div class="qh">Πρόσφατη — έως 2–3 ετών για θέματα τεχνολογίας;</div>
+      <div class="opts">
+        <label class="opt o-nai"><input type="radio" name="f2q3" id="f2q3a" value="nai" data-save><span class="box"></span>Ναι</label>
+        <label class="opt o-oxi"><input type="radio" name="f2q3" id="f2q3b" value="oxi" data-save><span class="box"></span>Όχι</label>
+        <label class="opt o-mid"><input type="radio" name="f2q3" id="f2q3c" value="mid" data-save><span class="box"></span>Παλιά</label>
+      </div>
+    </div>
+    <div class="q-block">
+      <div class="qt"><span class="nb">4</span>Υπάρχουν πηγές / βιβλιογραφία;</div>
+      <div class="qh">Το κείμενο αναφέρει άλλες πηγές ή στοιχεία;</div>
+      <div class="opts">
+        <label class="opt o-nai"><input type="radio" name="f2q4" id="f2q4a" value="nai" data-save><span class="box"></span>Ναι</label>
+        <label class="opt o-oxi"><input type="radio" name="f2q4" id="f2q4b" value="oxi" data-save><span class="box"></span>Όχι</label>
+        <label class="opt o-mid"><input type="radio" name="f2q4" id="f2q4c" value="mid" data-save><span class="box"></span>Μερικώς</label>
+      </div>
+    </div>
+    <div class="q-block">
+      <div class="qt"><span class="nb">5</span>Επιβεβαιώνεται από άλλη πηγή;</div>
+      <div class="qh">Βρήκα την ίδια πληροφορία σε δεύτερη ανεξάρτητη πηγή;</div>
+      <div class="opts">
+        <label class="opt o-nai"><input type="radio" name="f2q5" id="f2q5a" value="nai" data-save><span class="box"></span>Ναι</label>
+        <label class="opt o-oxi"><input type="radio" name="f2q5" id="f2q5b" value="oxi" data-save><span class="box"></span>Όχι</label>
+        <label class="opt o-mid"><input type="radio" name="f2q5" id="f2q5c" value="mid" data-save><span class="box"></span>Δεν έψαξα</label>
+      </div>
+    </div>
+
+    <div class="gold">
+      <div class="gt">🏆 Ο ΧΡΥΣΟΣ ΚΑΝΟΝΑΣ</div>
+      <p>Αν απάντησες <b style="color:var(--ok)">«Ναι» σε 4 από τα 5</b> → η πηγή είναι <b>αξιόπιστη</b>. Αν <b style="color:var(--bad)">«Όχι» σε 2 ή περισσότερα</b> → <b>ψάξε αλλού</b>. Πληροφορία από φόρουμ; Μόνο με διασταύρωση σε 2 ανεξάρτητες πηγές.</p>
+      <div class="f2live">
+        <div class="f2meter"><i id="f2meterFill"></i></div>
+        <span id="f2result">Ναι: 0/5 — συμπλήρωσε τους ελέγχους</span>
+      </div>
+    </div>
+
+    <div class="sh-note">📚 <span><b>Βάση:</b> Kuhlthau (2004) — Information Search Process · Wineburg &amp; McGrew (2019) — Lateral Reading · Eisenberg &amp; Berkowitz (1990) — Big6.</span></div>
+    <div class="sh-page"><span>ΕΠΑΛ Σάμου · Ε.Ε.Τ. — Μάθημα 2ο «Βιβλιογραφική Έρευνα &amp; Benchmark»</span><span>Φυλλάδιο 2 / 7</span></div>
+  </section>
+</div>
+
+<!-- ========== ΦΥΛΛΑΔΙΟ 3 ========== -->
+<div class="sheet-slot" id="slot3" data-sheet="3" style="--c:#FF5EC8">
+  <div class="sheet-tools">
+    <span class="st-num">Φ3</span><span class="st-title">Πίνακας Benchmark — Ομάδα 5</span><span class="st-copies">×1 αντίτυπο</span>
+    <div class="st-prog"><i></i></div><span class="st-pct">0%</span>
+    <button class="st-btn print" data-print="3">🖨 Εκτύπωση</button>
+    <button class="st-btn" data-reset="3">↺ Καθάρισμα</button>
+  </div>
+  <section class="sheet a3" id="sheet3">
+    <div class="sh-gov">ΕΛΛΗΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ — ΥΠ.ΠΑΙ.Θ.Α. · ΕΠΑΛ — ΣΧΟΛΙΚΟ ΕΤΟΣ 2026–2027</div>
+    <div class="sh-band"><span class="sh-tag">ΦΥΛΛΑΔΙΟ 3 — ΟΜΑΔΑ 5</span><span class="sh-course">Μάθημα: Ε.Ε.Τ. — Μάθημα 2ο<br>«Βιβλιογραφική Έρευνα &amp; Benchmark»</span></div>
+    <h2 class="sh-title">📊 ΠΙΝΑΚΑΣ ΣΥΓΚΡΙΣΗΣ ΕΠΑΓΓΕΛΜΑΤΙΚΩΝ ΠΟΔΟΣΦΑΙΡΑΚΙΩΝ</h2>
+    <p class="sh-sub">Benchmark: τι κάνουν τα επαγγελματικά — τι θα κάνουμε εμείς</p>
+    <div class="sh-meta">
+      <label class="fld" style="max-width:52mm"><span class="fl">👥 Ομάδα:</span><input type="text" id="f3-group" data-save placeholder="Ομάδα 5"></label>
+      <label class="fld" style="max-width:60mm"><span class="fl">📅 Ημερομηνία:</span><input type="text" id="f3-date" data-save data-date placeholder="ηη/μμ/εεεε"></label>
+    </div>
+
+    <table class="bench">
+      <thead>
+        <tr>
+          <th style="width:34mm">Χαρακτηριστικό</th>
+          <th><span class="bh">BRAND A</span><input type="text" id="f3-brandA" data-save placeholder="π.χ. Garlando"></th>
+          <th><span class="bh">BRAND B</span><input type="text" id="f3-brandB" data-save placeholder="π.χ. Tornado"></th>
+          <th><span class="bh">BRAND C</span><input type="text" id="f3-brandC" data-save placeholder="π.χ. Bonzini"></th>
+          <th class="own" style="width:36mm">⭐ ΤΟ ΔΙΚΟ ΜΑΣ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="rowlab"><span class="em">📐</span>Διαστάσεις</td><td><input type="text" id="f3-r1a" data-save></td><td><input type="text" id="f3-r1b" data-save></td><td><input type="text" id="f3-r1c" data-save></td><td class="own"><input type="text" id="f3-r1o" data-save></td></tr>
+        <tr><td class="rowlab"><span class="em">🧱</span>Ύψος πλευρών</td><td><input type="text" id="f3-r2a" data-save></td><td><input type="text" id="f3-r2b" data-save></td><td><input type="text" id="f3-r2c" data-save></td><td class="own"><input type="text" id="f3-r2o" data-save></td></tr>
+        <tr><td class="rowlab"><span class="em">🟩</span>Υλικό επιφάνειας</td><td><input type="text" id="f3-r3a" data-save></td><td><input type="text" id="f3-r3b" data-save></td><td><input type="text" id="f3-r3c" data-save></td><td class="own"><input type="text" id="f3-r3o" data-save></td></tr>
+        <tr><td class="rowlab"><span class="em">🪵</span>Υλικό πλευρών</td><td><input type="text" id="f3-r4a" data-save></td><td><input type="text" id="f3-r4b" data-save></td><td><input type="text" id="f3-r4c" data-save></td><td class="own"><input type="text" id="f3-r4o" data-save></td></tr>
+        <tr><td class="rowlab"><span class="em">⚙️</span>Υλικό ράβδων</td><td><input type="text" id="f3-r5a" data-save></td><td><input type="text" id="f3-r5b" data-save></td><td><input type="text" id="f3-r5c" data-save></td><td class="own"><input type="text" id="f3-r5o" data-save></td></tr>
+        <tr><td class="rowlab"><span class="em">🔩</span>Στήριξη ράβδων</td><td><input type="text" id="f3-r6a" data-save></td><td><input type="text" id="f3-r6b" data-save></td><td><input type="text" id="f3-r6c" data-save></td><td class="own"><input type="text" id="f3-r6o" data-save></td></tr>
+        <tr><td class="rowlab"><span class="em">🧍</span>Υλικό παικτών</td><td><input type="text" id="f3-r7a" data-save></td><td><input type="text" id="f3-r7b" data-save></td><td><input type="text" id="f3-r7c" data-save></td><td class="own"><input type="text" id="f3-r7o" data-save></td></tr>
+        <tr><td class="rowlab"><span class="em">⚽</span>Μπάλα</td><td><input type="text" id="f3-r8a" data-save></td><td><input type="text" id="f3-r8b" data-save></td><td><input type="text" id="f3-r8c" data-save></td><td class="own"><input type="text" id="f3-r8o" data-save></td></tr>
+        <tr><td class="rowlab"><span class="em">💶</span>Τιμή</td><td><input type="text" id="f3-r9a" data-save></td><td><input type="text" id="f3-r9b" data-save></td><td><input type="text" id="f3-r9c" data-save></td><td class="own"><input type="text" id="f3-r9o" data-save></td></tr>
+      </tbody>
+    </table>
+
+    <div class="area"><div class="al"><span class="nb">💡</span>Τι Μάθαμε από τη Σύγκριση:</div><textarea class="lined" id="f3-learned" data-save rows="3"></textarea></div>
+    <div class="area"><div class="al"><span class="nb">🎯</span>Τι θα Υιοθετήσουμε — Τι θα Αλλάξουμε:</div><textarea class="lined" id="f3-adopt" data-save rows="3"></textarea></div>
+
+    <div class="sh-note">📌 <span><b>Οδηγία:</b> Ο πίνακας συμπληρώνεται από την <b>Ομάδα 5</b> και παρουσιάζεται στην τάξη στο επόμενο μάθημα. Χρησιμοποιείται ως αναφορά για τις <b>τελικές αποφάσεις σχεδιασμού</b> όλης της τάξης.</span></div>
+    <div class="sh-page"><span>ΕΠΑΛ Σάμου · Ε.Ε.Τ. — Μάθημα 2ο «Βιβλιογραφική Έρευνα &amp; Benchmark»</span><span>Φυλλάδιο 3 / 7</span></div>
+  </section>
+</div>
+
+<!-- ========== ΦΥΛΛΑΔΙΟ 4 ========== -->
+<div class="sheet-slot" id="slot4" data-sheet="4" style="--c:#FFB020">
+  <div class="sheet-tools">
+    <span class="st-num">Φ4</span><span class="st-title">Αναθεώρηση Υπόθεσης</span><span class="st-copies">×5 αντίτυπα</span>
+    <div class="st-prog"><i></i></div><span class="st-pct">0%</span>
+    <button class="st-btn print" data-print="4">🖨 Εκτύπωση</button>
+    <button class="st-btn" data-reset="4">↺ Καθάρισμα</button>
+  </div>
+  <section class="sheet a4" id="sheet4">
+    <div class="sh-gov">ΕΛΛΗΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ — ΥΠ.ΠΑΙ.Θ.Α. · ΕΠΑΛ — ΣΧΟΛΙΚΟ ΕΤΟΣ 2026–2027</div>
+    <div class="sh-band"><span class="sh-tag">ΦΥΛΛΑΔΙΟ 4</span><span class="sh-course">Μάθημα: Ε.Ε.Τ. — Μάθημα 2ο<br>«Βιβλιογραφική Έρευνα &amp; Benchmark»</span></div>
+    <h2 class="sh-title">💭 ΑΝΑΘΕΩΡΗΣΗ ΥΠΟΘΕΣΗΣ</h2>
+    <p class="sh-sub">Με βάση τα ευρήματα — επιβεβαιώνεται, αλλάζει ή παραμένει ανοιχτή;</p>
+    <div class="sh-meta">
+      <label class="fld" style="max-width:52mm"><span class="fl">👥 Ομάδα:</span><input type="text" id="f4-group" data-save></label>
+      <label class="fld" style="max-width:60mm"><span class="fl">📅 Ημερομηνία:</span><input type="text" id="f4-date" data-save data-date placeholder="ηη/μμ/εεεε"></label>
+    </div>
+
+    <div class="sec">
+      <div class="st"><span class="nb">1</span>📌 Αρχική Υπόθεση <small>(από το Μάθημα 1ο — «Νομίζουμε ότι…»)</small></div>
+      <textarea class="lined" id="f4-initial" data-save rows="2"></textarea>
+    </div>
+    <div class="sec">
+      <div class="st"><span class="nb">2</span>📚 Τα 3 βασικά ευρήματα από τις πηγές μας</div>
+      <div class="sf"><span class="sl" style="min-width:22mm">Εύρημα 1:</span><input type="text" id="f4-find1" data-save></div>
+      <div class="sf"><span class="sl" style="min-width:22mm">Εύρημα 2:</span><input type="text" id="f4-find2" data-save></div>
+      <div class="sf"><span class="sl" style="min-width:22mm">Εύρημα 3:</span><input type="text" id="f4-find3" data-save></div>
+    </div>
+    <div class="sec">
+      <div class="st"><span class="nb">3</span>🔄 Η απόφασή μας για την υπόθεση <small>(κύκλωσε / πάτησε μία)</small></div>
+      <div class="decgrid">
+        <label class="dec d-ok"><input type="radio" name="f4dec" id="f4dec-a" value="ok" data-save><span class="di">✅</span><b>ΕΠΙΒΕΒΑΙΩΝΕΤΑΙ</b><small>Τα ευρήματα στηρίζουν την αρχική υπόθεση</small></label>
+        <label class="dec d-ch"><input type="radio" name="f4dec" id="f4dec-b" value="change" data-save><span class="di">🔄</span><b>ΑΛΛΑΖΕΙ</b><small>Τα ευρήματα την ανατρέπουν ή τη συμπληρώνουν</small></label>
+        <label class="dec d-open"><input type="radio" name="f4dec" id="f4dec-c" value="open" data-save><span class="di">❓</span><b>ΠΑΡΑΜΕΝΕΙ ΑΝΟΙΧΤΗ</b><small>Θα το ελέγξουμε στην πράξη</small></label>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="st"><span class="nb">4</span>✏️ Νέα / Αναθεωρημένη Υπόθεση <small>(αν άλλαξε)</small></div>
+      <textarea class="lined" id="f4-new" data-save rows="2"></textarea>
+    </div>
+    <div class="sec">
+      <div class="st"><span class="nb">5</span>💡 Αιτιολόγηση — γιατί καταλήξαμε εδώ</div>
+      <textarea class="lined" id="f4-why" data-save rows="2"></textarea>
+    </div>
+    <div class="sec">
+      <div class="st"><span class="nb">6</span>🧠 Μεταγνώση — Πώς αποφασίσαμε; Τι θα κάναμε διαφορετικά;</div>
+      <textarea class="lined" id="f4-meta" data-save rows="2"></textarea>
+    </div>
+
+    <div class="sh-note">📌 <span><b>Οδηγία:</b> Συμπληρώνεται στο τέλος του μαθήματος και <b>αντιγράφεται στο «Ημερολόγιο Έρευνας»</b>. Η αναθεώρηση δεν είναι αποτυχία — είναι η καρδιά της επιστημονικής μεθόδου.</span></div>
+    <div class="sh-page"><span>ΕΠΑΛ Σάμου · Ε.Ε.Τ. — Μάθημα 2ο «Βιβλιογραφική Έρευνα &amp; Benchmark»</span><span>Φυλλάδιο 4 / 7</span></div>
+  </section>
+</div>
+
+<!-- ========== ΦΥΛΛΑΔΙΟ 5 ========== -->
+<div class="sheet-slot" id="slot5" data-sheet="5" style="--c:#FF7A6E">
+  <div class="sheet-tools">
+    <span class="st-num">Φ5</span><span class="st-title">Φύλλο Εξόδου — Exit Ticket</span><span class="st-copies">×15 αντίτυπα · ατομικά</span>
+    <div class="st-prog"><i></i></div><span class="st-pct">0%</span>
+    <button class="st-btn print" data-print="5">🖨 Εκτύπωση</button>
+    <button class="st-btn" data-reset="5">↺ Καθάρισμα</button>
+  </div>
+  <section class="sheet a5" id="sheet5">
+    <div class="sh-gov">ΕΛΛΗΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ — ΥΠ.ΠΑΙ.Θ.Α. · ΕΠΑΛ — ΣΧΟΛΙΚΟ ΕΤΟΣ 2026–2027</div>
+    <div class="sh-band"><span class="sh-tag">ΦΥΛΛΑΔΙΟ 5</span><span class="sh-course">Μάθημα: Ε.Ε.Τ. — Μάθημα 2ο<br>«Βιβλιογραφική Έρευνα &amp; Benchmark»</span></div>
+    <h2 class="sh-title">🎫 ΦΥΛΛΟ ΕΞΟΔΟΥ — EXIT TICKET</h2>
+    <p class="sh-sub">Συμπληρώνεται ΑΤΟΜΙΚΑ στο τέλος του μαθήματος — είναι το εισιτήριό σου για την έξοδο!</p>
+    <div class="sh-meta">
+      <label class="fld"><span class="fl">👤 Όνομα:</span><input type="text" id="f5-name" data-save></label>
+      <label class="fld" style="max-width:52mm"><span class="fl">👥 Ομάδα:</span><input type="text" id="f5-group" data-save></label>
+    </div>
+
+    <div class="sec">
+      <div class="st"><span class="nb">1</span>📚 Πόσες πηγές καταγράψατε συνολικά;</div>
+      <div class="pillrow">
+        <label class="opt"><input type="radio" name="f5count" id="f5count-1" value="1" data-save><span class="box"></span>1 πηγή</label>
+        <label class="opt"><input type="radio" name="f5count" id="f5count-2" value="2" data-save><span class="box"></span>2 πηγές</label>
+        <label class="opt o-nai"><input type="radio" name="f5count" id="f5count-3" value="3" data-save><span class="box"></span>3 πηγές</label>
+        <label class="opt o-nai"><input type="radio" name="f5count" id="f5count-4" value="4+" data-save><span class="box"></span>4+ πηγές</label>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="st"><span class="nb">2</span>💡 Ποιο ήταν το πιο σημαντικό εύρημα για την ομάδα σου;</div>
+      <textarea class="lined" id="f5-find" data-save rows="2"></textarea>
+    </div>
+    <div class="sec">
+      <div class="st"><span class="nb">3</span>🔍 Πώς ελέγξατε αν μια πηγή είναι αξιόπιστη; <small>(γράψε 2 κριτήρια)</small></div>
+      <div class="sf"><span class="sl" style="min-width:24mm">Κριτήριο 1:</span><input type="text" id="f5-crit1" data-save></div>
+      <div class="sf"><span class="sl" style="min-width:24mm">Κριτήριο 2:</span><input type="text" id="f5-crit2" data-save></div>
+    </div>
+    <div class="sec">
+      <div class="st"><span class="nb">4</span>🔄 Τι έγινε η υπόθεσή σας;</div>
+      <div class="pillrow">
+        <label class="opt o-nai"><input type="radio" name="f5hyp" id="f5hyp-a" value="ok" data-save><span class="box"></span>✅ Επιβεβαιώθηκε</label>
+        <label class="opt o-mid"><input type="radio" name="f5hyp" id="f5hyp-b" value="change" data-save><span class="box"></span>🔄 Άλλαξε</label>
+        <label class="opt"><input type="radio" name="f5hyp" id="f5hyp-c" value="open" data-save><span class="box"></span>❓ Παραμένει ανοιχτή</label>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="st"><span class="nb">5</span>🧠 Μεταγνώση: Πώς αποφάσισες ποια πηγή είναι αξιόπιστη; Τι σε δυσκόλεψε;</div>
+      <textarea class="lined" id="f5-meta" data-save rows="2"></textarea>
+    </div>
+    <div class="sec">
+      <div class="st"><span class="nb">6</span>😊 Πώς ένιωσες σήμερα;</div>
+      <div class="pillrow moodrow">
+        <label class="opt o-nai"><input type="radio" name="f5mood" id="f5mood-a" value="great" data-save><span class="box"></span>😀 Πολύ καλά — βρήκαμε πηγές!</label>
+        <label class="opt o-nai"><input type="radio" name="f5mood" id="f5mood-b" value="good" data-save><span class="box"></span>🙂 Καλά</label>
+        <label class="opt o-mid"><input type="radio" name="f5mood" id="f5mood-c" value="soso" data-save><span class="box"></span>😐 Έτσι κι έτσι</label>
+        <label class="opt o-oxi"><input type="radio" name="f5mood" id="f5mood-d" value="hard" data-save><span class="box"></span>😕 Δύσκολα — χρειάζομαι βοήθεια</label>
+      </div>
+    </div>
+
+    <div class="sh-note">📌 <span><b>Οδηγία:</b> Το φύλλο εξόδου συμπληρώνεται <b>ατομικά</b> στο τέλος του μαθήματος και <b>παραδίδεται στον εκπαιδευτικό</b>.</span></div>
+    <div class="sh-page"><span>ΕΠΑΛ Σάμου · Ε.Ε.Τ. — Μάθημα 2ο «Βιβλιογραφική Έρευνα &amp; Benchmark»</span><span>Φυλλάδιο 5 / 7</span></div>
+  </section>
+</div>
+
+<!-- ========== ΦΥΛΛΑΔΙΟ 6 ========== -->
+<div class="sheet-slot" id="slot6" data-sheet="6" style="--c:#B08CFF">
+  <div class="sheet-tools">
+    <span class="st-num">Φ6</span><span class="st-title">Ανατροφοδότηση από Ομοτίμους</span><span class="st-copies">×5 αντίτυπα</span>
+    <div class="st-prog"><i></i></div><span class="st-pct">0%</span>
+    <button class="st-btn print" data-print="6">🖨 Εκτύπωση</button>
+    <button class="st-btn" data-reset="6">↺ Καθάρισμα</button>
+  </div>
+  <section class="sheet a6" id="sheet6">
+    <div class="sh-gov">ΕΛΛΗΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ — ΥΠ.ΠΑΙ.Θ.Α. · ΕΠΑΛ — ΣΧΟΛΙΚΟ ΕΤΟΣ 2026–2027</div>
+    <div class="sh-band"><span class="sh-tag">ΦΥΛΛΑΔΙΟ 6</span><span class="sh-course">Μάθημα: Ε.Ε.Τ. — Μάθημα 2ο<br>Φάση 3 · Παρουσιάσεις (32΄–40΄)</span></div>
+    <h2 class="sh-title">💬 ΑΝΑΤΡΟΦΟΔΟΤΗΣΗ ΑΠΟ ΟΜΟΤΙΜΟΥΣ</h2>
+    <p class="sh-sub">Φάση 3 — Ακούω την παρουσίαση και απαντώ δομημένα</p>
+    <div class="sh-meta">
+      <label class="fld"><span class="fl">👤 Παρατηρητής:</span><input type="text" id="f6-observer" data-save></label>
+      <label class="fld" style="max-width:70mm"><span class="fl">👥 Ομάδα που παρουσίασε:</span>
+        <select id="f6-presented" data-save>
+          <option value="">— διάλεξε —</option><option>Ομάδα 1</option><option>Ομάδα 2</option><option>Ομάδα 3</option><option>Ομάδα 4</option><option>Ομάδα 5</option>
+        </select></label>
+    </div>
+    <div class="sh-info">🎯 <span><b>Κανόνας:</b> Απαντάμε με <b>3 προτάσεις</b> — μία για κάθε κριτήριο. Ο στόχος είναι <b>να βοηθήσουμε</b>, όχι να κρίνουμε.</span></div>
+
+    <div class="fb-block fb1">
+      <div class="ft">👍 ΜΟΥ ΑΡΕΣΕ <small>— τι ήταν σαφές / καλά τεκμηριωμένο</small></div>
+      <div class="starter">Ξεκίνα: «Μου άρεσε που…» — π.χ. «…είπες συγκεκριμένα ποια πηγή χρησιμοποίησες.»</div>
+      <textarea class="lined" id="f6-like" data-save rows="4"></textarea>
+    </div>
+    <div class="fb-block fb2">
+      <div class="ft">🤔 ΑΝΑΡΩΤΙΕΜΑΙ <small>— τι θα ήθελα να μάθω / τι δεν κατάλαβα</small></div>
+      <div class="starter">Ξεκίνα: «Αναρωτιέμαι αν…» — π.χ. «…η πηγή σου ήταν πρόσφατη — πότε δημοσιεύτηκε;»</div>
+      <textarea class="lined" id="f6-wonder" data-save rows="4"></textarea>
+    </div>
+    <div class="fb-block fb3">
+      <div class="ft">💡 ΠΡΟΤΕΙΝΩ <small>— μια ιδέα για βελτίωση ή επόμενο βήμα</small></div>
+      <div class="starter">Ξεκίνα: «Προτείνω να…» — π.χ. «…διασταυρώσετε αυτό το νούμερο με δεύτερη πηγή.»</div>
+      <textarea class="lined" id="f6-suggest" data-save rows="4"></textarea>
+    </div>
+
+    <div class="sh-note">📌 <span><b>Οδηγία:</b> Συμπληρώνεται από <b>μία ομάδα-παρατηρητή</b> μετά από κάθε παρουσίαση. Παραδίδεται στον εκπαιδευτικό <b>στο τέλος της Φάσης 3</b>.</span></div>
+    <div class="sh-page"><span>ΕΠΑΛ Σάμου · Ε.Ε.Τ. — Μάθημα 2ο «Βιβλιογραφική Έρευνα &amp; Benchmark»</span><span>Φυλλάδιο 6 / 7</span></div>
+  </section>
+</div>
+
+<!-- ========== ΦΥΛΛΑΔΙΟ 7 ========== -->
+<div class="sheet-slot" id="slot7" data-sheet="7" style="--c:#8FB0BE">
+  <div class="sheet-tools">
+    <span class="st-num">Φ7</span><span class="st-title">Καρτέλα Παρατήρησης Εκπαιδευτικού</span><span class="st-copies">×5 αντίτυπα · εκπαιδευτικός</span>
+    <div class="st-prog"><i></i></div><span class="st-pct">0%</span>
+    <button class="st-btn print" data-print="7">🖨 Εκτύπωση</button>
+    <button class="st-btn" data-reset="7">↺ Καθάρισμα</button>
+  </div>
+  <section class="sheet a7" id="sheet7">
+    <div class="sh-gov">ΕΛΛΗΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ — ΥΠ.ΠΑΙ.Θ.Α. · ΕΠΑΛ — ΣΧΟΛΙΚΟ ΕΤΟΣ 2026–2027</div>
+    <div class="sh-band"><span class="sh-tag">ΦΥΛΛΑΔΙΟ 7 — ΕΚΠΑΙΔΕΥΤΙΚΟΥ</span><span class="sh-course">Μάθημα: Ε.Ε.Τ. — Μάθημα 2ο<br>Για τον ατομικό φάκελο μαθητών</span></div>
+    <h2 class="sh-title">👨‍🏫 ΚΑΡΤΕΛΑ ΠΑΡΑΤΗΡΗΣΕΩΝ ΕΚΠΑΙΔΕΥΤΙΚΟΥ</h2>
+    <p class="sh-sub">Συμμετοχή &amp; ποιότητα πηγών ανά μέλος — κλίμακα 1–5 (πάτα τον βαθμό)</p>
+    <div class="sh-meta">
+      <label class="fld" style="max-width:52mm"><span class="fl">👥 Ομάδα:</span><input type="text" id="f7-group" data-save></label>
+      <label class="fld" style="max-width:60mm"><span class="fl">📅 Ημερομηνία:</span><input type="text" id="f7-date" data-save data-date placeholder="ηη/μμ/εεεε"></label>
+    </div>
+
+    <table class="obs">
+      <thead>
+        <tr><th style="width:8mm">#</th><th>Ονοματεπώνυμο</th><th style="width:34mm">Ρόλος</th><th style="width:37mm">Συμμετοχή (1–5)</th><th style="width:37mm">Ποιότητα Πηγών (1–5)</th><th style="width:44mm">Παρατηρήσεις</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="idx">1</td>
+          <td><input type="text" id="f7-n1" data-save></td>
+          <td><select id="f7-role1" data-save><option value="">—</option><option>Ερευνητής/-τρια</option><option>Ελεγκτής/-τρια Αξιοπιστίας</option><option>Γραμματέας</option></select></td>
+          <td><div class="rate" data-rate="f7-part1"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div><input type="hidden" id="f7-part1" data-save value=""></td>
+          <td><div class="rate" data-rate="f7-qual1"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div><input type="hidden" id="f7-qual1" data-save value=""></td>
+          <td><input type="text" id="f7-note1" data-save></td>
+        </tr>
+        <tr>
+          <td class="idx">2</td>
+          <td><input type="text" id="f7-n2" data-save></td>
+          <td><select id="f7-role2" data-save><option value="">—</option><option>Ερευνητής/-τρια</option><option>Ελεγκτής/-τρια Αξιοπιστίας</option><option>Γραμματέας</option></select></td>
+          <td><div class="rate" data-rate="f7-part2"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div><input type="hidden" id="f7-part2" data-save value=""></td>
+          <td><div class="rate" data-rate="f7-qual2"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div><input type="hidden" id="f7-qual2" data-save value=""></td>
+          <td><input type="text" id="f7-note2" data-save></td>
+        </tr>
+        <tr>
+          <td class="idx">3</td>
+          <td><input type="text" id="f7-n3" data-save></td>
+          <td><select id="f7-role3" data-save><option value="">—</option><option>Ερευνητής/-τρια</option><option>Ελεγκτής/-τρια Αξιοπιστίας</option><option>Γραμματέας</option></select></td>
+          <td><div class="rate" data-rate="f7-part3"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div><input type="hidden" id="f7-part3" data-save value=""></td>
+          <td><div class="rate" data-rate="f7-qual3"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div><input type="hidden" id="f7-qual3" data-save value=""></td>
+          <td><input type="text" id="f7-note3" data-save></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="sec">
+      <div class="st">🎯 Έλεγχος Παραδοτέων <small>(τσέκαρε όσα ολοκληρώθηκαν)</small></div>
+      <div class="chkgrid">
+        <label class="chk"><input type="checkbox" id="f7-ck1" data-save><span class="box"></span><span class="ct">Φύλλο καταγραφής πηγών (≥3 πηγές)</span></label>
+        <label class="chk"><input type="checkbox" id="f7-ck2" data-save><span class="box"></span><span class="ct">Παρουσίαση ευρήματος στην ολομέλεια</span></label>
+        <label class="chk"><input type="checkbox" id="f7-ck3" data-save><span class="box"></span><span class="ct">Αναθεώρηση υπόθεσης</span></label>
+        <label class="chk"><input type="checkbox" id="f7-ck4" data-save><span class="box"></span><span class="ct">Ενημέρωση ημερολογίου</span></label>
+        <label class="chk"><input type="checkbox" id="f7-ck5" data-save><span class="box"></span><span class="ct">Ομάδα 5: πίνακας benchmark</span></label>
+        <label class="chk"><input type="checkbox" id="f7-ck6" data-save><span class="box"></span><span class="ct">Μεταγνωστική σκέψη στο ημερολόγιο</span></label>
+      </div>
+    </div>
+    <div class="area"><div class="al">📝 Γενικές Παρατηρήσεις Ομάδας:</div><textarea class="lined" id="f7-general" data-save rows="4"></textarea></div>
+
+    <div class="sh-note">📌 <span><b>Οδηγία:</b> Συμπληρώνεται <b>μετά το μάθημα</b> και φυλάσσεται στον ατομικό φάκελο. Αξιοποιείται στην τελική αξιολόγηση (<b>30% — Μέθοδος &amp; μετρήσεις</b>).</span></div>
+    <div class="sh-page"><span>ΕΠΑΛ Σάμου · Ε.Ε.Τ. — Μάθημα 2ο «Βιβλιογραφική Έρευνα &amp; Benchmark»</span><span>Φυλλάδιο 7 / 7</span></div>
+  </section>
+</div>
+
+</main>
+
+<footer id="pagefoot">
+  ⚽ <b>ΕΠΑΛ Σάμου</b> · Ερευνητική Εργασία στην Τεχνολογία · Σχολικό Έτος 2026–2027<br>
+  Πηγή: «Ποδοσφαιράκι 1 μ. — Αναλυτικό Πλάνο 8 Μαθημάτων» · Μάθημα 2ο — «Βιβλιογραφική Έρευνα &amp; Benchmark»<br>
+  💾 Ό,τι γράφεις αποθηκεύεται αυτόματα στη συσκευή σου · 🖨 Ctrl+P τυπώνει και τα 7 φυλλάδια
+</footer>
+
+<div id="toast"><span class="ti" id="toastIco">✅</span><div><div class="tt" id="toastTitle"></div><div class="ts" id="toastSub"></div></div><button id="toastAct">↺ Αναίρεση</button></div>
+<noscript><div style="position:relative;z-index:5;max-width:800px;margin:90px auto 0;padding:16px 22px;background:#3A2A10;border:1px solid #FFB020;border-radius:12px;color:#FFE9C2;font-weight:600">Χωρίς JavaScript τα φυλλάδια παραμένουν αναγνώσιμα και εκτυπώσιμα (Ctrl+P), αλλά η αυτόματη αποθήκευση και τα διαδραστικά κουτάκια δεν λειτουργούν.</div></noscript>
+
+<script>
+'use strict';
+/* ================= helpers ================= */
+const $=id=>document.getElementById(id);
+const $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const slots=$$('.sheet-slot'), N=slots.length;
+
+/* ================= tiny audio ================= */
+const Snd={ctx:null,on:LS.get('f2pack.sound',true),
+  ensure(){ if(this.ctx){ if(this.ctx.state==='suspended')this.ctx.resume().catch(()=>{}); return; }
+    try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC)return; this.ctx=new AC(); }catch(e){} },
+  tone(f,t0,dur,type,vol){ if(!this.on||!this.ctx)return;
+    try{ const o=this.ctx.createOscillator(),g=this.ctx.createGain(),n=this.ctx.currentTime+t0;
+      o.type=type||'sine'; o.frequency.setValueAtTime(f,n);
+      g.gain.setValueAtTime(.0001,n); g.gain.exponentialRampToValueAtTime(vol,n+.01); g.gain.exponentialRampToValueAtTime(.0001,n+dur);
+      o.connect(g); g.connect(this.ctx.destination); o.start(n); o.stop(n+dur+.05); }catch(e){} },
+  tick(){ this.ensure(); this.tone(720,0,.05,'square',.03); },
+  pop(){ this.ensure(); this.tone(480,0,.08,'sine',.05); this.tone(720,.05,.09,'sine',.05); },
+  good(){ this.ensure(); this.tone(523,0,.12,'sine',.06); this.tone(659,.08,.12,'sine',.06); this.tone(784,.16,.2,'sine',.07); },
+  print(){ this.ensure(); this.tone(600,0,.07,'triangle',.05); this.tone(900,.07,.1,'triangle',.05); }
+};
+window.addEventListener('pointerdown',()=>Snd.ensure(),{once:true});
+function paintSound(){ $('btnSound').textContent=Snd.on?'🔊':'🔇'; $('btnSound').setAttribute('aria-pressed',Snd.on); }
+$('btnSound').addEventListener('click',()=>{ Snd.on=!Snd.on; LS.set('f2pack.sound',Snd.on); paintSound(); if(Snd.on)Snd.tick(); });
+paintSound();
+
+/* ================= toast ================= */
+let toastT=null, undoFn=null;
+function toast(ico,title,sub,undo){
+  $('toastIco').textContent=ico; $('toastTitle').textContent=title; $('toastSub').textContent=sub||'';
+  undoFn=undo||null; $('toastAct').classList.toggle('show',!!undo);
+  const t=$('toast'); t.classList.add('show'); clearTimeout(toastT);
+  toastT=setTimeout(()=>t.classList.remove('show'),undo?6500:3600);
+}
+$('toastAct').addEventListener('click',()=>{ if(undoFn){undoFn();undoFn=null;} $('toast').classList.remove('show'); });
+
+/* ================= save / restore ================= */
+const KEY='f2pack.v1';
+function collect(scope){
+  const fields={};
+  $$('[data-save]',scope||document).forEach(el=>{
+    if(el.type==='radio'||el.type==='checkbox')fields[el.id]=el.checked;
+    else fields[el.id]=el.value;
+  });
+  return {fields,extra4:$('extra4').classList.contains('show'),extra5:$('extra5').classList.contains('show')};
+}
+function restoreData(data){
+  if(!data)return;
+  Object.entries(data.fields||{}).forEach(([id,v])=>{
+    const el=$(id); if(!el)return;
+    if(el.type==='radio'||el.type==='checkbox')el.checked=(v===true);
+    else el.value=v==null?'':v;
+  });
+  $('extra4').classList.toggle('show',!!data.extra4);
+  $('extra5').classList.toggle('show',!!data.extra5);
+  refreshAll();
+}
+let saveT=null;
+function scheduleSave(){
+  clearTimeout(saveT);
+  saveT=setTimeout(()=>{
+    LS.set(KEY,collect());
+    const si=$('saveInd'); si.classList.add('flash'); setTimeout(()=>si.classList.remove('flash'),1200);
+  },400);
+}
+
+/* ================= autogrow textareas ================= */
+function grow(t){ t.style.height='auto'; t.style.height=Math.max(t.scrollHeight, t.rows*26.5)+'px'; }
+function growAll(){ $$('textarea.lined').forEach(grow); }
+
+/* ================= Φ2 live verdict ================= */
+let f2Prev='';
+function f2Paint(){
+  let nai=0,oxi=0,answered=0;
+  for(let i=1;i<=5;i++){
+    const sel=document.querySelector('input[name="f2q'+i+'"]:checked');
+    if(sel){answered++; if(sel.value==='nai')nai++; else if(sel.value==='oxi')oxi++;}
+  }
+  $('f2meterFill').style.width=(nai/5*100)+'%';
+  const r=$('f2result'); let cls='',txt='Ναι: '+nai+'/5 — συμπλήρωσε τους ελέγχους',key='none';
+  if(answered>0){
+    if(nai>=4){cls='good';txt='Ναι: '+nai+'/5 → ✅ ΑΞΙΟΠΙΣΤΗ';key='good';}
+    else if(oxi>=2){cls='bad';txt='Ναι: '+nai+'/5 · Όχι: '+oxi+' → ❌ ΨΑΞΕ ΑΛΛΟΥ';key='bad';}
+    else{cls='warn';txt='Ναι: '+nai+'/5 → ⚠️ Χρειάζεται διασταύρωση';key='warn';}
+  }
+  r.textContent=txt; r.className=cls; r.id='f2result';
+  if(key==='good'&&f2Prev!=='good')Snd.good();
+  f2Prev=key;
+}
+
+/* ================= per-sheet progress ================= */
+function progress(slot){
+  let total=0,done=0; const names=new Set();
+  $$('[data-save]',slot).forEach(el=>{
+    if(el.type==='radio'){ if(!names.has(el.name)){names.add(el.name);total++; if(document.querySelector('input[name="'+el.name+'"]:checked'))done++;} }
+    else if(el.type==='checkbox'){ total++; if(el.checked)done++; }
+    else if(el.type==='hidden'){ total++; if(el.value)done++; }
+    else if(el.tagName==='SELECT'){ total++; if(el.value)done++; }
+    else{ total++; if(el.value.trim())done++; }
+  });
+  const pct=total?Math.round(done/total*100):0;
+  const bar=slot.querySelector('.st-prog i'), lab=slot.querySelector('.st-pct');
+  if(bar)bar.style.width=pct+'%'; if(lab)lab.textContent=pct+'%';
+}
+function progressAll(){ slots.forEach(progress); }
+
+/* ================= rating steppers (Φ7) ================= */
+function paintRate(box){
+  const hid=$(box.dataset.rate); const v=parseInt(hid.value,10)||0;
+  $$('button',box).forEach(b=>b.classList.toggle('fill',+b.dataset.v<=v));
+}
+function paintRates(){ $$('.rate').forEach(paintRate); }
+$$('.rate').forEach(box=>{
+  box.addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b)return;
+    const hid=$(box.dataset.rate); const v=+b.dataset.v;
+    hid.value=(parseInt(hid.value,10)===v)?'':String(v);
+    paintRate(box); Snd.tick(); scheduleSave(); progress(box.closest('.sheet-slot'));
+  });
+});
+
+/* ================= refresh everything ================= */
+function refreshAll(){ growAll(); f2Paint(); paintRates(); progressAll(); }
+
+/* ================= delegated input handling ================= */
+document.addEventListener('input',e=>{
+  const el=e.target;
+  if(el.matches('textarea.lined'))grow(el);
+  if(el.matches('[data-save]')){
+    scheduleSave();
+    const slot=el.closest('.sheet-slot'); if(slot)progress(slot);
+    if(el.name&&el.name.startsWith('f2q'))f2Paint();
+  }
+});
+document.addEventListener('change',e=>{
+  const el=e.target;
+  if(el.matches('input[type=radio][data-save],input[type=checkbox][data-save]')){
+    Snd.tick(); scheduleSave();
+    const slot=el.closest('.sheet-slot'); if(slot)progress(slot);
+    if(el.name&&el.name.startsWith('f2q'))f2Paint();
+  }
+  if(el.matches('select[data-save]')){ Snd.tick(); scheduleSave(); const slot=el.closest('.sheet-slot'); if(slot)progress(slot); }
+});
+
+/* ================= extra sources (Φ1) ================= */
+function toggleExtra(id,show,silent){
+  const el=$(id); el.classList.toggle('show',show);
+  if(show){ growAll(); if(!silent){ Snd.pop(); el.scrollIntoView({behavior:'smooth',block:'center'}); } }
+  scheduleSave(); progress($('slot1'));
+}
+$('addSrc4').addEventListener('click',()=>{
+  const on=$('extra4').classList.contains('show');
+  toggleExtra('extra4',!on);
+  $('addSrc4').textContent=on?'➕ Προσθήκη Πηγής 4 (Επέκταση)':'➖ Απόκρυψη Πηγής 4';
+});
+$('addSrc5').addEventListener('click',()=>{
+  const on=$('extra5').classList.contains('show');
+  toggleExtra('extra5',!on);
+  $('addSrc5').textContent=on?'➕ Προσθήκη Πηγής 5 (Επέκταση)':'➖ Απόκρυψη Πηγής 5';
+});
+function syncExtraBtns(){
+  $('addSrc4').textContent=$('extra4').classList.contains('show')?'➖ Απόκρυψη Πηγής 4':'➕ Προσθήκη Πηγής 4 (Επέκταση)';
+  $('addSrc5').textContent=$('extra5').classList.contains('show')?'➖ Απόκρυψη Πηγής 5':'➕ Προσθήκη Πηγής 5 (Επέκταση)';
+}
+
+/* ================= reset (per sheet & all) with undo ================= */
+function clearScope(scope){
+  $$('[data-save]',scope).forEach(el=>{
+    if(el.type==='radio'||el.type==='checkbox')el.checked=false;
+    else if(el.tagName==='SELECT')el.selectedIndex=0;
+    else el.value='';
+  });
+}
+function resetSheet(n){
+  const slot=$('slot'+n); const snap=collect();
+  clearScope(slot);
+  if(n===1){ $('extra4').classList.remove('show'); $('extra5').classList.remove('show'); syncExtraBtns(); }
+  refreshAll(); scheduleSave(); Snd.pop();
+  toast('↺','Καθάρισε το Φυλλάδιο '+n,'Όλα τα πεδία του φύλλου άδειασαν.',()=>{ restoreData(snap); syncExtraBtns(); scheduleSave(); toast('✅','Αναίρεση!','Τα δεδομένα επέστρεψαν όπως ήταν.'); });
+}
+$$('[data-reset]').forEach(b=>b.addEventListener('click',()=>resetSheet(+b.dataset.reset)));
+$('btnClearAll').addEventListener('click',()=>{
+  const snap=collect();
+  slots.forEach(s=>clearScope(s));
+  $('extra4').classList.remove('show'); $('extra5').classList.remove('show'); syncExtraBtns();
+  refreshAll(); scheduleSave(); Snd.pop();
+  toast('🧹','Καθάρισαν ΟΛΑ τα φυλλάδια','Έτοιμα για νέα συμπλήρωση ή κενή εκτύπωση.',()=>{ restoreData(snap); syncExtraBtns(); scheduleSave(); toast('✅','Αναίρεση!','Όλα τα δεδομένα επέστρεψαν.'); });
+});
+
+/* ================= today's date ================= */
+$('btnToday').addEventListener('click',()=>{
+  const d=new Date().toLocaleDateString('el-GR');
+  $$('[data-date]').forEach(el=>el.value=d);
+  scheduleSave(); progressAll(); Snd.pop();
+  toast('📅','Ημερομηνία: '+d,'Συμπληρώθηκε σε όλα τα φυλλάδια.');
+});
+
+/* ================= printing ================= */
+function setZoom(v){ slots.forEach(s=>{ s.style.zoom=v; }); }
+function fitZoom(){
+  const w=Math.min(document.documentElement.clientWidth,window.innerWidth||9999);
+  const target=794; /* 210mm ≈ 794px */
+  const scale=Math.min(1,(w-18)/target);
+  if(CSS&&CSS.supports&&CSS.supports('zoom','1')){ setZoom(scale); }
+  else{ slots.forEach(s=>{ s.style.transformOrigin='top center'; s.style.transform='scale('+scale+')'; s.style.marginBottom=((scale-1)*s.offsetHeight)+'px'; }); }
+}
+let printOneTarget=null;
+function doPrint(n){
+  Snd.print();
+  growAll();
+  if(n){ printOneTarget=$('slot'+n); printOneTarget.classList.add('print-target'); document.body.classList.add('print-one'); }
+  setZoom(1);
+  toast('🖨',n?('Εκτύπωση: Φυλλάδιο '+n):'Εκτύπωση: και τα 7 φυλλάδια','Στον διάλογο εκτύπωσης ενεργοποίησε «Γραφικά φόντου» για τα χρώματα.');
+  setTimeout(()=>window.print(),120);
+}
+function printCleanup(){
+  document.body.classList.remove('print-one');
+  if(printOneTarget){printOneTarget.classList.remove('print-target');printOneTarget=null;}
+  fitZoom();
+}
+window.addEventListener('beforeprint',()=>{ growAll(); setZoom(1); });
+window.addEventListener('afterprint',printCleanup);
+$$('[data-print]').forEach(b=>b.addEventListener('click',()=>doPrint(+b.dataset.print)));
+$$('[data-gprint]').forEach(b=>b.addEventListener('click',()=>doPrint(+b.dataset.gprint)));
+$('btnPrintAll').addEventListener('click',()=>doPrint(0));
+$('btnPrintAll2').addEventListener('click',()=>doPrint(0));
+
+/* ================= navigation / scrollspy ================= */
+function goto(n){ const s=$('slot'+n); if(s)s.scrollIntoView({behavior:'smooth',block:'start'}); }
+$$('[data-goto]').forEach(b=>b.addEventListener('click',()=>goto(+b.dataset.goto)));
+$('btnJump1').addEventListener('click',()=>goto(1));
+$$('.nchip').forEach(c=>c.addEventListener('click',e=>{ e.preventDefault(); goto(+c.dataset.nav); }));
+const chips=$$('.nchip');
+function setActive(n){ chips.forEach(c=>c.classList.toggle('on',+c.dataset.nav===n)); }
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{ if(en.isIntersecting)setActive(+en.target.dataset.sheet); });
+  },{rootMargin:'-30% 0px -55% 0px',threshold:0});
+  slots.forEach(s=>io.observe(s));
+}
+setActive(1);
+
+/* ================= init ================= */
+restoreData(LS.get(KEY,null));
+syncExtraBtns();
+refreshAll();
+fitZoom();
+let rsT=null;
+window.addEventListener('resize',()=>{ clearTimeout(rsT); rsT=setTimeout(fitZoom,140); });
+window.addEventListener('load',()=>{ growAll(); fitZoom(); });
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{ growAll(); fitZoom(); });
+</script>
+</body>
+</html>

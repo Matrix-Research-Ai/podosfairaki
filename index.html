@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ποδοσφαιράκι — Εργαστήριο Φυσικής · Ε.Ε.Τ. ΕΠΑΛ</title>
+<meta name="description" content="Ποδοσφαιράκι: εργαστήριο φυσικής και βιβλιογραφικού benchmark. 3D προσομοιωτής SI, μάθημα 2ο και φυλλάδια — Ε.Ε.Τ. ΕΠΑΛ.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700;800&family=Fira+Sans+Condensed:wght@600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070c0a;--panel:#101915;--card:#131f19;--line:#1e2f26;--line2:#2c4536;
+  --ink:#e9f4ec;--dim:#8fa89a;--faint:#5b7265;
+  --pitch:#19c37a;--cyan:#2fd4ff;--amber:#ffb02e;--red:#ff4d5e;--blue:#4d8dff;
+  --mono:'Roboto Mono',ui-monospace,monospace;
+  --cond:'Fira Sans Condensed','Fira Sans',system-ui,sans-serif;
+  --body:'Fira Sans',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{min-height:100%}
+body{
+  font-family:var(--body);background:var(--bg);color:var(--ink);
+  -webkit-font-smoothing:antialiased;line-height:1.55;
+  background-image:
+    radial-gradient(900px 600px at 12% -10%,rgba(25,195,122,.16),transparent 60%),
+    radial-gradient(800px 560px at 95% 8%,rgba(47,212,255,.10),transparent 60%),
+    radial-gradient(700px 700px at 50% 115%,rgba(255,138,61,.07),transparent 60%),
+    linear-gradient(180deg,#0a110e,#070c0a);
+}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E")}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:clamp(22px,4vw,54px) clamp(16px,4vw,34px) 30px}
+header{display:flex;align-items:center;gap:14px;margin-bottom:clamp(26px,5vw,48px)}
+.logo{flex:none;width:52px;height:52px;border-radius:14px;border:1px solid var(--line2);background:#0d1712;display:grid;place-items:center}
+.brand b{display:block;font-family:var(--cond);font-weight:800;font-size:17px;letter-spacing:.14em;line-height:1.1}
+.brand b em{font-style:normal;color:var(--pitch)}
+.brand span{display:block;font-family:var(--mono);font-size:9.5px;color:var(--dim);letter-spacing:.14em;margin-top:3px}
+.hero{max-width:760px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--pitch);
+  border:1px solid #1f5c3d;background:rgba(25,195,122,.08);padding:5px 10px;border-radius:20px;margin-bottom:16px}
+.kicker i{width:6px;height:6px;border-radius:50%;background:var(--pitch);box-shadow:0 0 8px var(--pitch)}
+h1{font-family:var(--cond);font-weight:800;font-size:clamp(34px,6vw,58px);letter-spacing:.02em;line-height:1.02}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--pitch),var(--cyan) 60%,var(--amber));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{margin-top:16px;color:var(--dim);font-size:clamp(14px,1.8vw,17px);max-width:62ch}
+.lede b{color:var(--ink);font-weight:600}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.chip{font-family:var(--mono);font-size:9.5px;color:var(--dim);border:1px solid var(--line);background:rgba(16,26,20,.7);
+  padding:5px 9px;border-radius:7px;letter-spacing:.04em}
+.chip b{color:var(--cyan);font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px;margin-top:clamp(28px,5vw,44px)}
+.card{display:flex;flex-direction:column;gap:10px;padding:20px;border:1px solid var(--line2);border-radius:16px;
+  background:linear-gradient(180deg,rgba(19,31,25,.92),rgba(12,20,16,.92));
+  text-decoration:none;color:inherit;position:relative;overflow:hidden;transition:transform .18s,border-color .18s,box-shadow .18s}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent,var(--pitch));opacity:.9}
+.card:hover{transform:translateY(-3px);border-color:var(--accent,var(--pitch));box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.card .ico{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-size:20px;
+  background:color-mix(in srgb,var(--accent,#19c37a) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent,#19c37a) 38%,transparent)}
+.card h2{font-family:var(--cond);font-weight:800;font-size:19px;letter-spacing:.04em}
+.card .sub{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--faint)}
+.card p{font-size:12.5px;color:var(--dim);line-height:1.5}
+.card p b{color:var(--ink);font-weight:600}
+.card .go{margin-top:auto;padding-top:8px;font-family:var(--cond);font-weight:700;font-size:12px;letter-spacing:.06em;color:var(--accent,var(--pitch))}
+.card .go::after{content:" →"}
+.card.c1{--accent:#19c37a}.card.c2{--accent:#2fd4ff}.card.c3{--accent:#ffb02e}
+footer{margin-top:clamp(30px,6vw,54px);padding-top:16px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:10px 18px;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:var(--faint);letter-spacing:.06em}
+footer b{color:var(--dim);font-weight:500}
+@media (max-width:560px){header{align-items:flex-start}.logo{width:44px;height:44px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo" aria-hidden="true">
+      <svg width="30" height="30" viewBox="0 0 34 34" fill="none">
+        <rect x="1" y="1" width="32" height="32" rx="8" fill="#0d1712" stroke="#2c4536"/>
+        <line x1="4" y1="17" x2="30" y2="17" stroke="#8fa89a" stroke-width="2.4" stroke-linecap="round"/>
+        <rect x="13.5" y="17" width="7" height="10" rx="2.4" fill="#ff4d5e"/>
+        <circle cx="24" cy="24.5" r="3.4" fill="#19c37a" stroke="#0b3d27"/>
+        <circle cx="23" cy="23.4" r="1" fill="#bfffe0"/>
+      </svg>
+    </div>
+    <div class="brand">
+      <b>ΠΟΔΟΣΦΑΙΡΑΚΙ <em>·</em> LAB</b>
+      <span>Ε.Ε.Τ. ΕΠΑΛ · ΕΡΕΥΝΗΤΙΚΗ ΕΡΓΑΣΙΑ ΣΤΗΝ ΤΕΧΝΟΛΟΓΙΑ</span>
+    </div>
+  </header>
+
+  <main class="hero">
+    <div class="kicker"><i></i>ΜΑΘΗΜΑ 2ο · ΒΙΒΛΙΟΓΡΑΦΙΚΗ ΕΡΕΥΝΑ &amp; BENCHMARK</div>
+    <h1>Ποδοσφαιράκι <em>εργαστήριο</em> φυσικής</h1>
+    <p class="lede">Ένα πραγματικό ποδοσφαιράκι, μετρήσεις σε <b>μονάδες SI</b> και τρεις ισχυρισμοί υπό έλεγχο: το ύψος των πλευρών, η επιφάνεια και η στήριξη της ράβδου. Η προσομοίωση είναι <b>ενδεικτική</b> — οι τιμές θέλουν πηγές.</p>
+    <div class="chips">
+      <span class="chip">g = <b>9.81</b> m/s²</span>
+      <span class="chip"><b>8</b> επιφάνειες</span>
+      <span class="chip"><b>5</b> μπάλες</span>
+      <span class="chip"><b>3</b> στηρίξεις</span>
+      <span class="chip">📚 Πηγές &amp; παραδοχές</span>
+    </div>
+  </main>
+
+  <section class="grid" aria-label="Περιεχόμενο">
+    <a class="card c1" href="simulations/benchmark/">
+      <div class="ico">🧪</div>
+      <div class="sub">ΠΡΟΣΟΜΟΙΩΣΗ 3D</div>
+      <h2>Benchmark Lab</h2>
+      <p>Σούτα, μέτρα, σύγκρινε. Δοκιμή τοιχώματος <b>5 ↔ 12 cm</b>, benchmark <b>8 επιφανειών</b> με αναλυτική πρόβλεψη και σύγκριση <b>5 μπαλών</b>.</p>
+      <span class="go">Άνοιγμα εργαστηρίου</span>
+    </a>
+    <a class="card c2" href="lesson/">
+      <div class="ico">🎓</div>
+      <div class="sub">ΔΙΑΦΑΝΕΙΕΣ</div>
+      <h2>Μάθημα 2ο</h2>
+      <p>Βιβλιογραφική έρευνα, ιεράρχηση πηγών, ισχυρισμοί φόρουμ και ζωντανή επίδειξη στην τάξη.</p>
+      <span class="go">Παρουσίαση μαθήματος</span>
+    </a>
+    <a class="card c3" href="handouts/">
+      <div class="ico">📄</div>
+      <div class="sub">ΕΡΓΑΣΙΕΣ ΟΜΑΔΩΝ</div>
+      <h2>Φυλλάδια</h2>
+      <p>Φυλλάδια για τις ομάδες, τους παρατηρητές και την καταγραφή μετρήσεων του εργαστηρίου.</p>
+      <span class="go">Άνοιγμα φυλλαδίων</span>
+    </a>
+  </section>
+
+  <footer>
+    <span><b>Ε.Ε.Τ. ΕΠΑΛ</b> · Ερευνητική Εργασία στην Τεχνολογία</span>
+    <span>Όλα τα αρχεία είναι <b>αυτόνομα HTML</b> — ανοίγουν και χωρίς internet.</span>
+    <span>Έκδοση <b>2.0</b> · SI</span>
+  </footer>
+</div>
+</body>
+</html>

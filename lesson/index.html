@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#06120C">
+<title>Μάθημα 2ο — Ποδοσφαιράκι · Βιβλιογραφική Έρευνα & Benchmark · Παρουσίαση Τάξης</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@600;700;800;900&family=Roboto+Condensed:wght@700&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg0:#06120C; --bg1:#0B1F16; --sur:#10291D; --sur2:#153525;
+  --line:rgba(150,225,180,.16); --line2:rgba(150,225,180,.3);
+  --pitch:#0E5C36; --pitch2:#12854C;
+  --red:#FF4B3E; --red2:#C21F14; --blue:#3D7BFF; --cyan:#39C6FF;
+  --lime:#A6F431; --green:#2FD97B; --amber:#FFB020; --amber2:#FF8A00; --magenta:#FF5EC8;
+  --paper:#F6ECD7; --paper2:#EFE0BE; --ink:#26190C;
+  --tx:#EAF6EC; --tx2:#9DBBA6; --ph:#39C6FF;
+  --topH:64px; --botH:88px;
+  --disp:'Fira Sans Condensed','Roboto Condensed',system-ui,sans-serif;
+  --body:'Inter','Noto Sans',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:var(--body); background:var(--bg0); color:var(--tx);
+  overflow:hidden; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent;
+}
+/* ---------- layered background ---------- */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg .base{position:absolute;inset:0;background:
+  radial-gradient(1200px 700px at 12% -10%, rgba(255,75,62,.14), transparent 60%),
+  radial-gradient(1100px 800px at 105% 20%, rgba(61,123,255,.16), transparent 60%),
+  radial-gradient(900px 900px at 50% 120%, rgba(18,133,76,.22), transparent 60%),
+  linear-gradient(160deg,#08170F 0%, #06120C 45%, #0A1D13 100%);}
+.bg .grid{position:absolute;inset:0;opacity:.5;background:
+  repeating-linear-gradient(0deg, rgba(160,230,190,.045) 0 1px, transparent 1px 52px),
+  repeating-linear-gradient(90deg, rgba(160,230,190,.045) 0 1px, transparent 1px 52px);}
+.bg .pitchline{position:absolute;left:50%;top:52%;width:64vmin;height:64vmin;transform:translate(-50%,-50%);
+  border:2px solid rgba(170,240,200,.06);border-radius:50%;}
+.bg .pitchline::after{content:'';position:absolute;left:50%;top:-40vh;bottom:-40vh;width:2px;background:rgba(170,240,200,.05)}
+.bg .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;mix-blend-mode:screen}
+.bg .o1{width:44vmin;height:44vmin;left:-8vmin;top:-6vmin;background:radial-gradient(circle,var(--ph),transparent 70%);animation:drift1 26s ease-in-out infinite alternate;transition:background 1.2s}
+.bg .o2{width:52vmin;height:52vmin;right:-12vmin;bottom:-14vmin;background:radial-gradient(circle,#12854C,transparent 70%);animation:drift2 32s ease-in-out infinite alternate}
+.bg .grain{position:absolute;inset:0;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");}
+@keyframes drift1{to{transform:translate(9vmin,7vmin) scale(1.15)}}
+@keyframes drift2{to{transform:translate(-7vmin,-9vmin) scale(1.1)}}
+/* ---------- scrollbars ---------- */
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:#0A1D13;border-radius:8px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--pitch2),#0E5C36);border-radius:8px;border:2px solid #0A1D13}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,var(--lime),var(--pitch2))}
+*{scrollbar-width:thin;scrollbar-color:#12854C #0A1D13}
+/* ---------- top bar ---------- */
+#topbar{position:fixed;top:0;left:0;right:0;height:var(--topH);z-index:60;display:flex;align-items:center;gap:12px;
+  padding:0 clamp(10px,1.6vw,22px);background:rgba(6,18,12,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:800;font-size:1.1rem;letter-spacing:.04em;white-space:nowrap}
+.brand .ball{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 32% 30%,#F3C784,#C98A3E 65%,#8A5A22);box-shadow:0 0 0 2px rgba(255,255,255,.15),0 4px 12px rgba(0,0,0,.5);animation:spinball 9s linear infinite}
+@keyframes spinball{to{transform:rotate(360deg)}}
+.brand small{color:var(--tx2);font-family:var(--body);font-weight:600;font-size:.78rem;display:block;letter-spacing:.02em}
+#phaseChip{font-family:var(--disp);font-weight:800;font-size:.92rem;letter-spacing:.06em;color:#08130C;background:var(--ph);
+  padding:7px 14px;border-radius:999px;box-shadow:0 0 18px color-mix(in srgb,var(--ph) 55%, transparent);transition:background .8s,box-shadow .8s;white-space:nowrap}
+.topspace{flex:1}
+.tbtn{min-width:48px;height:48px;border-radius:12px;border:1px solid var(--line2);background:rgba(20,48,34,.6);color:var(--tx);
+  font-size:1.25rem;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:.18s;padding:0 12px;font-family:var(--body);font-weight:700}
+.tbtn:hover{background:rgba(35,80,55,.75);border-color:var(--lime)}
+.tbtn:active{transform:scale(.94)}
+.tbtn .tl{font-size:.82rem;color:var(--tx2)}
+#clockChip{font-family:var(--mono);font-weight:800;font-size:1.05rem;color:var(--lime)}
+#clockChip.running{border-color:var(--lime);box-shadow:0 0 14px rgba(166,244,49,.25)}
+#clockReset{font-size:.95rem;color:var(--tx2);padding:4px;border-radius:8px}
+#clockReset:hover{color:var(--red)}
+#chipResearch{display:none;font-family:var(--mono);font-weight:800;color:var(--amber);border-color:rgba(255,176,32,.5)}
+#chipResearch.on{display:flex}
+/* ---------- deck & slides ---------- */
+#deck{position:fixed;inset:0;z-index:2;touch-action:pan-y}
+.slide{position:absolute;top:var(--topH);bottom:var(--botH);left:0;right:0;overflow-y:auto;overflow-x:hidden;
+  padding:clamp(10px,2vh,26px) clamp(14px,3vw,52px);display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;transform:translateX(5%);transition:opacity .42s cubic-bezier(.2,.8,.2,1),transform .42s cubic-bezier(.2,.8,.2,1)}
+.slide.before{transform:translateX(-5%)}
+.slide.active{opacity:1;pointer-events:auto;transform:none}
+.slide.active .s-body>*{animation:rise .55s cubic-bezier(.2,.8,.25,1) both}
+.slide.active .s-body>*:nth-child(2){animation-delay:.07s}.slide.active .s-body>*:nth-child(3){animation-delay:.14s}
+.slide.active .s-body>*:nth-child(4){animation-delay:.21s}.slide.active .s-body>*:nth-child(5){animation-delay:.28s}
+.slide.active .s-body>*:nth-child(6){animation-delay:.35s}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.s-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:clamp(10px,1.8vh,22px)}
+.s-kicker{font-family:var(--disp);font-weight:800;letter-spacing:.18em;font-size:clamp(.8rem,1.1vw,1rem);color:var(--ph);text-transform:uppercase;margin-bottom:4px;transition:color .8s}
+h2{font-family:var(--disp);font-weight:900;font-size:clamp(1.8rem,4vw,3.4rem);line-height:1.04;letter-spacing:.01em}
+h2 .hl-r{color:var(--red)} h2 .hl-l{color:var(--lime)} h2 .hl-c{color:var(--cyan)} h2 .hl-a{color:var(--amber)} h2 .hl-m{color:var(--magenta)}
+.s-body{flex:1;display:flex;flex-direction:column;gap:clamp(10px,1.6vh,18px);min-height:0}
+.sub{color:var(--tx2);font-size:clamp(1rem,1.4vw,1.3rem);line-height:1.5}
+/* ---------- mode badges ---------- */
+.mode{display:flex;align-items:center;gap:12px;padding:12px 18px;border-radius:16px;max-width:520px;
+  color:#161006;box-shadow:0 10px 26px rgba(0,0,0,.4);border:2px solid rgba(0,0,0,.25)}
+.mode .m-ico{font-size:2rem;line-height:1}
+.mode b{font-family:var(--disp);font-weight:900;font-size:clamp(1.15rem,1.7vw,1.6rem);letter-spacing:.05em;display:block;line-height:1.05}
+.mode small{font-size:clamp(.82rem,1vw,1rem);font-weight:600;line-height:1.3;display:block;opacity:.85;margin-top:2px}
+.m-watch{background:linear-gradient(135deg,#7FDBFF,var(--cyan))}
+.m-write{background:linear-gradient(135deg,#FFCF6B,var(--amber));animation:writepulse 2s ease-in-out infinite}
+.m-write .m-ico{animation:penwig 1.6s ease-in-out infinite}
+.m-talk{background:linear-gradient(135deg,#FF9ADE,var(--magenta))}
+.m-search{background:linear-gradient(135deg,#C9F97A,var(--lime))}
+@keyframes writepulse{0%,100%{box-shadow:0 10px 26px rgba(0,0,0,.4),0 0 0 0 rgba(255,176,32,.55)}50%{box-shadow:0 10px 26px rgba(0,0,0,.4),0 0 0 12px rgba(255,176,32,0)}}
+@keyframes penwig{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg)}}
+.sec-chip{display:inline-flex;align-items:center;gap:6px;background:var(--paper);color:var(--ink);font-weight:800;font-size:.9rem;
+  padding:6px 12px;border-radius:999px;margin-top:8px;border:1.5px dashed rgba(90,60,20,.5)}
+.modewrap{display:flex;flex-direction:column;align-items:flex-end}
+/* ---------- generic cards / buttons ---------- */
+.card{background:linear-gradient(170deg,rgba(24,56,40,.75),rgba(13,32,22,.85));border:1px solid var(--line);border-radius:20px;
+  padding:clamp(14px,1.8vw,26px);box-shadow:0 14px 34px rgba(0,0,0,.35), inset 0 1px 0 rgba(190,255,215,.08)}
+.card h3{font-family:var(--disp);font-weight:800;font-size:clamp(1.2rem,1.8vw,1.7rem);margin-bottom:8px}
+.btn{min-height:56px;padding:12px 26px;border-radius:15px;border:none;cursor:pointer;font-family:var(--disp);font-weight:800;
+  font-size:clamp(1.05rem,1.5vw,1.4rem);letter-spacing:.04em;display:inline-flex;align-items:center;justify-content:center;gap:10px;transition:.16s;color:#1A0B06}
+.btn:active{transform:scale(.95)}
+.btn-hot{background:linear-gradient(135deg,var(--red),var(--amber2));color:#fff;box-shadow:0 8px 24px rgba(255,75,62,.35)}
+.btn-hot:hover{box-shadow:0 10px 30px rgba(255,75,62,.55);filter:brightness(1.08)}
+.btn-lime{background:linear-gradient(135deg,var(--lime),var(--green));box-shadow:0 8px 24px rgba(166,244,49,.25)}
+.btn-lime:hover{filter:brightness(1.07)}
+.btn-blue{background:linear-gradient(135deg,#7FDBFF,var(--blue));color:#06121F;box-shadow:0 8px 24px rgba(61,123,255,.3)}
+.btn-ghost{background:rgba(20,48,34,.5);border:2px solid var(--line2);color:var(--tx)}
+.btn-ghost:hover{border-color:var(--lime);color:var(--lime)}
+.btn-sm{min-height:46px;padding:8px 18px;font-size:1rem;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;border:1px solid var(--line2);
+  background:rgba(20,48,34,.55);font-weight:700;font-size:clamp(.9rem,1.2vw,1.1rem)}
+.row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.6vw,22px)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px)}
+.tick{color:var(--green);font-weight:900}
+/* ---------- paper (handout preview) ---------- */
+.paper{background:linear-gradient(175deg,#F9F0DE,var(--paper2));color:var(--ink);border-radius:12px;position:relative;
+  box-shadow:0 16px 36px rgba(0,0,0,.45);padding:16px 16px 14px 48px;transform:rotate(-.4deg);overflow:hidden}
+.paper::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent 0 27px, rgba(90,60,20,.13) 27px 28px);pointer-events:none}
+.paper::after{content:'';position:absolute;left:34px;top:0;bottom:0;width:2px;background:rgba(200,60,50,.35)}
+.paper h4{font-family:var(--disp);font-weight:900;font-size:1.15rem;letter-spacing:.04em;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.paper .ptag{background:var(--ink);color:var(--paper);font-size:.72rem;padding:3px 9px;border-radius:999px;font-family:var(--body);font-weight:800;letter-spacing:.08em}
+.pf{display:flex;gap:10px;align-items:baseline;padding:5px 4px;font-size:clamp(.88rem,1.1vw,1.05rem);font-weight:600;position:relative;z-index:1}
+.pf .n{width:22px;height:22px;border-radius:50%;background:var(--amber);color:var(--ink);font-weight:900;font-size:.8rem;display:inline-flex;align-items:center;justify-content:center;flex:none;transform:translateY(3px)}
+.pf .blank{flex:1;border-bottom:2px dotted rgba(60,40,10,.5);min-height:1.15em}
+.pf .filled{flex:1;font-weight:700;color:#4A3208;font-style:italic}
+.pnote{font-size:.85rem;font-weight:700;color:#7A5A20;margin-top:8px;position:relative;z-index:1}
+/* ---------- bottom bar ---------- */
+#bottombar{position:fixed;bottom:0;left:0;right:0;height:var(--botH);z-index:60;display:flex;align-items:center;gap:16px;
+  padding:0 clamp(10px,1.6vw,22px);background:rgba(6,18,12,.85);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+#legend{display:flex;gap:8px;flex-wrap:wrap}
+.lg{display:flex;align-items:center;gap:7px;font-size:.78rem;font-weight:800;letter-spacing:.03em;padding:6px 11px;border-radius:999px;color:#161006}
+.lg small{font-weight:800}
+.lg-w{background:var(--cyan)}.lg-r{background:var(--amber)}.lg-t{background:var(--magenta)}.lg-s{background:var(--lime)}
+.midnav{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0}
+#segBar{display:flex;gap:3px;width:min(560px,42vw);height:8px}
+#segBar span{flex:1;border-radius:4px;opacity:.32;transition:.3s}
+#segBar span.cur{opacity:1;box-shadow:0 0 10px currentColor}
+#counter{font-family:var(--mono);font-weight:800;font-size:.95rem;color:var(--tx2)}
+#counter b{color:var(--tx);font-size:1.15rem}
+.navbtn{width:66px;height:66px;border-radius:50%;border:none;cursor:pointer;font-size:1.7rem;display:flex;align-items:center;justify-content:center;transition:.16s;flex:none}
+.navbtn:active{transform:scale(.9)}
+#btnPrev{background:rgba(20,48,34,.6);border:2px solid var(--line2);color:var(--tx)}
+#btnPrev:hover{border-color:var(--cyan);color:var(--cyan)}
+#btnNext{background:linear-gradient(135deg,var(--lime),var(--green));color:#0A1A08;box-shadow:0 8px 26px rgba(166,244,49,.35)}
+#btnNext:hover{filter:brightness(1.08)}
+#btnNext:disabled,#btnPrev:disabled{opacity:.3;pointer-events:none}
+/* ---------- toast & flash ---------- */
+#toastBox{position:fixed;top:calc(var(--topH) + 14px);left:50%;transform:translate(-50%,-140%);z-index:90;display:flex;gap:14px;align-items:center;
+  background:linear-gradient(135deg,#173B28,#0E2418);border:2px solid var(--lime);border-radius:18px;padding:14px 24px;max-width:min(760px,92vw);
+  box-shadow:0 20px 50px rgba(0,0,0,.6),0 0 30px rgba(166,244,49,.2);transition:transform .45s cubic-bezier(.2,.9,.25,1.2)}
+#toastBox.show{transform:translate(-50%,0)}
+#toastIco{font-size:2rem}
+#toastTitle{font-family:var(--disp);font-weight:800;font-size:1.25rem}
+#toastSub{color:var(--tx2);font-size:.95rem;font-weight:600}
+#flash{position:fixed;inset:0;z-index:95;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .3s}
+#flash.show{opacity:1}
+#flash .fb{background:rgba(6,18,12,.92);border:3px solid var(--amber);border-radius:26px;padding:clamp(20px,4vh,44px) clamp(26px,5vw,70px);
+  text-align:center;box-shadow:0 0 80px rgba(255,176,32,.35);animation:fpop .5s cubic-bezier(.2,.9,.3,1.4)}
+#flashText{font-family:var(--disp);font-weight:900;font-size:clamp(1.6rem,3.6vw,3.2rem);line-height:1.15;max-width:80vw}
+#flashText small{display:block;font-family:var(--body);font-weight:600;font-size:clamp(1rem,1.6vw,1.4rem);color:var(--tx2);margin-top:10px}
+@keyframes fpop{from{transform:scale(.7)}to{transform:scale(1)}}
+#fx{position:fixed;inset:0;z-index:100;pointer-events:none}
+/* ---------- overview ---------- */
+#overview{position:fixed;inset:0;z-index:80;background:rgba(4,12,8,.9);backdrop-filter:blur(10px);display:none;flex-direction:column;padding:calc(var(--topH) + 10px) clamp(14px,3vw,44px) 20px}
+#overview.open{display:flex}
+.ovhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ovhead h3{font-family:var(--disp);font-weight:900;font-size:1.7rem}
+#ovGrid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:12px;padding:4px 6px 14px 2px}
+.ovc{background:var(--sur);border:1px solid var(--line);border-radius:14px;padding:13px 14px;cursor:pointer;text-align:left;color:var(--tx);transition:.15s;position:relative;overflow:hidden;min-height:96px;font-family:var(--body)}
+.ovc:hover{transform:translateY(-3px);border-color:var(--lime)}
+.ovc.cur{border-color:var(--amber);box-shadow:0 0 18px rgba(255,176,32,.3)}
+.ovc .ovnum{font-family:var(--mono);font-weight:800;font-size:.8rem;color:var(--tx2)}
+.ovc .ovt{font-weight:800;font-size:.98rem;line-height:1.25;margin-top:4px}
+.ovc .ovbar{position:absolute;left:0;top:0;bottom:0;width:5px}
+.ovc .ovmode{position:absolute;right:10px;top:10px;font-size:1.05rem}
+.ovkeys{color:var(--tx2);font-size:.85rem;font-weight:600;padding-top:10px;border-top:1px solid var(--line)}
+.ovkeys b{color:var(--lime);font-family:var(--mono)}
+/* ---------- title slide ---------- */
+.title-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(16px,2.5vw,40px);flex:1;align-items:center;min-height:0}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.16em;font-size:.85rem;color:var(--cyan);border:1px solid rgba(57,198,255,.4);padding:8px 16px;border-radius:999px;background:rgba(57,198,255,.08)}
+h1{font-family:var(--disp);font-weight:900;font-size:clamp(2.6rem,6.4vw,5.6rem);line-height:.98;letter-spacing:.01em;margin:14px 0 6px;
+  background:linear-gradient(100deg,#FFFFFF 20%,#A6F431 55%,#39C6FF 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.t-sub{font-family:var(--disp);font-weight:800;font-size:clamp(1.3rem,2.4vw,2.1rem);color:var(--amber);margin-bottom:14px}
+.t-meta{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 22px}
+.hero-wrap{position:relative;height:clamp(280px,52vh,560px);border-radius:24px;overflow:hidden;border:2px solid var(--line2);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+#heroCv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-bubble{position:absolute;top:12px;right:12px;background:var(--paper);color:var(--ink);font-weight:800;font-size:.95rem;padding:10px 14px;border-radius:14px 14px 2px 14px;box-shadow:0 10px 24px rgba(0,0,0,.4);animation:bob 3.4s ease-in-out infinite;max-width:230px;line-height:1.3}
+.hero-bubble small{display:block;font-weight:600;color:#7A5A20}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(1.5deg)}50%{transform:translateY(-8px) rotate(-1deg)}}
+/* ---------- hook ---------- */
+.quote{font-family:var(--disp);font-weight:800;font-size:clamp(1.4rem,2.6vw,2.3rem);line-height:1.25;background:linear-gradient(135deg,rgba(255,75,62,.14),rgba(255,138,0,.08));
+  border:2px solid rgba(255,75,62,.45);border-radius:20px;padding:clamp(16px,2.4vh,28px) clamp(18px,2.4vw,34px);position:relative}
+.quote .who{display:block;font-family:var(--body);font-weight:700;font-size:1rem;color:var(--tx2);margin-top:8px}
+.hookchoice{cursor:pointer;text-align:left;border:2px solid var(--line2);transition:.2s;color:var(--tx)}
+.hookchoice:hover{transform:translateY(-4px)}
+.hookchoice .hc-t{font-family:var(--disp);font-weight:900;font-size:clamp(1.4rem,2.4vw,2.2rem)}
+.hookchoice.selA{border-color:var(--red);box-shadow:0 0 26px rgba(255,75,62,.3)}
+.hookchoice.selB{border-color:var(--green);box-shadow:0 0 26px rgba(47,217,123,.3)}
+.hookres{display:none;margin-top:10px;font-size:clamp(.95rem,1.3vw,1.15rem);line-height:1.5;color:var(--tx)}
+.hookres.show{display:block;animation:rise .4s both}
+.hookres b{color:var(--amber)}
+/* ---------- lists ---------- */
+.biglist{list-style:none;display:flex;flex-direction:column;gap:10px}
+.biglist li{display:flex;gap:14px;align-items:flex-start;font-size:clamp(1rem,1.5vw,1.35rem);font-weight:600;line-height:1.4}
+.biglist .bn{flex:none;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#06121F;font-family:var(--disp);font-weight:900;display:flex;align-items:center;justify-content:center;font-size:1.05rem}
+.critlist li .bn{background:linear-gradient(135deg,var(--lime),var(--green));color:#0A1A08}
+/* ---------- vocab flip ---------- */
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.4vw,18px);flex:1}
+.flip{perspective:1100px;cursor:pointer;min-height:130px;border:none;background:none;padding:0;font-family:var(--body)}
+.flip-in{position:relative;width:100%;height:100%;min-height:130px;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.8,.3,1)}
+.flip.open .flip-in{transform:rotateY(180deg)}
+.flip-f,.flip-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:8px}
+.flip-f{background:linear-gradient(160deg,#1B4530,#0E2418);border:2px solid var(--line2);color:var(--tx)}
+.flip-f b{font-family:var(--disp);font-weight:900;font-size:clamp(1.2rem,1.9vw,1.8rem)}
+.flip-f small{color:var(--tx2);font-weight:700;font-size:.8rem;letter-spacing:.1em}
+.flip-b{background:linear-gradient(160deg,#F9F0DE,var(--paper2));color:var(--ink);transform:rotateY(180deg);font-weight:700;font-size:clamp(.95rem,1.35vw,1.2rem);line-height:1.4;border:2px solid var(--amber)}
+/* ---------- roadmap ---------- */
+.roadbar{display:flex;gap:8px;height:clamp(120px,20vh,180px);align-items:stretch}
+.roadseg{border:none;cursor:pointer;border-radius:18px;color:#08130C;display:flex;flex-direction:column;justify-content:space-between;padding:16px 14px;text-align:left;transition:.2s;position:relative;font-family:var(--body);min-width:0}
+.roadseg:hover{transform:translateY(-5px);filter:brightness(1.08)}
+.roadseg .rt{font-family:var(--disp);font-weight:900;font-size:clamp(1rem,1.6vw,1.5rem);line-height:1.05}
+.roadseg .rm{font-family:var(--mono);font-weight:800;font-size:clamp(1.2rem,2vw,1.9rem)}
+.roadseg .rd{font-size:.8rem;font-weight:700;opacity:.8}
+.roadseg.here::after{content:'📍 ΕΔΩ ΤΩΡΑ';position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#fff;color:#111;font-weight:900;font-size:.75rem;padding:4px 10px;border-radius:999px;box-shadow:0 6px 16px rgba(0,0,0,.5);white-space:nowrap}
+/* ---------- phase divider ---------- */
+.phase-hero{display:flex;align-items:center;gap:clamp(16px,3vw,44px);flex:1}
+.phase-num{font-family:var(--disp);font-weight:900;font-size:clamp(7rem,22vh,15rem);line-height:.9;color:transparent;-webkit-text-stroke:3px var(--ph);opacity:.9;flex:none;text-shadow:0 0 60px color-mix(in srgb,var(--ph) 35%, transparent)}
+.phase-info{flex:1}
+.timechip{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-weight:800;background:rgba(20,48,34,.7);border:1px solid var(--line2);padding:8px 16px;border-radius:999px;color:var(--amber);font-size:1.05rem;margin:10px 0 16px}
+/* ---------- I Do sources ---------- */
+.src{border-radius:18px;padding:16px 18px;position:relative;border:2px solid;transition:.3s}
+.src-good{border-color:rgba(47,217,123,.6);background:linear-gradient(165deg,rgba(20,70,40,.55),rgba(10,30,18,.8))}
+.src-bad{border-color:rgba(255,75,62,.55);background:linear-gradient(165deg,rgba(80,25,20,.4),rgba(30,12,10,.7))}
+.src .src-tag{position:absolute;top:-14px;left:16px;font-weight:900;font-size:.8rem;letter-spacing:.1em;padding:5px 12px;border-radius:999px;font-family:var(--disp)}
+.src-good .src-tag{background:var(--green);color:#06210F}
+.src-bad .src-tag{background:var(--red);color:#fff}
+.src h4{font-family:var(--disp);font-weight:800;font-size:clamp(1.1rem,1.6vw,1.5rem);margin:6px 0 10px}
+.srow{display:flex;gap:10px;padding:7px 10px;border-radius:10px;font-size:clamp(.9rem,1.2vw,1.1rem);font-weight:600;line-height:1.35;transition:.3s;border:1.5px solid transparent}
+.srow .si{flex:none}
+.srow.hl{background:rgba(255,176,32,.16);border-color:var(--amber);box-shadow:0 0 16px rgba(255,176,32,.25)}
+.verdict{display:none;margin-top:10px;font-family:var(--disp);font-weight:900;font-size:1.15rem;padding:8px 14px;border-radius:12px;text-align:center}
+.verdict.show{display:block;animation:fpop .45s both}
+.v-good{background:rgba(47,217,123,.2);color:var(--green);border:2px solid var(--green)}
+.v-bad{background:rgba(255,75,62,.18);color:#FF8A80;border:2px solid var(--red)}
+.thinkbar{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.thinkbubble{flex:1;min-width:260px;background:linear-gradient(135deg,#173B28,#0E2418);border:2px solid var(--cyan);border-radius:16px;padding:14px 20px;font-size:clamp(1.05rem,1.6vw,1.45rem);font-weight:700;line-height:1.4;min-height:64px;display:flex;align-items:center}
+.thinkbubble .ti{margin-right:12px;font-size:1.6rem}
+.dots{display:flex;gap:6px}
+.dots span{width:10px;height:10px;border-radius:50%;background:var(--line2)}
+.dots span.on{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+/* ---------- We Do inspector ---------- */
+.wedo-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(12px,1.8vw,24px);flex:1;min-height:0}
+.webpage{background:#F4F1EA;color:#20242B;border-radius:16px;overflow:hidden;border:2px solid #C9C4B6;display:flex;flex-direction:column;box-shadow:0 16px 40px rgba(0,0,0,.45)}
+.wp-bar{background:#DDD8CB;padding:8px 14px;font-family:var(--mono);font-size:.8rem;font-weight:600;color:#5A5648;display:flex;gap:8px;align-items:center}
+.wp-bar .dot{width:10px;height:10px;border-radius:50%}
+.wp-body{display:grid;grid-template-columns:1fr 150px;gap:0;flex:1}
+.wp-main{padding:14px 18px}
+.wp-main h4{font-family:Georgia,serif;font-size:clamp(1.2rem,1.8vw,1.6rem);border-bottom:1px solid #B9B4A6;padding-bottom:6px;margin-bottom:8px;color:#1B1E24}
+.wpr{padding:6px 8px;border-radius:8px;border:2px solid transparent;transition:.3s;font-size:clamp(.85rem,1.1vw,1rem);line-height:1.45}
+.wpr.hl{border-color:var(--amber2);background:rgba(255,176,32,.25);box-shadow:0 0 14px rgba(255,138,0,.4)}
+.wp-byline{color:#6B675C;font-size:.85rem;font-weight:600}
+.wp-claim{font-weight:700;font-size:clamp(1rem,1.4vw,1.25rem);margin:10px 0;color:#14171C}
+.wp-claim mark{background:rgba(255,75,62,.25);padding:2px 4px;border-radius:4px}
+.wp-side{background:#E9E5D9;border-left:1px solid #C9C4B6;padding:12px 10px;display:flex;flex-direction:column;gap:10px}
+.wp-ad{background:linear-gradient(160deg,#FFE9A8,#FFC85C);border:2px dashed #C88A1E;border-radius:10px;padding:10px;font-weight:800;font-size:.82rem;text-align:center;color:#6B4A08;line-height:1.35}
+.wp-ad .big{font-size:1.05rem;display:block}
+.wd-panel{display:flex;flex-direction:column;gap:9px;min-height:0}
+.crit{display:flex;align-items:center;gap:12px;background:rgba(20,48,34,.6);border:1.5px solid var(--line2);border-radius:14px;padding:9px 14px;cursor:pointer;color:var(--tx);text-align:left;transition:.15s;font-family:var(--body);width:100%}
+.crit:hover{border-color:var(--cyan);transform:translateX(4px)}
+.crit .cn{flex:none;width:32px;height:32px;border-radius:50%;background:var(--sur2);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-weight:900;font-family:var(--disp)}
+.crit .ct{flex:1;min-width:0}
+.crit .ct b{font-size:clamp(.92rem,1.2vw,1.1rem);display:block}
+.crit .ct small{color:var(--tx2);font-size:.8rem;font-weight:600;display:none;line-height:1.3;margin-top:2px}
+.crit.done .ct small{display:block}
+.cstat{flex:none;font-weight:900;font-size:.85rem;padding:5px 11px;border-radius:999px;background:var(--sur2);color:var(--tx2);font-family:var(--disp);letter-spacing:.03em}
+.cstat.nai{background:var(--green);color:#06210F}
+.cstat.oxi{background:var(--red);color:#fff}
+.cstat.amfi{background:var(--amber);color:#3A2604}
+.meter{height:16px;border-radius:999px;background:var(--sur2);border:1px solid var(--line2);overflow:hidden}
+.meter i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--red),var(--amber));transition:width .5s cubic-bezier(.2,.8,.3,1);border-radius:999px}
+.meterrow{display:flex;align-items:center;gap:12px}
+.meterrow .meter{flex:1}
+#wdScore{font-family:var(--mono);font-weight:800;font-size:1.05rem;color:var(--amber);white-space:nowrap}
+.wd-extra{display:none;background:rgba(57,198,255,.08);border:1.5px solid rgba(57,198,255,.4);border-radius:12px;padding:10px 14px;font-size:.9rem;line-height:1.45;font-weight:600}
+.wd-extra.show{display:block;animation:rise .4s both}
+.wd-extra b{color:var(--cyan)}
+#wdProCard{border-color:rgba(47,217,123,.5);background:rgba(47,217,123,.08)}
+#wdProCard b{color:var(--green)}
+#wdVerdict{display:none;font-family:var(--disp);font-weight:900;text-align:center;font-size:clamp(1.2rem,2vw,1.8rem);color:#FF8A80;
+  border:3px solid var(--red);border-radius:14px;padding:10px;transform:rotate(-2deg);background:rgba(255,75,62,.12);letter-spacing:.05em}
+#wdVerdict.show{display:block;animation:stamp .5s cubic-bezier(.2,.9,.3,1.4) both}
+#wdVerdict small{display:block;font-family:var(--body);font-weight:600;font-size:.9rem;color:var(--tx);transform:none;margin-top:4px;letter-spacing:0}
+@keyframes stamp{from{transform:rotate(-14deg) scale(2.2);opacity:0}to{transform:rotate(-2deg) scale(1);opacity:1}}
+/* ---------- You Do vote cards ---------- */
+.vcgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(8px,1.2vw,16px)}
+.vc{display:flex;flex-direction:column;gap:8px}
+.vcflip{perspective:1000px;cursor:pointer;border:none;background:none;padding:0;min-height:190px;font-family:var(--body)}
+.vcflip-in{position:relative;width:100%;height:100%;min-height:190px;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.3,.8,.3,1)}
+.vc.open .vcflip-in{transform:rotateY(180deg)}
+.vcf,.vcb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:6px;text-align:left}
+.vcf{background:linear-gradient(160deg,#1B4530,#0E2418);border:2px solid var(--line2);color:var(--tx);align-items:center;justify-content:center}
+.vcf b{font-family:var(--disp);font-weight:900;font-size:1.3rem}
+.vcf .qm{font-size:2.6rem}
+.vcf small{color:var(--tx2);font-weight:700;font-size:.75rem;letter-spacing:.08em}
+.vcb{background:linear-gradient(170deg,#F9F0DE,var(--paper2));color:var(--ink);transform:rotateY(180deg);border:2px solid var(--amber);font-size:.8rem;line-height:1.35;font-weight:600;overflow:hidden}
+.vcb b{font-size:.92rem;font-family:var(--disp);font-weight:800;line-height:1.15}
+.vcb .vm{color:#7A5A20;font-size:.72rem;font-weight:700}
+.vcvote{display:flex;gap:6px}
+.vcvote button{flex:1;min-height:44px;border-radius:11px;border:2px solid var(--line2);background:rgba(20,48,34,.6);font-size:1.2rem;cursor:pointer;transition:.15s;color:var(--tx)}
+.vcvote button:hover{transform:translateY(-2px)}
+.vcvote .vg:hover{border-color:var(--green)}
+.vcvote .vr:hover{border-color:var(--red)}
+.vcvote button:disabled{opacity:.35;pointer-events:none}
+.vcres{display:none;font-size:.78rem;font-weight:700;line-height:1.35;border-radius:10px;padding:8px 10px}
+.vcres.show{display:block;animation:rise .35s both}
+.vcres.ok{background:rgba(47,217,123,.15);border:1.5px solid var(--green);color:#B8F5CF}
+.vcres.no{background:rgba(255,75,62,.14);border:1.5px solid var(--red);color:#FFC4BF}
+.vc.answered-ok .vcflip-in .vcb{border-color:var(--green);box-shadow:0 0 18px rgba(47,217,123,.4)}
+.vc.answered-no .vcflip-in .vcb{border-color:var(--red);box-shadow:0 0 18px rgba(255,75,62,.4)}
+/* ---------- mini timers ---------- */
+.mtimer{display:inline-flex;align-items:center;gap:10px;background:rgba(20,48,34,.7);border:1.5px solid var(--line2);border-radius:999px;padding:6px 8px 6px 18px}
+.mtimer .mt-t{font-family:var(--mono);font-weight:800;font-size:1.3rem;color:var(--cyan);min-width:64px;text-align:center}
+.mtimer .mt-t.warn{color:var(--red);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.4}}
+.mtimer button{min-width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;font-size:1.05rem;background:var(--sur2);color:var(--tx);border:1px solid var(--line2)}
+.mtimer button:hover{border-color:var(--cyan)}
+.mtimer .mt-go{background:linear-gradient(135deg,var(--lime),var(--green));color:#0A1A08;font-weight:900}
+/* ---------- roles ---------- */
+.rolecard{text-align:center;position:relative;overflow:hidden}
+.rolecard .ri{font-size:clamp(2.4rem,4.5vw,3.6rem);display:block;margin-bottom:6px}
+.rolecard h3{color:var(--lime)}
+.rolecard p{color:var(--tx2);font-size:clamp(.92rem,1.25vw,1.15rem);font-weight:600;line-height:1.45}
+.rolecard .rot{margin-top:10px;display:inline-block;font-size:.8rem;font-weight:800;color:var(--cyan);border:1px dashed rgba(57,198,255,.5);padding:5px 12px;border-radius:999px}
+/* ---------- keywords ---------- */
+.kwtabs{display:flex;gap:8px;flex-wrap:wrap}
+.kwtab{min-height:52px;padding:10px 22px;border-radius:14px;border:2px solid var(--line2);background:rgba(20,48,34,.55);color:var(--tx);font-family:var(--disp);font-weight:800;font-size:1.15rem;cursor:pointer;transition:.15s}
+.kwtab:hover{border-color:var(--lime)}
+.kwtab.on{background:linear-gradient(135deg,var(--lime),var(--green));color:#0A1A08;border-color:transparent;box-shadow:0 6px 20px rgba(166,244,49,.3)}
+.kwchips{display:flex;gap:10px;flex-wrap:wrap}
+.kwchip{font-family:var(--mono);font-weight:600;font-size:clamp(.95rem,1.4vw,1.25rem);background:#0A1D13;border:1.5px solid rgba(166,244,49,.45);color:var(--lime);padding:12px 18px;border-radius:12px;cursor:pointer;transition:.15s;display:inline-flex;gap:10px;align-items:center}
+.kwchip:hover{background:rgba(166,244,49,.12);transform:translateY(-2px)}
+.kwchip .cp{font-size:.85rem;color:var(--tx2)}
+.lvl{border-radius:16px;padding:14px 16px;border:2px solid;font-size:clamp(.88rem,1.15vw,1.05rem);font-weight:600;line-height:1.45}
+.lvl b{font-family:var(--disp);font-weight:900;font-size:1.15rem;display:block;margin-bottom:4px}
+.lvl-b{border-color:rgba(61,123,255,.55);background:rgba(61,123,255,.1)} .lvl-b b{color:#8FB4FF}
+.lvl-c{border-color:rgba(47,217,123,.55);background:rgba(47,217,123,.09)} .lvl-c b{color:var(--green)}
+.lvl-e{border-color:rgba(255,138,0,.55);background:rgba(255,138,0,.1)} .lvl-e b{color:var(--amber2)}
+/* ---------- research timer ---------- */
+.res-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(14px,2vw,28px);flex:1;align-items:stretch}
+.bigtime{font-family:var(--mono);font-weight:800;font-size:clamp(4.4rem,15vh,9rem);line-height:1;letter-spacing:.02em;color:var(--lime);text-shadow:0 0 44px rgba(166,244,49,.35);text-align:center}
+.bigtime.paused{color:var(--amber);text-shadow:0 0 44px rgba(255,176,32,.3)}
+.bigtime.done{color:var(--red);text-shadow:0 0 44px rgba(255,75,62,.4)}
+.rbarwrap{position:relative;height:26px;border-radius:999px;background:var(--sur2);border:1px solid var(--line2);margin:26px 0 8px}
+#rBar{position:absolute;left:0;top:0;bottom:0;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--green),var(--lime));transition:width .3s linear;box-shadow:0 0 16px rgba(166,244,49,.4)}
+.rmark{position:absolute;top:-9px;bottom:-9px;width:4px;border-radius:4px;background:var(--amber);box-shadow:0 0 10px rgba(255,176,32,.6)}
+.rmark.hit{background:var(--red);box-shadow:0 0 12px rgba(255,75,62,.8)}
+.rmarklbl{position:absolute;top:34px;transform:translateX(-50%);font-size:.78rem;font-weight:800;color:var(--amber);white-space:nowrap;text-align:center;line-height:1.3}
+.rcontrols{display:flex;gap:12px;justify-content:center;margin-top:44px;flex-wrap:wrap}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:12px}
+.checklist li{display:flex;gap:12px;align-items:flex-start;font-weight:600;font-size:clamp(.95rem,1.3vw,1.2rem);line-height:1.4}
+.checklist .ci{flex:none;font-size:1.3rem}
+/* ---------- lab ---------- */
+.labtabs{display:flex;gap:8px;flex-wrap:wrap}
+.labtab{min-height:52px;padding:10px 20px;border-radius:14px;border:2px solid var(--line2);background:rgba(20,48,34,.55);color:var(--tx);font-family:var(--disp);font-weight:800;font-size:clamp(1rem,1.4vw,1.25rem);cursor:pointer;transition:.15s}
+.labtab.on{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#06121F;border-color:transparent;box-shadow:0 6px 20px rgba(57,198,255,.3)}
+.simpane{display:none;flex:1;min-height:0}
+.simpane.on{display:flex;flex-direction:column;gap:10px}
+.sim-grid{display:grid;grid-template-columns:1fr 330px;gap:14px;flex:1;min-height:0}
+.sim-stage{position:relative;border-radius:18px;overflow:hidden;border:2px solid var(--line2);background:#08170F;min-height:280px;height:clamp(300px,44vh,540px)}
+.sim-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:pointer}
+.sim-verdict{position:absolute;top:10px;left:50%;transform:translateX(-50%);font-family:var(--disp);font-weight:900;font-size:clamp(1rem,1.7vw,1.5rem);padding:8px 20px;border-radius:999px;pointer-events:none;opacity:0;transition:.25s;white-space:nowrap;max-width:94%;text-overflow:ellipsis;overflow:hidden}
+.sim-verdict.show{opacity:1;animation:fpop .4s both}
+.sim-verdict.good{background:rgba(47,217,123,.92);color:#06210F;box-shadow:0 0 26px rgba(47,217,123,.5)}
+.sim-verdict.bad{background:rgba(255,75,62,.94);color:#fff;box-shadow:0 0 26px rgba(255,75,62,.5)}
+.sim-controls{display:flex;flex-direction:column;gap:11px;overflow-y:auto;padding:14px;background:rgba(13,32,22,.85);border:1px solid var(--line);border-radius:18px;max-height:clamp(300px,44vh,540px)}
+.ctl{display:flex;flex-direction:column;gap:5px}
+.ctl label{font-size:.82rem;font-weight:800;letter-spacing:.05em;color:var(--tx2);display:flex;justify-content:space-between;align-items:baseline}
+.ctl label output{font-family:var(--mono);color:var(--lime);font-size:.95rem;font-weight:800}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:30px;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:9px;border-radius:6px;background:linear-gradient(90deg,#0E5C36,#12854C);border:1px solid var(--line2)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#D9FF8A,var(--lime) 60%,#5FA81E);margin-top:-9.5px;box-shadow:0 3px 10px rgba(0,0,0,.55),0 0 12px rgba(166,244,49,.45);border:2px solid #0A1A08}
+input[type=range]::-moz-range-track{height:9px;border-radius:6px;background:#12854C}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--lime);border:2px solid #0A1A08}
+.sel,.seg{width:100%;min-height:46px;border-radius:11px;border:1.5px solid var(--line2);background:#0A1D13;color:var(--tx);font-family:var(--body);font-weight:700;font-size:.95rem;padding:8px 10px}
+.sel:focus{outline:2px solid var(--cyan)}
+.seg2{display:flex;gap:6px}
+.seg2 button{flex:1;min-height:46px;border-radius:11px;border:1.5px solid var(--line2);background:#0A1D13;color:var(--tx);font-weight:800;font-size:.9rem;cursor:pointer;font-family:var(--body)}
+.seg2 button.on{background:linear-gradient(135deg,var(--amber),var(--amber2));color:#2A1A02;border-color:transparent}
+.tgl{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.88rem;font-weight:700;color:var(--tx);cursor:pointer;padding:4px 0}
+.tgl input{display:none}
+.tgl .tk{width:52px;height:28px;border-radius:999px;background:#0A1D13;border:1.5px solid var(--line2);position:relative;transition:.2s;flex:none}
+.tgl .tk::after{content:'';position:absolute;left:3px;top:3px;width:19px;height:19px;border-radius:50%;background:var(--tx2);transition:.2s}
+.tgl input:checked+.tk{background:rgba(166,244,49,.25);border-color:var(--lime)}
+.tgl input:checked+.tk::after{left:27px;background:var(--lime);box-shadow:0 0 10px rgba(166,244,49,.6)}
+.simstats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{font-family:var(--mono);font-weight:800;font-size:.9rem;background:rgba(20,48,34,.7);border:1px solid var(--line2);padding:7px 13px;border-radius:999px;color:var(--tx2)}
+.stat b{color:var(--lime)}
+.stat.bad b{color:var(--red)}
+.stat.good b{color:var(--green)}
+.labnote{font-size:.85rem;color:var(--tx2);font-weight:600;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.labnote .grp{color:var(--cyan);font-weight:800}
+.predline{font-size:.9rem;font-weight:700;color:var(--amber);background:rgba(255,176,32,.08);border:1px dashed rgba(255,176,32,.45);border-radius:10px;padding:8px 12px;line-height:1.4}
+/* ---------- present ---------- */
+.pres-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(14px,2vw,28px);flex:1}
+.ringwrap{position:relative;width:clamp(200px,30vh,290px);margin:0 auto}
+.ringwrap svg{width:100%;height:auto;display:block;transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:#153525;stroke-width:14}
+#pRingFg{fill:none;stroke:url(#ringGrad);stroke-width:14;stroke-linecap:round;stroke-dasharray:540;stroke-dashoffset:0;transition:stroke-dashoffset .25s linear}
+#pTime{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);font-weight:800;font-size:clamp(2.6rem,7vh,4.2rem);color:var(--tx)}
+#pTime small{font-family:var(--body);font-size:.85rem;font-weight:700;color:var(--tx2);letter-spacing:.1em}
+#pTime.warn{color:var(--red);animation:blink 1s steps(2) infinite}
+.pgroups{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.pg{min-width:58px;height:58px;border-radius:14px;border:2px solid var(--line2);background:rgba(20,48,34,.6);color:var(--tx);font-family:var(--disp);font-weight:900;font-size:1.25rem;cursor:pointer;transition:.15s;position:relative}
+.pg.on{border-color:var(--magenta);background:rgba(255,94,200,.15);color:var(--magenta);box-shadow:0 0 16px rgba(255,94,200,.3)}
+.pg.done::after{content:'✓';position:absolute;top:-8px;right:-6px;background:var(--green);color:#06210F;width:22px;height:22px;border-radius:50%;font-size:.85rem;display:flex;align-items:center;justify-content:center;font-family:var(--body);font-weight:900}
+.fbcard{border-left:5px solid;border-radius:14px;padding:12px 16px;background:rgba(20,48,34,.55);font-size:clamp(.95rem,1.3vw,1.2rem);line-height:1.45;font-weight:600}
+.fbcard b{font-family:var(--disp);font-weight:900;font-size:1.15rem;display:block;margin-bottom:3px}
+.fb1{border-color:var(--green)} .fb1 b{color:var(--green)}
+.fb2{border-color:var(--cyan)} .fb2 b{color:var(--cyan)}
+.fb3{border-color:var(--amber)} .fb3 b{color:var(--amber)}
+#pFeedback.hot{animation:writepulse 1.6s ease-in-out infinite;border-radius:16px}
+.ones{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,1.2vw,16px)}
+.onecard{text-align:center;padding:clamp(12px,1.8vh,22px) 10px}
+.onecard .o1{font-family:var(--disp);font-weight:900;font-size:clamp(2.6rem,6vh,4.4rem);line-height:1;background:linear-gradient(135deg,var(--magenta),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.onecard b{font-family:var(--disp);font-weight:800;font-size:clamp(1rem,1.5vw,1.35rem);display:block;margin-top:4px}
+.onecard small{color:var(--tx2);font-weight:600;font-size:.85rem;display:block;margin-top:3px;line-height:1.3}
+/* ---------- phase 4 ---------- */
+.decgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.4vw,18px)}
+.dec{cursor:pointer;text-align:center;border:2px solid var(--line2);transition:.2s;color:var(--tx)}
+.dec .di{font-size:clamp(2rem,4vw,3rem)}
+.dec b{font-family:var(--disp);font-weight:900;font-size:clamp(1.15rem,1.8vw,1.6rem);display:block;margin:6px 0}
+.dec .starter{display:none;font-size:.92rem;font-weight:600;color:var(--tx2);font-style:italic;line-height:1.4;margin-top:6px}
+.dec.sel .starter{display:block;animation:rise .35s both}
+.dec.sel{transform:translateY(-4px)}
+.dec.d1.sel{border-color:var(--green);box-shadow:0 0 24px rgba(47,217,123,.3)}
+.dec.d2.sel{border-color:var(--amber);box-shadow:0 0 24px rgba(255,176,32,.3)}
+.dec.d3.sel{border-color:var(--cyan);box-shadow:0 0 24px rgba(57,198,255,.3)}
+.metaq{list-style:none;display:flex;flex-direction:column;gap:8px}
+.metaq li{font-size:clamp(.95rem,1.3vw,1.2rem);font-weight:600;color:var(--tx);display:flex;gap:10px;line-height:1.4}
+/* ---------- closing ---------- */
+.ckgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ck{display:flex;align-items:center;gap:14px;text-align:left;cursor:pointer;border:2px solid var(--line2);color:var(--tx);transition:.2s;font-family:var(--body);font-weight:700;font-size:clamp(.95rem,1.35vw,1.25rem);line-height:1.35}
+.ck .box{flex:none;width:38px;height:38px;border-radius:11px;border:2.5px solid var(--tx2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:transparent;transition:.2s}
+.ck.done{border-color:var(--green);background:rgba(47,217,123,.1)}
+.ck.done .box{background:var(--green);border-color:var(--green);color:#06210F;animation:fpop .35s both}
+#celebrateMsg{display:none;text-align:center;font-family:var(--disp);font-weight:900;font-size:clamp(1.5rem,3vw,2.6rem);color:var(--lime);text-shadow:0 0 30px rgba(166,244,49,.5)}
+#celebrateMsg.show{display:block;animation:fpop .6s cubic-bezier(.2,.9,.3,1.4) both}
+.nextcard{border:2px solid rgba(255,176,32,.5);background:linear-gradient(150deg,rgba(255,176,32,.1),rgba(255,138,0,.05))}
+.nextcard h3{color:var(--amber)}
+.nextlist{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.nextlist li{display:flex;gap:9px;font-weight:600;font-size:clamp(.9rem,1.2vw,1.1rem);line-height:1.35}
+/* ---------- responsive ---------- */
+@media (max-width:1180px){ .vcgrid{grid-template-columns:repeat(3,1fr)} .sim-grid{grid-template-columns:1fr 280px} }
+@media (max-width:920px){
+  :root{--topH:60px;--botH:78px}
+  .brand small,.tbtn .tl{display:none}
+  #phaseChip{font-size:.72rem;padding:6px 10px}
+  .title-grid,.grid2,.grid3,.wedo-grid,.res-grid,.pres-grid,.ckgrid,.decgrid,.nextlist{grid-template-columns:1fr}
+  .vgrid{grid-template-columns:1fr 1fr}
+  .vcgrid{grid-template-columns:1fr 1fr}
+  .ones{grid-template-columns:1fr 1fr}
+  .sim-grid{grid-template-columns:1fr}
+  .sim-stage{height:clamp(240px,36vh,400px)}
+  .sim-controls{max-height:none;overflow:visible}
+  .hero-wrap{height:clamp(200px,30vh,320px)}
+  .phase-hero{flex-direction:column;align-items:flex-start;gap:8px}
+  .phase-num{font-size:5rem;-webkit-text-stroke:2px var(--ph)}
+  .lg small{display:none}
+  .navbtn{width:56px;height:56px;font-size:1.4rem}
+  #segBar{width:34vw}
+  .roadbar{flex-direction:column;height:auto}
+  .roadseg{min-height:74px}
+  .mode{max-width:100%}
+  .modewrap{align-items:flex-start}
+  .wp-body{grid-template-columns:1fr}
+  .wp-side{flex-direction:row;border-left:none;border-top:1px solid #C9C4B6}
+}
+@media (prefers-reduced-motion:reduce){
+  .bg .orb,.brand .ball,.hero-bubble,.m-write,.m-write .m-ico{animation:none!important}
+  .slide,.flip-in,.vcflip-in{transition-duration:.01s!important}
+}
+</style>
+</head>
+<body data-phase="0">
+
+<div class="bg" aria-hidden="true">
+  <div class="base"></div><div class="grid"></div><div class="pitchline"></div>
+  <div class="orb o1"></div><div class="orb o2"></div><div class="grain"></div>
+</div>
+
+<!-- ================= TOP BAR ================= -->
+<header id="topbar">
+  <div class="brand"><span class="ball"></span><span>Ε.Ε.Τ. · ΜΑΘΗΜΑ 2ο<small>ΕΠΑΛ Σάμου · 2026–27</small></span></div>
+  <span id="phaseChip">ΕΙΣΑΓΩΓΗ</span>
+  <div class="topspace"></div>
+  <button class="tbtn" id="chipResearch" title="Χρονόμετρο έρευνας — πήγαινε στη διαφάνεια">🔎 <span id="chipResearchTime">21:00</span></button>
+  <button class="tbtn" id="clockChip" title="Ρολόι μαθήματος 45΄ — πάτα για έναρξη/παύση">⏱ <span id="clockTime">45:00</span><span id="clockReset" title="Επαναφορά ρολογιού">↺</span></button>
+  <button class="tbtn" id="btnSound" title="Ήχος on/off (M)" aria-pressed="true">🔊<span class="tl">Ήχος</span></button>
+  <button class="tbtn" id="btnOverview" title="Επισκόπηση διαφανειών (G)">▦</button>
+  <button class="tbtn" id="btnFull" title="Πλήρης οθόνη (F)">⛶</button>
+</header>
+
+<!-- ================= DECK ================= -->
+<main id="deck">
+
+<!-- 1 · TITLE -->
+<section class="slide" data-title="Τίτλος — Ποδοσφαιράκι" data-phase="0" data-mode="watch" data-sub="Καλωσόρισες — ετοίμασε τραπέζι, φυλλάδια & μολύβι">
+  <div class="s-body">
+    <div class="title-grid">
+      <div>
+        <span class="eyebrow">⚽ ΕΡΕΥΝΗΤΙΚΗ ΕΡΓΑΣΙΑ ΣΤΗΝ ΤΕΧΝΟΛΟΓΙΑ · ΕΒΔΟΜΑΔΑ 2</span>
+        <h1>ΠΟΔΟΣΦΑΙΡΑΚΙ<br>1 ΜΕΤΡΟΥ</h1>
+        <div class="t-sub">Μάθημα 2ο — «Βιβλιογραφική Έρευνα &amp; Benchmark»</div>
+        <p class="sub">Σήμερα: βρίσκουμε <b style="color:var(--lime)">αξιόπιστες πηγές</b>, συγκρίνουμε με τα <b style="color:var(--cyan)">επαγγελματικά</b> τραπέζια και <b style="color:var(--amber)">αναθεωρούμε την υπόθεσή μας</b>.</p>
+        <div class="t-meta">
+          <span class="chip">⏰ 45΄</span><span class="chip">👥 15 μαθητές</span><span class="chip">🧩 5 ομάδες × 3</span><span class="chip">📌 Φάση 1 — Διερεύνηση</span>
+        </div>
+        <div class="row">
+          <button class="btn btn-hot" id="btnStartLesson">▶ ΠΑΜΕ! Ξεκινά το 45λεπτο</button>
+          <span class="sub" style="font-size:.95rem">ή σύρε / πάτα ➜ για πλοήγηση</span>
+        </div>
+      </div>
+      <div class="hero-wrap" data-noswipe>
+        <canvas id="heroCv"></canvas>
+        <div class="hero-bubble">«Τα καλύτερα έχουν πλευρές <b>5 cm</b>; Trust me 😎»<small>— kicker99, άγνωστο φόρουμ</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · HOOK -->
+<section class="slide" data-title="Αφόρμηση — Τι θα του πεις;" data-phase="0" data-mode="talk" data-sub="Διάλεξε απάντηση & αιτιολόγησε προφορικά — 3΄">
+  <header class="s-head"><div><div class="s-kicker">⚡ Αφόρμηση · 0–3΄</div><h2>Τι θα του <span class="hl-r">πεις</span>;</h2></div></header>
+  <div class="s-body">
+    <div class="quote">«Διάβασα σε ένα φόρουμ ότι τα καλύτερα ποδοσφαιράκια έχουν <b style="color:var(--red)">ύψος πλευρών 5 cm</b>. Θα το φτιάξω έτσι!»<span class="who">— Ένας φίλος σου, απόψε. Τι του απαντάς;</span></div>
+    <div class="grid2">
+      <button class="card hookchoice" id="hookA">
+        <div class="hc-t">🅰 «ΟΚ, φτιάξ’ το έτσι!»</div>
+        <p class="sub">Το διάβασε κάπου — άρα ισχύει… σωστά;</p>
+        <div class="hookres" id="hookResA">⚠️ <b>Τι κινδυνεύει;</b> Η μπάλα να βγαίνει συνεχώς έξω, λάθος σχέδιο, άσκοπα έξοδα &amp; χρόνος. Το «διάβασα κάπου» <b>δεν είναι απόδειξη</b> — μπορεί να είναι λάθος, παλιό ή διαφήμιση.</div>
+      </button>
+      <button class="card hookchoice" id="hookB">
+        <div class="hc-t">🅱 «Ποιος το είπε;»</div>
+        <p class="sub">Ρωτάω πριν το πιστέψω — γιατί αλλάζει κάτι;</p>
+        <div class="hookres" id="hookResB">✅ <b>Αλλάζει τα πάντα!</b> Ελέγχουμε <b>ποιος</b> το λέει, <b>γιατί</b> το λέει και <b>πότε</b>. Αυτή είναι η πιο σημαντική ερώτηση ενός ερευνητή.</div>
+      </button>
+    </div>
+    <p class="sub" id="hookMsg">🎯 <b style="color:var(--tx)">Δεν αρκεί να βρω κάτι — πρέπει να ξέρω ποιος το λέει και γιατί.</b> Η απάντηση για τα 5 cm θα έρθει μέσα από τη <b style="color:var(--lime)">δική μας έρευνα</b>… και μια προσομοίωση! 🧪</p>
+  </div>
+</section>
+
+<!-- 3 · RECAP -->
+<section class="slide" data-title="Επανάληψη Μαθήματος 1" data-phase="0" data-mode="watch" data-sub="Θυμόμαστε τι έχουμε ήδη χτίσει — μάτια στην οθόνη">
+  <header class="s-head"><div><div class="s-kicker">🔗 Σύνδεση με το Μάθημα 1ο</div><h2>Τι έχουμε ήδη <span class="hl-l">χτίσει</span></h2></div></header>
+  <div class="s-body">
+    <div class="grid2">
+      <div class="card">
+        <h3>✅ Έτοιμα από την περασμένη εβδομάδα</h3>
+        <ul class="biglist">
+          <li><span class="bn">1</span>Ερευνητικό ερώτημα ανά ομάδα</li>
+          <li><span class="bn">2</span>Αρχική υπόθεση — «Νομίζουμε ότι…»</li>
+          <li><span class="bn">3</span>Κατανομή ρόλων στις ομάδες</li>
+          <li><span class="bn">4</span>Κοινές διαστάσεις κατασκευής</li>
+          <li><span class="bn">5</span>Πρώτη καταγραφή στο Ημερολόγιο Έρευνας</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(255,176,32,.45)">
+        <h3 style="color:var(--amber)">💡 Σήμερα προσθέτουμε</h3>
+        <ul class="biglist critlist">
+          <li><span class="bn">🔎</span>Αξιόπιστες πηγές για το ερώτημά μας</li>
+          <li><span class="bn">📊</span>Σύγκριση με τα επαγγελματικά (benchmark)</li>
+          <li><span class="bn">🔄</span>Αναθεώρηση υπόθεσης με βάση ό,τι βρούμε</li>
+        </ul>
+        <p class="sub" style="margin-top:14px;font-size:1rem">📓 Το Ημερολόγιο Έρευνας μένει ανοιχτό σε κάθε τραπέζι — γράφουμε εκεί στο τέλος.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · GOALS -->
+<section class="slide" data-title="Στόχοι & Κριτήρια Επιτυχίας" data-phase="0" data-mode="watch" data-sub="Ξέρουμε από την αρχή πού πάμε & πότε τα καταφέραμε">
+  <header class="s-head"><div><div class="s-kicker">🎯 Στόχοι μαθήματος</div><h2>Πού πάμε <span class="hl-c">σήμερα</span></h2></div></header>
+  <div class="s-body">
+    <div class="grid2">
+      <div class="card">
+        <h3>Με το τέλος του μαθήματος θα μπορώ να…</h3>
+        <ul class="biglist">
+          <li><span class="bn">1</span>Διακρίνω αξιόπιστες από αναξιόπιστες πηγές</li>
+          <li><span class="bn">2</span>Εντοπίζω πληροφορίες για το ερώτημα της ομάδας μου</li>
+          <li><span class="bn">3</span>Καταγράφω ≥3 πηγές: τίτλο, σύνδεσμο, εύρημα</li>
+          <li><span class="bn">4</span>Συγκρίνω το σχέδιό μας με τα επαγγελματικά</li>
+          <li><span class="bn">5</span>Αναθεωρώ την υπόθεσή μου με βάση τα ευρήματα</li>
+          <li><span class="bn">6</span>Παρουσιάζω το πιο σημαντικό εύρημα σε 1΄</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(166,244,49,.4)">
+        <h3 style="color:var(--lime)">🏁 «Θα το ξέρω ότι τα κατάφερα αν…»</h3>
+        <ul class="biglist critlist">
+          <li><span class="bn">✓</span>Εξηγώ με δικά μου λόγια <b>2 κριτήρια</b> αξιοπιστίας</li>
+          <li><span class="bn">✓</span>Έχω ≥3 πηγές με τίτλο, URL, συγγραφέα &amp; εύρημα</li>
+          <li><span class="bn">✓</span>Έχω διασταυρώσει ≥1 πληροφορία σε 2 ανεξάρτητες πηγές</li>
+          <li><span class="bn">✓</span>Λέω το βασικό εύρημα της ομάδας μου σε 1 λεπτό</li>
+          <li><span class="bn">✓</span>Γράφω στο ημερολόγιο: επιβεβαιώνεται / αλλάζει / ανοιχτή — <b>και γιατί</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · VOCAB -->
+<section class="slide" data-title="Λεξιλόγιο Κλειδιών (κάρτες)" data-phase="0" data-mode="watch" data-sub="Πάτα κάθε κάρτα στην οθόνη για να γυρίσει — μάντεψε πρώτα!">
+  <header class="s-head"><div><div class="s-kicker">📖 Λεξιλόγιο κλειδιών</div><h2>6 λέξεις — <span class="hl-m">κλειδιά</span></h2></div></header>
+  <div class="s-body">
+    <div class="vgrid" data-noswipe>
+      <button class="flip"><div class="flip-in"><div class="flip-f"><small>ΠΑΤΑ ΓΙΑ ΟΡΙΣΜΟ</small><b>Αξιόπιστη πηγή</b><small>👆</small></div><div class="flip-b">Πηγή της οποίας ο <b>συγγραφέας</b>, ο <b>σκοπός</b> και η <b>ημερομηνία</b> μπορούν να ελεγχθούν.</div></div></button>
+      <button class="flip"><div class="flip-in"><div class="flip-f"><small>ΠΑΤΑ ΓΙΑ ΟΡΙΣΜΟ</small><b>Διασταύρωση</b><small>👆</small></div><div class="flip-b">Επιβεβαίωση μιας πληροφορίας σε <b>2+ ανεξάρτητες</b> πηγές. Ο κανόνας είναι απαράβατος!</div></div></button>
+      <button class="flip"><div class="flip-in"><div class="flip-f"><small>ΠΑΤΑ ΓΙΑ ΟΡΙΣΜΟ</small><b>Benchmark</b><small>👆</small></div><div class="flip-b">Σημείο αναφοράς — συγκρίνω <b>το δικό μας</b> με τα <b>επαγγελματικά</b> ποδοσφαιράκια.</div></div></button>
+      <button class="flip"><div class="flip-in"><div class="flip-f"><small>ΠΑΤΑ ΓΙΑ ΟΡΙΣΜΟ</small><b>Υπόθεση</b><small>👆</small></div><div class="flip-b">Πρόταση που κάνουμε <b>πριν</b> ελέγξουμε. Μπορεί — και πρέπει — να αλλάξει αν τα δεδομένα το απαιτούν.</div></div></button>
+      <button class="flip"><div class="flip-in"><div class="flip-f"><small>ΠΑΤΑ ΓΙΑ ΟΡΙΣΜΟ</small><b>Lateral Reading</b><small>👆</small></div><div class="flip-b">«Διαβάζω πλάγια»: ανοίγω <b>νέες καρτέλες</b> για να ελέγξω τον συγγραφέα — όχι μόνο τη σελίδα του.</div></div></button>
+      <button class="flip"><div class="flip-in"><div class="flip-f"><small>ΠΑΤΑ ΓΙΑ ΟΡΙΣΜΟ</small><b>Πρωτογενής πηγή</b><small>👆</small></div><div class="flip-b">Το ίδιο το έγγραφο / προϊόν — π.χ. το <b>επίσημο εγχειρίδιο</b> του κατασκευαστή.</div></div></button>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · ROADMAP -->
+<section class="slide" data-title="Χάρτης 45λέπτου" data-phase="0" data-mode="watch" data-sub="Πάτα ένα στάδιο για να μεταφερθείς εκεί — ο δείκτης 📍 ακολουθεί το ρολόι">
+  <header class="s-head"><div><div class="s-kicker">⏱ Χρονική κατανομή</div><h2>Ο χάρτης των <span class="hl-a">45 λεπτών</span></h2></div></header>
+  <div class="s-body">
+    <div class="roadbar" id="roadbar" data-noswipe>
+      <button class="roadseg" data-jump="1" data-ph="0" style="flex:3;background:linear-gradient(160deg,#7FDBFF,#39C6FF)"><span class="rt">⚡ Αφόρμηση</span><span><span class="rm">3΄</span><span class="rd">«Τι θα του πεις;»</span></span></button>
+      <button class="roadseg" data-jump="6" data-ph="1" style="flex:8;background:linear-gradient(160deg,#8FB4FF,#3D7BFF)"><span class="rt">🛡 Φάση 1<br>Αξιοπιστία</span><span><span class="rm">8΄</span><span class="rd">I Do · We Do · You Do → Φ2</span></span></button>
+      <button class="roadseg" data-jump="11" data-ph="2" style="flex:21;background:linear-gradient(160deg,#C9F97A,#A6F431)"><span class="rt">🔎 Φάση 2<br>Έρευνα ανά ομάδα</span><span><span class="rm">21΄</span><span class="rd">Ρόλοι · λέξεις-κλειδιά · Φ1 (+Φ3 η Ομάδα 5) · έλεγχοι 16΄ &amp; 24΄</span></span></button>
+      <button class="roadseg" data-jump="16" data-ph="3" style="flex:8;background:linear-gradient(160deg,#FF9ADE,#FF5EC8)"><span class="rt">🎤 Φάση 3<br>Παρουσιάσεις</span><span><span class="rm">8΄</span><span class="rd">1΄ ανά ομάδα · Φ6</span></span></button>
+      <button class="roadseg" data-jump="18" data-ph="4" style="flex:5;background:linear-gradient(160deg,#FFCF6B,#FFB020)"><span class="rt">🔄 Φάση 4<br>Αναθεώρηση</span><span><span class="rm">5΄</span><span class="rd">Φ4 · Ημερολόγιο · Φ5</span></span></button>
+    </div>
+    <p class="sub">👀 <b style="color:var(--cyan)">Παρατηρώ</b> · ✍️ <b style="color:var(--amber)">Γράφω στο φυλλάδιο</b> · 💬 <b style="color:var(--magenta)">Συζητώ</b> · 🔎 <b style="color:var(--lime)">Ψάχνω</b> — η ταμπέλα πάνω-δεξιά σε κάθε διαφάνεια σου λέει <b style="color:var(--tx)">τι κάνεις ΤΩΡΑ και πού ακριβώς γράφεις</b>.</p>
+  </div>
+</section>
+
+<!-- 7 · PHASE 1 DIVIDER -->
+<section class="slide" data-title="Φάση 1 — Κριτήρια Αξιοπιστίας" data-phase="1" data-mode="watch" data-sub="Βλέπουμε πώς σκέφτεται ένας ερευνητής — 8΄ (3–11΄)">
+  <div class="s-body">
+    <div class="phase-hero">
+      <div class="phase-num">1</div>
+      <div class="phase-info">
+        <div class="s-kicker">Φάση 1η</div>
+        <h2>Κριτήρια αξιοπιστίας &amp; <span class="hl-c">μοντελοποίηση</span></h2>
+        <div class="timechip">⏱ 8 λεπτά · 3΄–11΄</div>
+        <ul class="biglist">
+          <li><span class="bn">👨‍🏫</span><b>I Do</b>&nbsp;— Ο εκπαιδευτικός «σκέφτεται δυνατά» μπροστά σε 2 πηγές</li>
+          <li><span class="bn">🤝</span><b>We Do</b>&nbsp;— Ελέγχουμε ΜΑΖΙ μια τρίτη πηγή, ζωντανά στην οθόνη</li>
+          <li><span class="bn">🫵</span><b>You Do</b>&nbsp;— Κάθε ομάδα αξιολογεί τη δική της κάρτα → <b style="color:var(--amber)">Φυλλάδιο 2</b> + ψήφος 🟢/🔴</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · I DO -->
+<section class="slide" data-title="I Do — Δύο πηγές, σκέψη δυνατά" data-phase="1" data-mode="watch" data-sub="Παρατηρώ πώς ελέγχεται μια πηγή — τα βήματα ανάβουν στην οθόνη">
+  <header class="s-head"><div><div class="s-kicker">Φάση 1 · I Do — Επίδειξη (3΄)</div><h2>Δύο πηγές. <span class="hl-c">Ποια πιστεύεις;</span></h2></div></header>
+  <div class="s-body">
+    <div class="grid2">
+      <div class="src src-good" id="srcA">
+        <span class="src-tag">ΠΗΓΗ Α</span>
+        <h4>🏭 GARLANDO G5000 — Επίσημες προδιαγραφές</h4>
+        <div class="srow f-author"><span class="si">👤</span><span><b>Garlando S.p.A.</b> — επίσημη ιστοσελίδα κατασκευαστή</span></div>
+        <div class="srow f-date"><span class="si">📅</span><span>Ενημέρωση: <b>03/2026</b> — πρόσφατη</span></div>
+        <div class="srow f-purpose"><span class="si">🎯</span><span>Σκοπός: τεχνική ενημέρωση προϊόντος — «Ύψος πλευρών: <b>12 cm</b> · MDF 25 mm»</span></div>
+        <div class="srow f-ref"><span class="si">📄</span><span>Παραπομπές: Εγχειρίδιο G5000 (PDF) · πιστοποίηση ITSF</span></div>
+        <div class="verdict v-good" id="verdictA">✅ ΑΞΙΟΠΙΣΤΗ — φορέας, ημερομηνία, τεκμηρίωση</div>
+      </div>
+      <div class="src src-bad" id="srcB">
+        <span class="src-tag">ΠΗΓΗ Β</span>
+        <h4>💬 FoosMaster Forum — «Τα 5 cm είναι τέλεια!»</h4>
+        <div class="srow f-author"><span class="si">👤</span><span><b>kicker99</b> — ανώνυμος χρήστης, κανένα στοιχείο</span></div>
+        <div class="srow f-date"><span class="si">📅</span><span>Ημερομηνία: <b>—</b> (κανένα ίχνος)</span></div>
+        <div class="srow f-purpose"><span class="si">🎯</span><span>«Τα καλύτερα έχουν 5 cm. Trust me!» + 🛒 «Αγόρασε φθηνά εδώ!»</span></div>
+        <div class="srow f-ref"><span class="si">📄</span><span>Παραπομπές: <b>καμία</b> — «το ξέρω από χρόνια»</span></div>
+        <div class="verdict v-bad" id="verdictB">❌ ΜΗ ΑΞΙΟΠΙΣΤΗ ως μοναδική πηγή</div>
+      </div>
+    </div>
+    <div class="thinkbar" data-noswipe>
+      <div class="thinkbubble"><span class="ti">🧠</span><span id="idoStep">Πάτα «Σκέψη δυνατά» για να ακούσεις τι σκέφτεται ένας ερευνητής…</span></div>
+      <div class="dots" id="idoDots"><span></span><span></span><span></span><span></span></div>
+      <button class="btn btn-blue" id="idoBtn">🧠 Σκέψη δυνατά ▶</button>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · WE DO — SOURCE INSPECTOR SIM -->
+<section class="slide" data-title="We Do — Ζωντανός έλεγχος πηγής 🧪" data-phase="1" data-mode="talk" data-sub="Εφαρμόζουμε τα 5 κριτήρια ΜΑΖΙ — φώναξε την απάντηση πριν πατηθεί!">
+  <header class="s-head"><div><div class="s-kicker">Φάση 1 · We Do — Μαζί (3΄) · 🧪 ΠΡΟΣΟΜΟΙΩση 1</div><h2>Ελέγχουμε μια πηγή <span class="hl-a">ζωντανά</span></h2></div></header>
+  <div class="s-body">
+    <div class="wedo-grid" data-noswipe>
+      <div class="webpage">
+        <div class="wp-bar"><span class="dot" style="background:#FF6B5E"></span><span class="dot" style="background:#FFC85C"></span><span class="dot" style="background:#7DD957"></span>🔗 foosfans.wiki/kataskevi-podosfairaki</div>
+        <div class="wp-body">
+          <div class="wp-main">
+            <h4>Κατασκευή ποδοσφαιράκι — Οδηγός</h4>
+            <div class="wpr wp-byline" id="wd-author">Από: <b>FoosFan2019</b> ✏️ — «οποιοσδήποτε μπορεί να επεξεργαστεί αυτό το άρθρο»</div>
+            <div class="wpr" id="wd-claim"><p class="wp-claim">«Τα καλύτερα ποδοσφαιράκια έχουν <mark>ύψος πλευρών 5 cm</mark>. Το ξέρω από χρόνια ενασχόλησης.»</p></div>
+            <div class="wpr wp-byline" id="wd-date">🕓 Τελευταία επεξεργασία: <b>14/06/2019</b></div>
+            <div class="wpr wp-byline" id="wd-refs">📚 Παραπομπές: <b>καμία</b> — δεν υπάρχει βιβλιογραφία</div>
+          </div>
+          <div class="wp-side">
+            <div class="wp-ad" id="wd-ad"><span class="big">🛒 ΠΡΟΣΦΟΡΑ!</span>Ποδοσφαιράκια −50%<br>ΑΓΟΡΑΣΕ ΤΩΡΑ →</div>
+            <div class="wp-ad" style="background:linear-gradient(160deg,#D8F0FF,#A8D8F0);border-color:#4A8AB0;color:#1E4A66">✏️ Κάνε edit<br>το άρθρο!</div>
+          </div>
+        </div>
+      </div>
+      <div class="wd-panel">
+        <button class="crit" id="wdC1"><span class="cn">1</span><span class="ct"><b>👤 Ποιος είναι ο συντάκτης;</b><small id="wdE1"></small></span><span class="cstat" id="wdS1">—</span></button>
+        <button class="crit" id="wdC2"><span class="cn">2</span><span class="ct"><b>🎯 Ποιος είναι ο σκοπός;</b><small id="wdE2"></small></span><span class="cstat" id="wdS2">—</span></button>
+        <button class="crit" id="wdC3"><span class="cn">3</span><span class="ct"><b>📅 Υπάρχει πρόσφατη ημερομηνία;</b><small id="wdE3"></small></span><span class="cstat" id="wdS3">—</span></button>
+        <button class="crit" id="wdC4"><span class="cn">4</span><span class="ct"><b>📚 Υπάρχουν παραπομπές;</b><small id="wdE4"></small></span><span class="cstat" id="wdS4">—</span></button>
+        <button class="crit" id="wdC5"><span class="cn">5</span><span class="ct"><b>⚖️ Διασταυρώνεται;</b><small id="wdE5"></small></span><span class="cstat" id="wdS5">—</span></button>
+        <div class="meterrow"><div class="meter"><i id="wdMeterFill"></i></div><span id="wdScore">Ναι: 0/5</span></div>
+        <div class="row" style="gap:8px">
+          <button class="btn btn-blue btn-sm" id="wdLateral">🔎 Lateral Reading</button>
+          <button class="btn btn-lime btn-sm" id="wdCross">⚖️ Διασταύρωσε με επίσημη πηγή</button>
+          <button class="btn btn-ghost btn-sm" id="wdReset">↺</button>
+        </div>
+        <div class="wd-extra" id="wdLatPanel"><b>🔎 Νέα καρτέλα: «foosfans wiki — ποιος γράφει;»</b><br>• «Ανοιχτή εγκυκλοπαίδεια — επεξεργασία από τον καθένα»<br>• Σχόλιο χρήστη: «ο FoosFan2019 πουλάει ανταλλακτικά…» → <b>άγνωστος + πιθανό συμφέρον</b></div>
+        <div class="wd-extra" id="wdProCard"><b>🏭 GARLANDO G5000 (03/2026):</b> «Ύψος πλευρών: <b>12 cm</b>» → Η πληροφορία των 5 cm <b style="color:var(--red)">ΔΙΑΨΕΥΔΕΤΑΙ</b>. 12 ≠ 5!</div>
+        <div id="wdVerdict">❌ ΜΗ ΑΞΙΟΠΙΣΤΗ ως μοναδική πηγή<small>Δεν την πετάμε στα σκουπίδια — την κρατάμε ΜΟΝΟ αν διασταυρωθεί. Εδώ διαψεύστηκε: τα επαγγελματικά έχουν 10–15 cm.</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · GOLDEN RULE -->
+<section class="slide" data-title="Ο Χρυσός Κανόνας 4/5" data-phase="1" data-mode="watch" data-sub="Αποστηθίζουμε τον κανόνα — σε λίγο γράφουμε στο Φυλλάδιο 2" data-sec="📄 Σε λίγο: Φυλλάδιο 2">
+  <header class="s-head"><div><div class="s-kicker">Φάση 1 · Ο κανόνας τσέπης</div><h2>Ο χρυσός κανόνας <span class="hl-a">4 / 5</span></h2></div></header>
+  <div class="s-body">
+    <div class="grid3">
+      <div class="card"><h3>1️⃣ 👤 Ποιος;</h3><p class="sub">Γνωστός οργανισμός, κατασκευαστής, πανεπιστήμιο — όχι άγνωστος χρήστης.</p></div>
+      <div class="card"><h3>2️⃣ 🎯 Γιατί;</h3><p class="sub">Ενημέρωση / εκπαίδευση. Αν <b style="color:var(--red)">πουλάει κάτι</b>, προσοχή στα συμφέροντα.</p></div>
+      <div class="card"><h3>3️⃣ 📅 Πότε;</h3><p class="sub">Υπάρχει ημερομηνία; Για τεχνολογία θέλουμε <b>έως 2–3 ετών</b>.</p></div>
+      <div class="card"><h3>4️⃣ 📚 Τεκμηρίωση;</h3><p class="sub">Αναφέρει άλλες πηγές, στοιχεία, βιβλιογραφία;</p></div>
+      <div class="card"><h3>5️⃣ ⚖️ Διασταύρωση;</h3><p class="sub">Η ίδια πληροφορία σε <b>2η ανεξάρτητη</b> πηγή. Απαράβατο!</p></div>
+      <div class="card" style="border-color:var(--amber);background:linear-gradient(150deg,rgba(255,176,32,.14),rgba(255,138,0,.06))">
+        <h3 style="color:var(--amber)">🏆 Ο ΚΑΝΟΝΑΣ</h3>
+        <p class="sub"><b style="color:var(--green);font-size:1.3em">4/5 «Ναι» → αξιόπιστη.</b><br><b style="color:var(--red);font-size:1.3em">2+ «Όχι» → ψάξε αλλού.</b><br>Πληροφορία από φόρουμ; Μόνο με διασταύρωση.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · YOU DO -->
+<section class="slide" data-title="You Do — Κάρτα ανά ομάδα + ψήφος" data-phase="1" data-mode="write" data-sub="Φυλλάδιο 2 — οι 5 ερωτήσεις ελέγχου για την κάρτα της ομάδας σας (2΄)">
+  <header class="s-head"><div><div class="s-kicker">Φάση 1 · You Do — Έλεγχος κατανόησης (2΄)</div><h2>Η κάρτα της <span class="hl-l">ομάδας σου</span></h2></div></header>
+  <div class="s-body">
+    <div class="row" style="justify-content:space-between">
+      <p class="sub">✍️ <b style="color:var(--amber)">Γράψτε ΤΩΡΑ στο Φυλλάδιο 2</b> τις 5 απαντήσεις για την κάρτα σας → μετά σηκώστε <b style="color:var(--green)">πράσινο</b> / <b style="color:var(--red)">κόκκινο</b> χαρτί!</p>
+      <div class="mtimer" data-noswipe><span class="mt-t" id="mtYDtime">2:00</span><button class="mt-go" id="mtYDbtn" title="Έναρξη/παύση">▶</button><button id="mtYDrst" title="Επαναφορά">↺</button></div>
+    </div>
+    <div class="vcgrid" data-noswipe>
+      <div class="vc" id="vc1" data-ok="1" data-why="Διεθνής ομοσπονδία (ITSF) — επίσημος φορέας, ημερομηνία, κανονισμοί με τεκμηρίωση.">
+        <button class="vcflip"><div class="vcflip-in"><div class="vcf"><small>ΟΜΑΔΑ</small><b>1</b><span class="qm">🃏</span><small>ΠΑΤΑ ΝΑ ΓΥΡΙΣΕΙ</small></div>
+        <div class="vcb"><b>📜 ITSF — Official Rules 2026</b><span>👤 Διεθνής Ομοσπονδία Table Soccer</span><span>📅 01/2026</span><span>🎯 Επίσημοι κανονισμοί &amp; προδιαγραφές</span><span class="vm">Πάτα 🟢 ή 🔴 αφού γράψετε στο Φ2</span></div></div></button>
+        <div class="vcvote"><button class="vg" title="Αξιόπιστη">🟢</button><button class="vr" title="Όχι αξιόπιστη">🔴</button></div><div class="vcres"></div>
+      </div>
+      <div class="vc" id="vc2" data-ok="0" data-why="Άγνωστος χρήστης, χωρίς ημερομηνία & τεκμηρίωση — χρησιμοποιείται ΜΟΝΟ με διασταύρωση.">
+        <button class="vcflip"><div class="vcflip-in"><div class="vcf"><small>ΟΜΑΔΑ</small><b>2</b><span class="qm">🃏</span><small>ΠΑΤΑ ΝΑ ΓΥΡΙΣΕΙ</small></div>
+        <div class="vcb"><b>💬 Forum: «Τα 5 cm είναι τέλεια!»</b><span>👤 kicker99 — ανώνυμος</span><span>📅 χωρίς ημερομηνία</span><span>🎯 «Trust me» + διαφημιστικά links</span><span class="vm">Πάτα 🟢 ή 🔴 αφού γράψετε στο Φ2</span></div></div></button>
+        <div class="vcvote"><button class="vg">🟢</button><button class="vr">🔴</button></div><div class="vcres"></div>
+      </div>
+      <div class="vc" id="vc3" data-ok="1" data-why="Επίσημος κατασκευαστής — πρωτογενής πηγή για το ίδιο του το προϊόν, με ημερομηνία.">
+        <button class="vcflip"><div class="vcflip-in"><div class="vcf"><small>ΟΜΑΔΑ</small><b>3</b><span class="qm">🃏</span><small>ΠΑΤΑ ΝΑ ΓΥΡΙΣΕΙ</small></div>
+        <div class="vcb"><b>🏭 Bonzini B90 — Τεχνικά χαρακτηριστικά</b><span>👤 Bonzini France (επίσημο site)</span><span>📅 2025</span><span>🎯 Προδιαγραφές προϊόντος + εγχειρίδιο</span><span class="vm">Πάτα 🟢 ή 🔴 αφού γράψετε στο Φ2</span></div></div></button>
+        <div class="vcvote"><button class="vg">🟢</button><button class="vr">🔴</button></div><div class="vcres"></div>
+      </div>
+      <div class="vc" id="vc4" data-ok="0" data-why="Πουλάει κάτι — affiliate links, κανένας συγγραφέας, καμία τεκμηρίωση. Εμπορικό συμφέρον!">
+        <button class="vcflip"><div class="vcflip-in"><div class="vcf"><small>ΟΜΑΔΑ</small><b>4</b><span class="qm">🃏</span><small>ΠΑΤΑ ΝΑ ΓΥΡΙΣΕΙ</small></div>
+        <div class="vcb"><b>📝 Blog «FoosDeals»: «Τα καλύτερα υλικά»</b><span>👤 χωρίς συγγραφέα</span><span>📅 2021</span><span>🎯 Πωλήσεις — «αγόρασε από εδώ» (affiliate)</span><span class="vm">Πάτα 🟢 ή 🔴 αφού γράψετε στο Φ2</span></div></div></button>
+        <div class="vcvote"><button class="vg">🟢</button><button class="vr">🔴</button></div><div class="vcres"></div>
+      </div>
+      <div class="vc" id="vc5" data-ok="1" data-why="Επίσημος εκπαιδευτικός φορέας (Ι.Ε.Π.) — τεκμηριωμένο υλικό. Ελέγχουμε πάντα την ημερομηνία!">
+        <button class="vcflip"><div class="vcflip-in"><div class="vcf"><small>ΟΜΑΔΑ</small><b>5</b><span class="qm">🃏</span><small>ΠΑΤΑ ΝΑ ΓΥΡΙΣΕΙ</small></div>
+        <div class="vcb"><b>🎓 Ι.Ε.Π. — Οδηγός Ερευνητικής Εργασίας</b><span>👤 Ινστιτούτο Εκπαιδευτικής Πολιτικής</span><span>📅 2024</span><span>🎯 Εκπαιδευτικό υλικό με βιβλιογραφία</span><span class="vm">Πάτα 🟢 ή 🔴 αφού γράψετε στο Φ2</span></div></div></button>
+        <div class="vcvote"><button class="vg">🟢</button><button class="vr">🔴</button></div><div class="vcres"></div>
+      </div>
+    </div>
+    <p class="sub" style="font-size:.95rem">🖐 Σημείο ελέγχου: «Πες μου <b style="color:var(--tx)">ένα</b> κριτήριο αξιοπιστίας με δικά σου λόγια» — αν δυσκολευόμαστε, ξανακάνουμε το «We Do»!</p>
+  </div>
+</section>
+
+<!-- 12 · PHASE 2 DIVIDER / ROLES -->
+<section class="slide" data-title="Φάση 2 — Ρόλοι στην ομάδα" data-phase="2" data-mode="watch" data-sub="Μοιράζουμε ρόλους — εναλλαγή στο Μάθημα 3">
+  <div class="s-body">
+    <div class="row" style="justify-content:space-between;align-items:flex-end">
+      <div><div class="s-kicker">Φάση 2η · 11΄–32΄</div><h2>Έρευνα ανά ομάδα — <span class="hl-l">3 ρόλοι</span></h2></div>
+      <div class="timechip" style="margin:0">⏱ 21 λεπτά</div>
+    </div>
+    <div class="grid3">
+      <div class="card rolecard"><span class="ri">🔎</span><h3>Ερευνητής/-τρια</h3><p>Ψάχνει με λέξεις-κλειδιά, ανοίγει σελίδες, προτείνει πηγές.</p><span class="rot">↻ Εναλλαγή στο Μάθημα 3</span></div>
+      <div class="card rolecard"><span class="ri">✅</span><h3>Ελεγκτής/-τρια Αξιοπιστίας</h3><p>Εφαρμόζει τα 5 κριτήρια. Ρωτά: «Ποιος το λέει; Γιατί; Πότε;»</p><span class="rot">↻ Εναλλαγή στο Μάθημα 3</span></div>
+      <div class="card rolecard"><span class="ri">📝</span><h3>Γραμματέας</h3><p>Συμπληρώνει το <b style="color:var(--amber)">Φυλλάδιο 1</b>. Κρατά σημειώσεις για την παρουσίαση.</p><span class="rot">↻ Εναλλαγή στο Μάθημα 3</span></div>
+    </div>
+    <p class="sub">🔄 <b style="color:var(--tx)">Γιατί ρόλοι;</b> Κάθε μέλος έχει συγκεκριμένη ευθύνη — κανείς δεν «χάνεται». Οι ρόλοι εναλλάσσονται ώστε όλοι να αναπτύξουν όλες τις δεξιότητες.</p>
+  </div>
+</section>
+
+<!-- 13 · KEYWORDS -->
+<section class="slide" data-title="Λέξεις-κλειδιά & επίπεδα ανά ομάδα" data-phase="2" data-mode="watch" data-sub="Διάλεξε ομάδα & επίπεδο — πάτα μια λέξη-κλειδί για αντιγραφή">
+  <header class="s-head"><div><div class="s-kicker">Φάση 2 · Εργαλεία αναζήτησης</div><h2>Τράπεζα <span class="hl-l">λέξεων-κλειδιών</span></h2></div></header>
+  <div class="s-body">
+    <div class="kwtabs" id="kwTabs" data-noswipe>
+      <button class="kwtab on" data-g="0">ΟΜΑΔΑ 1</button><button class="kwtab" data-g="1">ΟΜΑΔΑ 2</button><button class="kwtab" data-g="2">ΟΜΑΔΑ 3</button><button class="kwtab" data-g="3">ΟΜΑΔΑ 4</button><button class="kwtab" data-g="4">ΟΜΑΔΑ 5</button>
+    </div>
+    <div class="card">
+      <h3 id="kwTitle" style="color:var(--cyan)">🔍 Διαστάσεις &amp; ύψος πλευρών — υλικά κατασκευής</h3>
+      <div class="kwchips" id="kwChips" data-noswipe></div>
+      <p class="sub" id="kwNote" style="margin-top:10px;font-size:.95rem"></p>
+    </div>
+    <div class="grid3">
+      <div class="lvl lvl-b"><b>🟦 Βάση — Στήριξη</b>2 έτοιμες πηγές από τον εκπαιδευτικό (1 αξιόπιστη, 1 όχι) → αξιολόγηση με Φ2 → βρίσκεις 1 δική σου.</div>
+      <div class="lvl lvl-c"><b>🟩 Πυρήνας — Αναμενόμενο</b>3 πηγές με λέξεις-κλειδιά → 5 κριτήρια σε κάθε μία → πλήρης καταγραφή στο Φ1.</div>
+      <div class="lvl lvl-e"><b>🟧 Επέκταση — Πρόκληση</b>4–5 πηγες &amp; σύγκριση → εντοπίζεις αντίφαση ή προκατάληψη → προτείνεις νέο ερώτημα.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · SHEET 1 ANATOMY -->
+<section class="slide" data-title="Φυλλάδιο 1 — Πού ακριβώς γράφω" data-phase="2" data-mode="write" data-sub="Φυλλάδιο 1 — κεφαλίδα ΤΩΡΑ: Ομάδα · Ημερομηνία · Ερευνητικό ερώτημα">
+  <header class="s-head"><div><div class="s-kicker">Φάση 2 · Τι σημαίνει «καλή καταγραφή»</div><h2>Φυλλάδιο 1: <span class="hl-a">6 πεδία</span> ανά πηγή</h2></div></header>
+  <div class="s-body">
+    <div class="grid2">
+      <div class="paper">
+        <h4>📚 ΦΥΛΛΟ ΚΑΤΑΓΡΑΦΗΣ ΠΗΓΩΝ <span class="ptag">ΦΥΛΛΑΔΙΟ 1</span></h4>
+        <div class="pf"><span class="n">✏</span><b>Κεφαλίδα (ΤΩΡΑ):</b><span class="blank">Ομάδα · Ημερομηνία · Ερευνητικό ερώτημα</span></div>
+        <div class="pf"><span class="n">1</span><b>Τίτλος:</b><span class="blank"></span></div>
+        <div class="pf"><span class="n">2</span><b>Σύνδεσμος (URL):</b><span class="blank"></span></div>
+        <div class="pf"><span class="n">3</span><b>Συγγραφέας / Φορέας:</b><span class="blank"></span></div>
+        <div class="pf"><span class="n">4</span><b>Ημερομηνία δημοσίευσης:</b><span class="blank"></span></div>
+        <div class="pf"><span class="n">5</span><b>Τι βρήκαμε (βασικό εύρημα):</b><span class="blank"></span></div>
+        <div class="pf"><span class="n">6</span><b>Αξιόπιστη γιατί;</b><span class="blank"></span></div>
+        <p class="pnote">📌 Τουλάχιστον 3 πηγές — επανάληψη των 6 πεδίων για «Πηγή 2» και «Πηγή 3». Φόρουμ; → διασταύρωση με 2 ανεξάρτητες!</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="paper" style="transform:rotate(.4deg)">
+          <h4>✅ ΠΑΡΑΔΕΙΓΜΑ ΣΩΣΤΗΣ ΕΓΓΡΑΦΗΣ <span class="ptag">ΠΗΓΗ 1</span></h4>
+          <div class="pf"><span class="n">1</span><span class="filled">«Garlando G5000 — Technical Specifications»</span></div>
+          <div class="pf"><span class="n">2</span><span class="filled">garlando.com/g5000-specs</span></div>
+          <div class="pf"><span class="n">3</span><span class="filled">Garlando S.p.A. (κατασκευαστής)</span></div>
+          <div class="pf"><span class="n">4</span><span class="filled">03/2026</span></div>
+          <div class="pf"><span class="n">5</span><span class="filled">Ύψος πλευρών 12 cm — επιφάνεια MDF 25 mm</span></div>
+          <div class="pf"><span class="n">6</span><span class="filled">Επίσημος φορέας + ημερομηνία + διασταύρωση με ITSF ✓</span></div>
+        </div>
+        <div class="card" style="border-color:rgba(255,94,200,.5)">
+          <h3 style="color:var(--magenta)">⭐ Ειδική αποστολή ΟΜΑΔΑΣ 5 — Φυλλάδιο 3</h3>
+          <p class="sub" style="font-size:.98rem">Πίνακας benchmark <b style="color:var(--tx)">3 επαγγελματικών</b> (Garlando · Tornado · Bonzini): διαστάσεις, ύψος πλευρών, υλικά επιφάνειας/πλευρών/ράβδων/παικτών, στήριξη, μπάλα, τιμή → στήλη <b style="color:var(--amber)">«Το Δικό Μας»</b>. Θα τον χρησιμοποιήσει ΟΛΗ η τάξη στο επόμενο μάθημα!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 · RESEARCH TIMER -->
+<section class="slide" data-title="Ώρα έρευνας — 21΄ με σημεία ελέγχου" data-phase="2" data-mode="search" data-sub="Στον υπολογιστή της ομάδας: λέξεις-κλειδιά → 5 κριτήρια → καταγραφή" data-sec="✍️ Φυλλάδιο 1 · Πηγές 1–3 (+ Φυλλάδιο 3 η Ομάδα 5)">
+  <header class="s-head"><div><div class="s-kicker">Φάση 2 · Αναζήτηση &amp; καταγραφή</div><h2>Ψάχνουμε <span class="hl-l">ΤΩΡΑ</span> — 21΄</h2></div></header>
+  <div class="s-body">
+    <div class="res-grid">
+      <div class="card" data-noswipe>
+        <div class="bigtime" id="rTime">21:00</div>
+        <div class="rbarwrap"><div id="rBar"></div>
+          <div class="rmark" id="rMark1" style="left:23.8%"></div><div class="rmarklbl" style="left:23.8%">16΄ παγκ. · «Δείξε την καλύτερη πηγή»</div>
+          <div class="rmark" id="rMark2" style="left:61.9%"></div><div class="rmarklbl" style="left:61.9%">24΄ παγκ. · «Έχετε ≥2 πηγές;»</div>
+        </div>
+        <div class="rcontrols">
+          <button class="btn btn-lime" id="rStart">▶ ΕΝΑΡΞΗ ΕΡΕΥΝΑΣ</button>
+          <button class="btn btn-ghost" id="rReset">↺ Επαναφορά</button>
+        </div>
+        <p class="sub" style="text-align:center;margin-top:14px;font-size:.95rem">🔔 Στα σημεία ελέγχου η οθόνη θα «χτυπήσει» — ο εκπαιδευτικός περνά από κάθε ομάδα.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="card">
+          <h3 style="color:var(--amber)">✍️ Καθώς ψάχνεις → Φυλλάδιο 1</h3>
+          <ul class="checklist">
+            <li><span class="ci">1️⃣</span>Λέξεις-κλειδιά της ομάδας σου (αγγλικά!)</li>
+            <li><span class="ci">2️⃣</span>5 κριτήρια σε ΚΑΘΕ πηγή — «Ποιος; Γιατί; Πότε;»</li>
+            <li><span class="ci">3️⃣</span>Καταγραφή 6 πεδίων — Πηγή 1, 2, 3…</li>
+            <li><span class="ci">4️⃣</span>Διασταύρωση ≥1 πληροφορίας σε 2η πηγή</li>
+            <li><span class="ci">5️⃣</span>Διάλεξε το <b>1 πιο σημαντικό εύρημα</b> για την ολομέλεια</li>
+          </ul>
+        </div>
+        <div class="card" style="padding:14px 18px">
+          <p class="sub" style="font-size:.95rem">💬 Αν κολλήσεις, ρώτα τον εαυτό σου: <b style="color:var(--cyan)">«Ποιος το γράφει; Πώς το ξέρει; Πουλάει κάτι; Έχω δεύτερη πηγή;»</b></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 · BENCHMARK LAB -->
+<section class="slide" data-title="🧪 Εργαστήριο Benchmark — 3 προσομοιώσεις" data-phase="2" data-mode="watch" data-sub="Ζωντανή προσομοίωση — ΠΡΟΒΛΕΨΕ πριν πατηθεί το κουμπί!">
+  <header class="s-head"><div><div class="s-kicker">Φάση 2 · ★ Ζωντανή επίδειξη — 🧪 ΠΡΟΣΟΜΟΙΩΣΕΙΣ 2–4</div><h2>Εργαστήριο <span class="hl-c">Benchmark</span></h2></div></header>
+  <div class="s-body">
+    <div class="labtabs" id="labTabs" data-noswipe>
+      <button class="labtab on" data-sim="wall">🧱 Ύψος πλευρών — «5 cm;»</button>
+      <button class="labtab" data-sim="race">🏁 Επιφάνειες &amp; μπάλα</button>
+      <button class="labtab" data-sim="rod">⚙️ Τριβή ράβδων</button>
+    </div>
+
+    <!-- WALL -->
+    <div class="simpane on" id="paneWall" data-noswipe>
+      <div class="sim-grid">
+        <div class="sim-stage"><canvas id="wallCv"></canvas><div class="sim-verdict" id="wallVerdict"></div></div>
+        <div class="sim-controls">
+          <div class="ctl"><label>🧱 Υψος πλευρας <output id="wHout">5 cm</output></label><input type="range" id="wH" min="2" max="20" step="1" value="5"></div>
+          <div class="ctl"><label>💥 Δυναμη σουτ <output id="wPout">65</output></label><input type="range" id="wP" min="30" max="100" step="1" value="65"></div>
+          <div class="ctl"><label>📐 Γωνια σουτ <output id="wAout">32°</output></label><input type="range" id="wA" min="10" max="60" step="1" value="32"></div>
+          <div class="ctl"><label>⚽ Μπαλα</label><div class="seg2"><button id="wBallCork" class="on">🟤 Φελλός</button><button id="wBallPing">⚪ Πινγκ-πονγκ</button></div></div>
+          <label class="tgl">👣 Ιχνος τροχιάς<input type="checkbox" id="wTrail" checked><span class="tk"></span></label>
+          <label class="tgl">🐢 Αργή κίνηση<input type="checkbox" id="wSlow"><span class="tk"></span></label>
+          <button class="btn btn-hot" id="wLaunch" style="width:100%">🚀 ΕΚΤΟΞΕΥΣΗ!</button>
+          <div class="row" style="gap:8px"><button class="btn btn-ghost btn-sm" id="wPre5" style="flex:1">🔴 Forum: 5 cm</button><button class="btn btn-ghost btn-sm" id="wPre12" style="flex:1">🟢 Επαγγ.: 12 cm</button></div>
+          <button class="btn btn-ghost btn-sm" id="wReset" style="width:100%">↺ Μηδενισμός μετρητών</button>
+        </div>
+      </div>
+      <div class="predline" id="wallPred">🔮 Πρόβλεψη: —</div>
+      <div class="simstats"><span class="stat">Βολές <b id="wsShots">0</b></span><span class="stat good">✅ Μέσα <b id="wsIn">0</b></span><span class="stat bad">❌ Έξω <b id="wsOut">0</b></span></div>
+      <p class="labnote"><span class="grp">Ομάδα 1:</span> τα επαγγελματικά έχουν ύψος πλευρών <b style="color:var(--lime)">10–15 cm</b> — δοκίμασε τα 5 cm του φόρουμ! <span style="opacity:.7">· Η προσομοίωση είναι ενδεικτική — επιβεβαίωσε με τις πηγές σου.</span></p>
+    </div>
+
+    <!-- RACE -->
+    <div class="simpane" id="paneRace" data-noswipe>
+      <div class="sim-grid">
+        <div class="sim-stage"><canvas id="raceCv"></canvas><div class="sim-verdict" id="raceVerdict"></div></div>
+        <div class="sim-controls">
+          <div class="ctl"><label>⚽ Μπαλα (ίδια για όλους)</label><div class="seg2"><button id="rBallCork" class="on">🟤 Φελλός</button><button id="rBallPing">⚪ Πινγκ-πονγκ</button></div></div>
+          <div class="ctl"><label>💥 Ωθηση εκκινησης <output id="rImpOut">62</output></label><input type="range" id="rImp" min="40" max="100" step="1" value="62"></div>
+          <div class="ctl"><label>🛤 Διαδρομος 1 — επιφάνεια</label><select class="sel" id="rS1"><option value="MDF" selected>MDF (τραχιά)</option><option value="Laminate">Laminate</option><option value="Glass">Γυαλί (λεία)</option><option value="Felt">Τσόχα</option></select></div>
+          <div class="ctl"><label>🛤 Διαδρομος 2 — επιφάνεια</label><select class="sel" id="rS2"><option value="MDF">MDF (τραχιά)</option><option value="Laminate" selected>Laminate</option><option value="Glass">Γυαλί (λεία)</option><option value="Felt">Τσόχα</option></select></div>
+          <div class="ctl"><label>🛤 Διαδρομος 3 — επιφάνεια</label><select class="sel" id="rS3"><option value="MDF">MDF (τραχιά)</option><option value="Laminate">Laminate</option><option value="Glass" selected>Γυαλί (λεία)</option><option value="Felt">Τσόχα</option></select></div>
+          <label class="tgl">📏 Χάρακας cm<input type="checkbox" id="rRulers" checked><span class="tk"></span></label>
+          <label class="tgl">🐢 Αργή κίνηση<input type="checkbox" id="rSlow"><span class="tk"></span></label>
+          <button class="btn btn-hot" id="rGo" style="width:100%">🏁 ΕΚΚΙΝΗΣΗ!</button>
+          <button class="btn btn-ghost btn-sm" id="rReset2" style="width:100%">↺ Επαναφορά</button>
+        </div>
+      </div>
+      <div class="simstats"><span class="stat" id="rs1">1: —</span><span class="stat" id="rs2">2: —</span><span class="stat" id="rs3">3: —</span></div>
+      <p class="labnote"><span class="grp">Ομάδα 2:</span> «Ο φελλός κυλά καλύτερα σε τραχιές επιφάνειες, το πινγκ-πονγκ σε λείες» — <b style="color:var(--lime)">επιβεβαιώνεται;</b> Άλλαξε μπάλα &amp; ξανατρέξε! <span style="opacity:.7">· Ενδεικτική προσομοίωση.</span></p>
+    </div>
+
+    <!-- ROD -->
+    <div class="simpane" id="paneRod" data-noswipe>
+      <div class="sim-grid">
+        <div class="sim-stage"><canvas id="rodCv"></canvas><div class="sim-verdict" id="rodVerdict"></div></div>
+        <div class="sim-controls">
+          <div class="ctl"><label>🔴 Στηριξη ράβδου Α (πάνω)</label><select class="sel" id="rodA"><option value="hole" selected>Απλή τρύπα 13 mm</option><option value="brass">Ορειχάλκινος δακτύλιος</option><option value="bearing">Ρουλεμάν (bearing)</option></select></div>
+          <div class="ctl"><label>🔵 Στηριξη ράβδου Β (κάτω)</label><select class="sel" id="rodB"><option value="hole">Απλή τρύπα 13 mm</option><option value="brass">Ορειχάλκινος δακτύλιος</option><option value="bearing" selected>Ρουλεμάν (bearing)</option></select></div>
+          <div class="ctl"><label>💪 Δυναμη ώθησης <output id="rodImpOut">70</output></label><input type="range" id="rodImp" min="40" max="100" step="1" value="70"></div>
+          <div class="ctl"><label>🧲 Συντελεστής τριβής ×<output id="rodMuOut">1.0</output></label><input type="range" id="rodMu" min="0.5" max="3" step="0.1" value="1"></div>
+          <label class="tgl">👻 Ίχνη κίνησης<input type="checkbox" id="rodTrace" checked><span class="tk"></span></label>
+          <label class="tgl">🐢 Αργή κίνηση<input type="checkbox" id="rodSlow"><span class="tk"></span></label>
+          <button class="btn btn-hot" id="rodPush" style="width:100%">⚡ ΩΘΗΣΗ &amp; ΣΤΡΙΨΙΜΟ!</button>
+          <button class="btn btn-ghost btn-sm" id="rodReset3" style="width:100%">↺ Επαναφορά</button>
+          <p class="sub" style="font-size:.8rem">👆 Σύρε μια ράβδο με το δάχτυλο &amp; άσε την απότομα — «φλικ»!</p>
+        </div>
+      </div>
+      <div class="simstats"><span class="stat" id="ro1">🔴 —</span><span class="stat" id="ro2">🔵 —</span></div>
+      <p class="labnote"><span class="grp">Ομάδα 3:</span> τα επαγγελματικά χρησιμοποιούν <b style="color:var(--lime)">ρουλεμάν</b> — εμείς θα δοκιμάσουμε τρύπα 13 mm. Πόση διαφορά κάνει; <span style="opacity:.7">· Ενδεικτική προσομοίωση.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 17 · PHASE 3 DIVIDER -->
+<section class="slide" data-title="Φάση 3 — Κανόνες παρουσίασης 1-1-1-1" data-phase="3" data-mode="watch" data-sub="Οδηγίες παρουσίασης & ανατροφοδότησης — ετοιμάστε Φυλλάδιο 6" data-sec="📄 Παρατηρητές: Φυλλάδιο 6">
+  <div class="s-body">
+    <div class="row" style="justify-content:space-between;align-items:flex-end">
+      <div><div class="s-kicker">Φάση 3η · 32΄–40΄</div><h2>Παρουσιάσεις &amp; <span class="hl-m">peer feedback</span></h2></div>
+      <div class="timechip" style="margin:0">⏱ 8 λεπτά</div>
+    </div>
+    <div class="ones">
+      <div class="card onecard"><div class="o1">1΄</div><b>ΧΡΟΝΟΣ</b><small>Σύντομα &amp; περιεκτικά — το χρονόμετρο τρέχει!</small></div>
+      <div class="card onecard"><div class="o1">1</div><b>ΕΥΡΗΜΑ</b><small>Το πιο σημαντικό — όχι όλα</small></div>
+      <div class="card onecard"><div class="o1">1</div><b>ΠΗΓΗ</b><small>Ποιος το είπε — όχι «το διάβασα»</small></div>
+      <div class="card onecard"><div class="o1">1</div><b>ΕΡΩΤΗΣΗ</b><small>Τι θα θέλατε να μάθετε παραπάνω;</small></div>
+    </div>
+    <div class="grid3">
+      <div class="fbcard fb1"><b>👍 Μου άρεσε…</b>«Μου άρεσε που είπες συγκεκριμένα ποια πηγή χρησιμοποίησες.»</div>
+      <div class="fbcard fb2"><b>🤔 Αναρωτιέμαι…</b>«Αναρωτιέμαι αν η πηγή σου ήταν πρόσφατη — πότε δημοσιεύτηκε;»</div>
+      <div class="fbcard fb3"><b>💡 Προτείνω…</b>«Προτείνω να διασταυρώσετε αυτό το νούμερο με δεύτερη πηγή.»</div>
+    </div>
+    <p class="sub">✍️ <b style="color:var(--amber)">Μία ομάδα-παρατηρητής</b> ανά παρουσίαση γράφει τις 3 προτάσεις στο <b style="color:var(--amber)">Φυλλάδιο 6</b> και το παραδίδει. Στόχος: να βοηθήσουμε, όχι να κρίνουμε.</p>
+  </div>
+</section>
+
+<!-- 18 · PRESENT TIMER -->
+<section class="slide" data-title="Χρονόμετρο παρουσιάσεων — 1΄ ανά ομάδα" data-phase="3" data-mode="talk" data-sub="Παρουσιάζει 1 ομάδα — οι υπόλοιποι ακούν ενεργά" data-sec="✍️ Φυλλάδιο 6 (ομάδα-παρατηρητής)">
+  <header class="s-head"><div><div class="s-kicker">Φάση 3 · Στην ολομέλεια</div><h2>Ομάδα <span class="hl-m" id="pGroupLabel">1</span> — στο βήμα!</h2></div></header>
+  <div class="s-body">
+    <div class="pres-grid">
+      <div class="card" data-noswipe>
+        <div class="ringwrap">
+          <svg viewBox="0 0 200 200"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF5EC8"/><stop offset="1" stop-color="#39C6FF"/></linearGradient></defs><circle class="ring-bg" cx="100" cy="100" r="86"/><circle id="pRingFg" cx="100" cy="100" r="86"/></svg>
+          <div id="pTime">1:00<small>ΛΕΠΤΟ</small></div>
+        </div>
+        <div class="pgroups" id="pGroups">
+          <button class="pg on" data-g="1">1</button><button class="pg" data-g="2">2</button><button class="pg" data-g="3">3</button><button class="pg" data-g="4">4</button><button class="pg" data-g="5">5</button>
+        </div>
+        <div class="row" style="justify-content:center;margin-top:14px">
+          <button class="btn btn-hot" id="pStart">▶ ΕΝΑΡΞΗ 1΄</button>
+          <button class="btn btn-ghost" id="pResetP">↺</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px" id="pFeedback">
+        <div class="fbcard fb1"><b>👍 Μου άρεσε</b>Τι ήταν σαφές / καλά τεκμηριωμένο; Πες το συγκεκριμένα.</div>
+        <div class="fbcard fb2"><b>🤔 Αναρωτιέμαι</b>Τι δεν κατάλαβα; Τι θα ήθελα να μάθω; (ημερομηνία; διασταύρωση;)</div>
+        <div class="fbcard fb3"><b>💡 Προτείνω</b>Μία ιδέα βελτίωσης ή επόμενο βήμα για την ομάδα.</div>
+        <div class="card" style="padding:12px 18px"><p class="sub" style="font-size:.95rem">🧠 Στο τέλος: <b style="color:var(--tx)">«Ποια ομάδα άκουσε κάτι που άλλαξε τον τρόπο που σκέφτεται;»</b> — 1–2 σύντομες απαντήσεις.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 · PHASE 4 -->
+<section class="slide" data-title="Φάση 4 — Αναθεώρηση υπόθεσης & μεταγνώση" data-phase="4" data-mode="write" data-sub="Φυλλάδιο 4 — πεδία 1–6 & αντιγραφή στο Ημερολόγιο Έρευνας (5΄)">
+  <header class="s-head"><div><div class="s-kicker">Φάση 4η · 40΄–45΄ · Κλείσιμο</div><h2>Τι έγινε η <span class="hl-a">υπόθεσή μας</span>;</h2></div></header>
+  <div class="s-body">
+    <div class="decgrid" data-noswipe>
+      <button class="card dec d1"><span class="di">✅</span><b>ΕΠΙΒΕΒΑΙΩΝΕΤΑΙ</b><span class="sub" style="font-size:.9rem">Τα ευρήματα στηρίζουν την υπόθεσή μας</span><span class="starter">«Τα ευρήματα στηρίζουν την υπόθεσή μας επειδή… (πηγή Χ, εύρημα Υ)»</span></button>
+      <button class="card dec d2"><span class="di">🔄</span><b>ΑΛΛΑΖΕΙ</b><span class="sub" style="font-size:.9rem">Βρήκαμε κάτι που την ανατρέπει</span><span class="starter">«Αλλάζουμε την υπόθεση σε… επειδή βρήκαμε… (2 πηγές συμφωνούν)»</span></button>
+      <button class="card dec d3"><span class="di">❓</span><b>ΠΑΡΑΜΕΝΕΙ ΑΝΟΙΧΤΗ</b><span class="sub" style="font-size:.9rem">Δεν έχουμε αρκετά δεδομένα</span><span class="starter">«Θα το ελέγξουμε στην πράξη, δοκιμάζοντας… και μετρώντας…»</span></button>
+    </div>
+    <div class="grid2">
+      <div class="paper">
+        <h4>💭 ΑΝΑΘΕΩΡΗΣΗ ΥΠΟΘΕΣΗΣ <span class="ptag">ΦΥΛΛΑΔΙΟ 4</span></h4>
+        <div class="pf"><span class="n">1</span><b>Αρχική υπόθεση</b><span class="filled">(από το Μάθημα 1ο)</span></div>
+        <div class="pf"><span class="n">2</span><b>Τα 3 βασικά ευρήματα</b><span class="blank"></span></div>
+        <div class="pf"><span class="n">3</span><b>Η απόφασή μας</b><span class="filled">✅ / 🔄 / ❓ (κύκλωσε)</span></div>
+        <div class="pf"><span class="n">4</span><b>Νέα υπόθεση (αν άλλαξε)</b><span class="blank"></span></div>
+        <div class="pf"><span class="n">5</span><b>Αιτιολόγηση — γιατί;</b><span class="blank"></span></div>
+        <div class="pf"><span class="n">6</span><b>Μεταγνώση</b><span class="blank"></span></div>
+        <p class="pnote">📓 Μετά: αντίγραψε την απόφαση &amp; τη μεταγνωστική σκέψη στο Ημερολόγιο Έρευνας.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--cyan)">🧠 Μεταγνωστικές ερωτήσεις</h3>
+        <ul class="metaq">
+          <li>🔍 «Πώς αποφάσισα ποια πηγή είναι αξιόπιστη;»</li>
+          <li>🧗 «Τι με δυσκόλεψε περισσότερο — και τι έκανα;»</li>
+          <li>🔁 «Τι θα έκανα διαφορετικά την επόμενη φορά;»</li>
+        </ul>
+        <p class="sub" style="margin-top:12px;font-size:.98rem">💪 <b style="color:var(--lime)">Η αλλαγή υπόθεσης δεν είναι αποτυχία — είναι μάθηση.</b> Είναι η καρδιά της επιστημονικής μεθόδου.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 20 · EXIT TICKET -->
+<section class="slide" data-title="Φύλλο Εξόδου — Φυλλάδιο 5 (ατομικά)" data-phase="4" data-mode="write" data-sub="Φυλλάδιο 5 — ΑΤΟΜΙΚΑ, ερωτήσεις 1–6 → παράδοση στον εκπαιδευτικό">
+  <header class="s-head"><div><div class="s-kicker">🎫 Φύλλο εξόδου · Exit Ticket</div><h2>Πριν φύγεις… <span class="hl-a">γράψε ατομικά</span></h2></div></header>
+  <div class="s-body">
+    <div class="row" style="justify-content:flex-end">
+      <div class="mtimer" data-noswipe><span class="mt-t" id="mtEXtime">2:00</span><button class="mt-go" id="mtEXbtn">▶</button><button id="mtEXrst">↺</button></div>
+    </div>
+    <div class="grid2">
+      <div class="paper">
+        <h4>🎫 ΦΥΛΛΟ ΕΞΟΔΟΥ <span class="ptag">ΦΥΛΛΑΔΙΟ 5 · ΑΤΟΜΙΚΟ</span></h4>
+        <div class="pf"><span class="n">1</span><b>Πόσες πηγές καταγράψατε;</b><span class="filled">1 / 2 / 3 / 4+ (κύκλωσε)</span></div>
+        <div class="pf"><span class="n">2</span><b>Το πιο σημαντικό εύρημα:</b><span class="blank"></span></div>
+        <div class="pf"><span class="n">3</span><b>2 κριτήρια αξιοπιστίας:</b><span class="blank"></span></div>
+        <div class="pf"><span class="n">4</span><b>Η υπόθεσή σας:</b><span class="filled">✅ επιβεβαιώθηκε / 🔄 άλλαξε / ❓ ανοιχτή</span></div>
+        <div class="pf"><span class="n">5</span><b>Μεταγνώση — τι σε δυσκόλεψε;</b><span class="blank"></span></div>
+        <div class="pf"><span class="n">6</span><b>Πώς ένιωσες σήμερα;</b><span class="filled">😀 🙂 😐 😕 (κύκλωσε)</span></div>
+        <p class="pnote">👤 Όνομα &amp; ομάδα πάνω-πάνω. 📥 Παράδωσε το φύλλο φεύγοντας — είναι το εισιτήριό σου!</p>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;justify-content:center;gap:14px">
+        <h3 style="color:var(--amber)">✍️ Γράφουμε ΤΩΡΑ — ήσυχα &amp; ατομικά</h3>
+        <p class="sub">Δεν είναι διαγώνισμα: είναι ο καθρέφτης της ομάδας σου. Αν κάτι δυσκολεύτηκε, γράψ’ το — έτσι σε βοηθάμε στο επόμενο μάθημα.</p>
+        <p class="sub" style="font-size:.95rem">📌 Ελέγξτε ότι έχετε: <b style="color:var(--tx)">Φ1 (≥3 πηγές) · Φ4 (υπόθεση) · Ημερολόγιο (μεταγνώση)</b> — και η Ομάδα 5 το <b style="color:var(--magenta)">Φ3 (benchmark)</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 21 · CLOSING -->
+<section class="slide" data-title="Κλείσιμο — Παραδοτέα & Μάθημα 3ο" data-phase="4" data-mode="talk" data-sub="Τσέκαρε μαζί με την τάξη τα παραδοτέα — πάτα κάθε κουτί!">
+  <header class="s-head"><div><div class="s-kicker">🏁 Αποτέλεσμα μαθήματος</div><h2>Τι κρατάμε <span class="hl-l">σήμερα</span></h2></div></header>
+  <div class="s-body">
+    <div class="ckgrid" data-noswipe>
+      <button class="card ck" id="ck1"><span class="box">✓</span>Τουλάχιστον 3 αξιόπιστες πηγές καταγεγραμμένες (Φ1)</button>
+      <button class="card ck" id="ck2"><span class="box">✓</span>1 βασικό εύρημα παρουσιάστηκε στην ολομέλεια (1΄)</button>
+      <button class="card ck" id="ck3"><span class="box">✓</span>Υπόθεση: επιβεβαιωμένη / αναθεωρημένη / ανοιχτή (Φ4)</button>
+      <button class="card ck" id="ck4"><span class="box">✓</span>Μεταγνωστική σκέψη στο Ημερολόγιο Έρευνας</button>
+    </div>
+    <div class="row" style="justify-content:space-between">
+      <span class="chip" style="font-family:var(--mono)">Παραδοτέα: <b id="ckCount" style="color:var(--lime);margin-left:6px">0 / 4</b></span>
+      <button class="btn btn-ghost btn-sm" id="ckReset">↺ Ξανατσέκαρε</button>
+    </div>
+    <div id="celebrateMsg">🎉 Ετοιμοι για το Μάθημα 3ο! Καλή εβδομάδα, ερευνητές! ⚽</div>
+    <div class="card nextcard">
+      <h3>➡️ Την επόμενη φορά — Μάθημα 3ο: Σχεδιασμός, μέτρηση &amp; ασφάλεια</h3>
+      <ul class="nextlist">
+        <li>📐 Τεχνικό σχέδιο σε κλίμακα (χαρτί Α3)</li>
+        <li>🧾 Λίστα υλικών — ενοποίηση αποφάσεων</li>
+        <li>🧪 Σχεδιασμός πειράματος &amp; μετρήσεων</li>
+        <li>🦺 Κανόνες ασφάλειας εργαλείων (πριόνι, δράπανο)</li>
+      </ul>
+      <p class="sub" style="margin-top:10px;font-size:.95rem">⭐ Η Ομάδα 5 παρουσιάζει τον πίνακα benchmark — τον χρησιμοποιεί ΟΛΗ η τάξη. Φέρε χάρακα, μολύβι… και τις πηγές σου!</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= BOTTOM BAR ================= -->
+<footer id="bottombar">
+  <div id="legend">
+    <span class="lg lg-w">👀<small>ΠΑΡΑΤΗΡΩ</small></span>
+    <span class="lg lg-r">✍️<small>ΓΡΑΦΩ</small></span>
+    <span class="lg lg-t">💬<small>ΣΥΖΗΤΩ</small></span>
+    <span class="lg lg-s">🔎<small>ΨΑΧΝΩ</small></span>
+  </div>
+  <div class="midnav">
+    <div id="segBar"></div>
+    <div id="counter"><b>1</b> / 21</div>
+  </div>
+  <button class="navbtn" id="btnPrev" aria-label="Προηγούμενη διαφάνεια">←</button>
+  <button class="navbtn" id="btnNext" aria-label="Επόμενη διαφάνεια">→</button>
+</footer>
+
+<!-- ================= OVERLAYS ================= -->
+<div id="overview" role="dialog" aria-label="Επισκόπηση διαφανειών">
+  <div class="ovhead"><h3>▦ Όλες οι διαφάνειες</h3><button class="tbtn" id="ovClose">✕<span class="tl">Κλείσιμο</span></button></div>
+  <div id="ovGrid"></div>
+  <div class="ovkeys">Πλοήγηση: σύρε οριζόντια ή <b>← →</b> · <b>Space</b> επόμενο · <b>G</b> επισκόπηση · <b>F</b> πλήρης οθόνη · <b>M</b> ήχος · <b>L</b> εργαστήριο · <b>T</b> ρολόι 45λέπτου</div>
+</div>
+<div id="toastBox"><span id="toastIco">🔔</span><div><div id="toastTitle"></div><div id="toastSub"></div></div></div>
+<div id="flash"><div class="fb"><div id="flashText"></div></div></div>
+<canvas id="fx"></canvas>
+<noscript><div style="position:fixed;inset:0;background:#06120C;color:#EAF6EC;display:flex;align-items:center;justify-content:center;font-size:1.4rem;z-index:999;padding:30px;text-align:center">Η παρουσίαση χρειάζεται JavaScript για να λειτουργήσει.</div></noscript>
+
+<script>
+'use strict';
+/* ============ helpers & state ============ */
+const $=id=>document.getElementById(id);
+const $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const slides=$$('.slide'), N=slides.length;
+const PH=['ΕΙΣΑΓΩΓΗ','ΦΑΣΗ 1 · ΑΞΙΟΠΙΣΤΙΑ','ΦΑΣΗ 2 · ΕΡΕΥΝΑ','ΦΑΣΗ 3 · ΠΑΡΟΥΣΙΑΣΕΙΣ','ΦΑΣΗ 4 · ΑΝΑΘΕΩΡΗΣΗ'];
+const PHC=['#39C6FF','#3D7BFF','#A6F431','#FF5EC8','#FFB020'];
+const MODES={watch:{i:'👀',t:'ΠΑΡΑΤΗΡΩ ΤΗΝ ΟΘΟΝΗ',c:'m-watch'},write:{i:'✍️',t:'ΓΡΑΦΩ ΤΩΡΑ',c:'m-write'},talk:{i:'💬',t:'ΣΥΖΗΤΩ',c:'m-talk'},search:{i:'🔎',t:'ΨΑΧΝΩ ΣΤΟΝ ΥΠΟΛΟΓΙΣΤΗ',c:'m-search'}};
+const state={i:0,sound:LS.get('f2.sound',true),presented:new Set(LS.get('f2.presented',[])),pGroup:1,celebrated:false};
+
+/* ============ audio ============ */
+const AudioSys={ctx:null,master:null,
+  ensure(){ if(this.ctx) { if(this.ctx.state==='suspended') this.ctx.resume().catch(()=>{}); return; }
+    try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC)return;
+      this.ctx=new AC(); this.master=this.ctx.createGain(); this.master.gain.value=state.sound?0.9:0; this.master.connect(this.ctx.destination);
+    }catch(e){} },
+  tone(f,t0,dur,type,vol,slide){ if(!this.ctx||!state.sound)return;
+    try{ const o=this.ctx.createOscillator(),g=this.ctx.createGain(),n=this.ctx.currentTime+t0;
+      o.type=type||'sine'; o.frequency.setValueAtTime(f,n); if(slide)o.frequency.exponentialRampToValueAtTime(slide,n+dur);
+      g.gain.setValueAtTime(0.0001,n); g.gain.exponentialRampToValueAtTime(vol,n+0.012); g.gain.exponentialRampToValueAtTime(0.0001,n+dur);
+      o.connect(g); g.connect(this.master); o.start(n); o.stop(n+dur+0.05);
+    }catch(e){} },
+  play(name){ this.ensure(); if(!this.ctx||!state.sound)return;
+    switch(name){
+      case 'click': this.tone(640,0,.07,'square',.045,420); break;
+      case 'flip': this.tone(500,0,.09,'sine',.07,760); break;
+      case 'good': this.tone(523,0,.14,'sine',.08); this.tone(659,.08,.14,'sine',.08); this.tone(784,.16,.22,'sine',.09); break;
+      case 'bad': this.tone(200,0,.22,'sawtooth',.055,120); break;
+      case 'chime': this.tone(880,0,.35,'sine',.1); this.tone(1174,.16,.45,'sine',.1); break;
+      case 'tick': this.tone(1050,0,.04,'square',.05); break;
+      case 'launch': this.tone(300,0,.16,'square',.06,720); break;
+      case 'bounce': this.tone(360,0,.05,'triangle',.05,240); break;
+      case 'out': this.tone(330,0,.14,'sawtooth',.06,160); this.tone(160,.12,.2,'sawtooth',.06,90); break;
+      case 'fanfare': [523,659,784,1046].forEach((f,k)=>this.tone(f,k*.12,.3,'sine',.09)); this.tone(1318,.5,.5,'sine',.08); break;
+    } }
+};
+window.addEventListener('pointerdown',()=>AudioSys.ensure(),{once:true});
+window.addEventListener('keydown',()=>AudioSys.ensure(),{once:true});
+function setSound(on){ state.sound=on; LS.set('f2.sound',on);
+  if(AudioSys.master)AudioSys.master.gain.value=on?0.9:0;
+  $('btnSound').innerHTML=(on?'🔊':'🔇')+'<span class="tl">Ήχος</span>';
+  $('btnSound').setAttribute('aria-pressed',on);
+}
+$('btnSound').addEventListener('click',()=>{setSound(!state.sound); if(state.sound)AudioSys.play('click');});
+
+/* ============ badges / progress / overview ============ */
+slides.forEach(s=>{
+  const head=s.querySelector('.s-head');
+  const m=MODES[s.dataset.mode]||MODES.watch;
+  const wrap=document.createElement('div'); wrap.className='modewrap';
+  wrap.innerHTML='<div class="mode '+m.c+'"><span class="m-ico">'+m.i+'</span><div><b>'+m.t+'</b><small>'+(s.dataset.sub||'')+'</small></div></div>'+(s.dataset.sec?'<span class="sec-chip">'+s.dataset.sec+'</span>':'');
+  if(head) head.appendChild(wrap);
+  else{ wrap.style.alignSelf='flex-end'; s.querySelector('.s-body').prepend(wrap); }
+});
+const segBar=$('segBar');
+slides.forEach(s=>{const sp=document.createElement('span');const c=PHC[+s.dataset.phase];sp.style.background=c;sp.style.color=c;segBar.appendChild(sp);});
+const segs=$$('#segBar span');
+const ovGrid=$('ovGrid');
+slides.forEach((s,i)=>{
+  const b=document.createElement('button'); b.className='ovc';
+  const m=MODES[s.dataset.mode]||MODES.watch;
+  b.innerHTML='<span class="ovbar" style="background:'+PHC[+s.dataset.phase]+'"></span><span class="ovmode">'+m.i+'</span><div class="ovnum">'+String(i+1).padStart(2,'0')+' · '+PH[+s.dataset.phase].split(' ·')[0]+'</div><div class="ovt">'+s.dataset.title+'</div>';
+  b.addEventListener('click',()=>{go(i);toggleOverview(false);AudioSys.play('click');});
+  ovGrid.appendChild(b);
+});
+const ovcards=$$('.ovc');
+function toggleOverview(force){ const o=$('overview'); const open=force!=null?force:!o.classList.contains('open'); o.classList.toggle('open',open); }
+$('btnOverview').addEventListener('click',()=>{toggleOverview();AudioSys.play('click');});
+$('ovClose').addEventListener('click',()=>toggleOverview(false));
+
+/* ============ navigation ============ */
+function phaseOf(i){return +slides[i].dataset.phase}
+function go(i){
+  i=clamp(i,0,N-1); state.i=i;
+  slides.forEach((s,j)=>{s.classList.toggle('active',j===i);s.classList.toggle('before',j<i);});
+  const ph=phaseOf(i);
+  document.body.dataset.phase=ph;
+  document.documentElement.style.setProperty('--ph',PHC[ph]);
+  $('phaseChip').textContent=PH[ph];
+  segs.forEach((sp,j)=>sp.classList.toggle('cur',j===i));
+  ovcards.forEach((c,j)=>c.classList.toggle('cur',j===i));
+  $('counter').innerHTML='<b>'+(i+1)+'</b> / '+N;
+  $('btnPrev').disabled=i===0; $('btnNext').disabled=i===N-1;
+  try{history.replaceState(null,'','#'+(i+1));}catch(e){}
+  LS.set('f2.slide',i);
+  updateRoadmap();
+  if(i===0) requestAnimationFrame(()=>hero.resize());
+  if(i===15) requestAnimationFrame(()=>lab.resizeActive());
+  slides[i].scrollTop=0;
+}
+function next(){ if(state.i<N-1){go(state.i+1);AudioSys.play('click');} }
+function prev(){ if(state.i>0){go(state.i-1);AudioSys.play('click');} }
+$('btnNext').addEventListener('click',next);
+$('btnPrev').addEventListener('click',prev);
+let sw=null;
+$('deck').addEventListener('pointerdown',e=>{ if(e.target.closest('button,a,input,select,textarea,canvas,[data-noswipe]'))return; sw={x:e.clientX,y:e.clientY,t:Date.now()}; });
+$('deck').addEventListener('pointerup',e=>{ if(!sw)return; const dx=e.clientX-sw.x,dy=e.clientY-sw.y,dt=Date.now()-sw.t; sw=null;
+  if(dt<650&&Math.abs(dx)>70&&Math.abs(dy)<90){ dx<0?next():prev(); } });
+$('deck').addEventListener('pointercancel',()=>sw=null);
+$('deck').addEventListener('contextmenu',e=>{ if(!e.target.closest('input,select,textarea'))e.preventDefault(); });
+document.addEventListener('keydown',e=>{
+  if(e.target.matches('input,select,textarea'))return;
+  switch(e.key){
+    case 'ArrowRight': case 'PageDown': next(); break;
+    case ' ': e.preventDefault(); next(); break;
+    case 'ArrowLeft': case 'PageUp': prev(); break;
+    case 'Home': go(0); break;
+    case 'End': go(N-1); break;
+    case 'g': case 'G': case 'γ': case 'Γ': toggleOverview(); break;
+    case 'f': case 'F': case 'φ': case 'Φ': toggleFull(); break;
+    case 'm': case 'M': case 'μ': case 'Μ': setSound(!state.sound); break;
+    case 'l': case 'L': case 'λ': case 'Λ': go(15); break;
+    case 't': case 'T': case 'τ': case 'Τ': clockToggle(); break;
+    case 'Escape': toggleOverview(false); break;
+  }
+});
+function toggleFull(){ try{ if(document.fullscreenElement)document.exitFullscreen(); else document.documentElement.requestFullscreen(); }catch(e){} }
+$('btnFull').addEventListener('click',toggleFull);
+if(!document.documentElement.requestFullscreen)$('btnFull').style.display='none';
+document.addEventListener('fullscreenchange',()=>{ $('btnFull').textContent=document.fullscreenElement?'⛶':'⛶'; setTimeout(()=>{hero.resize();lab.resizeActive();},120); });
+
+/* ============ toast & flash ============ */
+let toastT=null;
+function toast(ico,title,sub,ms){ $('toastIco').textContent=ico; $('toastTitle').textContent=title; $('toastSub').textContent=sub||'';
+  const b=$('toastBox'); b.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>b.classList.remove('show'),ms||4500); }
+let flashT=null;
+function flash(html,ms){ $('flashText').innerHTML=html; const f=$('flash'); f.classList.add('show'); AudioSys.play('chime');
+  clearTimeout(flashT); flashT=setTimeout(()=>f.classList.remove('show'),ms||3000); }
+
+/* ============ timers ============ */
+function fmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+class Timer{
+  constructor(dur,opts){ this.dur=dur; this.el=0; this.run=false; this.cps=(opts&&opts.cps)||[]; this.onDone=opts&&opts.onDone; this.render=opts&&opts.render; this.lastWhole=-1; this.onTick=opts&&opts.onTick; }
+  toggle(){ this.run=!this.run; if(this.el>=this.dur&&this.run)this.reset(false); this.paint(); }
+  start(){ if(this.el>=this.dur)this.reset(false); this.run=true; this.paint(); }
+  pause(){ this.run=false; this.paint(); }
+  reset(paint){ this.el=0; this.run=false; this.lastWhole=-1; this.cps.forEach(c=>c.done=false); if(paint!==false)this.paint(); }
+  step(dt){ if(!this.run)return; this.el=Math.min(this.dur,this.el+dt);
+    this.cps.forEach(c=>{ if(!c.done&&this.el>=c.at){c.done=true;c.fire();} });
+    const rem=this.dur-this.el, w=Math.ceil(rem);
+    if(this.onTick&&w!==this.lastWhole){this.lastWhole=w;this.onTick(w);}
+    if(this.el>=this.dur){ this.run=false; if(this.onDone)this.onDone(); }
+    this.paint(); }
+  paint(){ if(this.render)this.render(this); }
+}
+/* lesson clock 45' */
+const clock=new Timer(45*60,{
+  cps:[
+    {at:180,fire:()=>toast('🛡','Φάση 1 — Αξιοπιστία πηγών','3΄ πέρασαν — ώρα για κριτήρια!',5000)},
+    {at:660,fire:()=>toast('🔎','Φάση 2 — Έρευνα ανά ομάδα','11΄ πέρασαν — ανοίξτε Φυλλάδιο 1!',5000)},
+    {at:1920,fire:()=>toast('🎤','Φάση 3 — Παρουσιάσεις','32΄ πέρασαν — 1΄ ανά ομάδα, Φ6 έτοιμο!',5000)},
+    {at:2400,fire:()=>toast('🔄','Φάση 4 — Αναθεώρηση','40΄ πέρασαν — Φ4 & Ημερολόγιο!',5000)}
+  ],
+  onDone:()=>flash('⏰ Τέλος 45λέπτου!<small>Μάζεψε τα Φύλλα Εξόδου (Φ5) 📥</small>',3500),
+  render:t=>{ $('clockTime').textContent=fmt(t.dur-t.el); $('clockChip').classList.toggle('running',t.run); updateRoadmap(); }
+});
+function clockToggle(){ clock.toggle(); AudioSys.play('click'); }
+$('clockChip').addEventListener('click',e=>{ if(e.target.id==='clockReset')return; clockToggle(); });
+$('clockReset').addEventListener('click',e=>{ e.stopPropagation(); clock.reset(); toast('↺','Το ρολόι μηδενίστηκε','45:00 — έτοιμο για νέα έναρξη',2500); });
+$('btnStartLesson').addEventListener('click',()=>{ clock.start(); next(); toast('⏱','Το 45λεπτο ξεκίνησε!','Παρακολούθησε το ρολόι πάνω δεξιά — θα σε ειδοποιεί στις φάσεις.',4000); });
+
+/* research 21' — checkpoints at global 16' & 24' (=5' & 13' into block) */
+const research=new Timer(21*60,{
+  cps:[
+    {at:5*60,fire:()=>{ $('rMark1').classList.add('hit'); flash('⏰ Σημείο ελέγχου — 16΄<small>«Δείξε μου την ΚΑΛΥΤΕΡΗ πηγή σου — γιατί είναι αξιόπιστη;»</small>',3400); }},
+    {at:13*60,fire:()=>{ $('rMark2').classList.add('hit'); flash('⏰ Σημείο ελέγχου — 24΄<small>«Πόσες πηγές έχετε; Σηκώστε χέρι αν έχετε ≥2!» — όσες έχουν λιγότερες: άμεση υποστήριξη</small>',3400); }}
+  ],
+  onDone:()=>flash('🎤 Ώρα για παρουσιάσεις!<small>Φάση 3 — κάθε ομάδα: 1΄ · 1 εύρημα · 1 πηγή · 1 ερώτηση</small>',3500),
+  render:t=>{ const rem=t.dur-t.el; const d=$('rTime'); d.textContent=fmt(rem);
+    d.classList.toggle('paused',!t.run&&t.el>0&&rem>0); d.classList.toggle('done',rem<=0);
+    $('rBar').style.width=(t.el/t.dur*100)+'%';
+    $('rStart').innerHTML=t.run?'⏸ ΠΑΥΣΗ':(t.el>0&&rem>0?'▶ ΣΥΝΕΧΕΙΑ':'▶ ΕΝΑΡΞΗ ΕΡΕΥΝΑΣ');
+    const chip=$('chipResearch'); const show=(t.run||t.el>0)&&state.i!==14;
+    chip.classList.toggle('on',show); $('chipResearchTime').textContent=fmt(rem); }
+});
+$('rStart').addEventListener('click',()=>{research.toggle();AudioSys.play('click');});
+$('rReset').addEventListener('click',()=>{research.reset();$('rMark1').classList.remove('hit');$('rMark2').classList.remove('hit');AudioSys.play('click');});
+$('chipResearch').addEventListener('click',()=>go(14));
+
+/* presentation 60'' */
+let lastTickWhole=-1;
+const present=new Timer(60,{
+  onTick:w=>{ if(w<=5&&w>0){AudioSys.play('tick'); $('pTime').classList.add('warn');} },
+  onDone:()=>{ $('pTime').classList.remove('warn'); flash('🔁 Ανατροφοδότηση!<small>Μου άρεσε… · Αναρωτιέμαι… · Προτείνω… → Φυλλάδιο 6</small>',3200);
+    $('pFeedback').classList.add('hot'); state.presented.add(state.pGroup); LS.set('f2.presented',Array.from(state.presented)); renderGroups(); },
+  render:t=>{ const rem=t.dur-t.el; $('pTime').innerHTML=fmt(rem)+'<small>'+(t.run?'ΤΡΕΧΕΙ':'ΛΕΠΤΟ')+'</small>';
+    $('pRingFg').style.strokeDashoffset=(540*(t.el/t.dur)).toFixed(1);
+    $('pStart').innerHTML=t.run?'⏸ ΠΑΥΣΗ':'▶ ΕΝΑΡΞΗ 1΄'; if(rem>5)$('pTime').classList.remove('warn'); }
+});
+$('pStart').addEventListener('click',()=>{ $('pFeedback').classList.remove('hot'); present.toggle(); AudioSys.play('click'); });
+$('pResetP').addEventListener('click',()=>{present.reset();$('pFeedback').classList.remove('hot');AudioSys.play('click');});
+function renderGroups(){ $$('#pGroups .pg').forEach(b=>{ const g=+b.dataset.g;
+  b.classList.toggle('on',g===state.pGroup); b.classList.toggle('done',state.presented.has(g)); });
+  $('pGroupLabel').textContent=state.pGroup; }
+$$('#pGroups .pg').forEach(b=>b.addEventListener('click',()=>{ state.pGroup=+b.dataset.g; present.reset(); $('pFeedback').classList.remove('hot'); renderGroups(); AudioSys.play('flip'); }));
+renderGroups();
+
+/* mini timers */
+function miniTimer(prefix,dur,label){
+  const t=new Timer(dur,{
+    onDone:()=>flash('⏱ Τέλος χρόνου!<small>'+label+'</small>',2600),
+    onTick:w=>{ if(w<=5&&w>0)AudioSys.play('tick'); },
+    render:tt=>{ const rem=tt.dur-tt.el; const d=$(prefix+'time'); d.textContent=fmt(rem); d.classList.toggle('warn',rem<=10&&rem>0);
+      $(prefix+'btn').textContent=tt.run?'⏸':'▶'; }
+  });
+  $(prefix+'btn').addEventListener('click',()=>{t.toggle();AudioSys.play('click');});
+  $(prefix+'rst').addEventListener('click',()=>{t.reset();AudioSys.play('click');});
+  t.paint(); return t;
+}
+const mtYD=miniTimer('mtYD',120,'Σηκώστε πράσινο / κόκκινο χαρτί! 🟢🔴');
+const mtEX=miniTimer('mtEX',120,'Παράδωσε το Φυλλάδιο 5 στον εκπαιδευτικό 📥');
+
+/* roadmap position */
+function updateRoadmap(){
+  let ph=phaseOf(state.i);
+  if(clock.el>0){ const e=clock.el; ph=e<180?0:e<660?1:e<1920?2:e<2400?3:4; }
+  $$('#roadbar .roadseg').forEach(b=>b.classList.toggle('here',+b.dataset.ph===ph));
+}
+$$('#roadbar .roadseg').forEach(b=>b.addEventListener('click',()=>{go(+b.dataset.jump);AudioSys.play('click');}));
+
+/* master tick */
+let lastTs=performance.now();
+setInterval(()=>{ const now=performance.now(); const dt=Math.min(2,(now-lastTs)/1000); lastTs=now;
+  clock.step(dt); research.step(dt); present.step(dt); mtYD.step(dt); mtEX.step(dt);
+},200);
+
+/* ============ hook ============ */
+$('hookA').addEventListener('click',()=>{ $('hookA').classList.add('selA'); $('hookResA').classList.add('show'); AudioSys.play('bad'); });
+$('hookB').addEventListener('click',()=>{ $('hookB').classList.add('selB'); $('hookResB').classList.add('show'); AudioSys.play('good'); });
+
+/* ============ vocab flips ============ */
+$$('.flip').forEach(f=>f.addEventListener('click',()=>{f.classList.toggle('open');AudioSys.play('flip');}));
+
+/* ============ I Do steps ============ */
+const idoSteps=[
+  {t:'«Ποιος το γράφει;… Η Α είναι εταιρεία με όνομα. Η Β ένας άγνωστος χρήστης — kicker99. Ποιον εμπιστεύομαι;»',hl:['f-author']},
+  {t:'«Έχει ημερομηνία; Η Α: 03/2026, πρόσφατη. Η Β: καμία! Πότε γράφτηκε αυτό; Ισχύει ακόμα;»',hl:['f-date']},
+  {t:'«Πουλάει κάτι; Η Α δίνει specs. Η Β έχει διαφήμιση “αγόρασε φθηνά εδώ” — προσοχή στο συμφέρον!»',hl:['f-purpose']},
+  {t:'«Υπάρχει τεκμηρίωση; Η Α παραπέμπει σε εγχειρίδιο & ITSF. Η Β λέει “trust me”. Άρα: Α ✅ — Β ❌ ως μοναδική πηγή.»',hl:['f-ref'],final:true}
+];
+let idoIdx=-1;
+$('idoBtn').addEventListener('click',()=>{
+  idoIdx++;
+  if(idoIdx>=idoSteps.length){ idoIdx=-1; $$('#srcA .srow,#srcB .srow').forEach(r=>r.classList.remove('hl'));
+    $('verdictA').classList.remove('show'); $('verdictB').classList.remove('show');
+    $('idoStep').textContent='Πάτα «Σκέψη δυνατά» για να ακούσεις τι σκέφτεται ένας ερευνητής…';
+    $$('#idoDots span').forEach(d=>d.classList.remove('on')); $('idoBtn').innerHTML='🧠 Σκέψη δυνατά ▶'; return; }
+  const st=idoSteps[idoIdx];
+  $$('#srcA .srow,#srcB .srow').forEach(r=>r.classList.remove('hl'));
+  st.hl.forEach(c=>{$$('#srcA .'+c+',#srcB .'+c).forEach(r=>r.classList.add('hl'));});
+  $('idoStep').textContent=st.t;
+  $$('#idoDots span').forEach((d,k)=>d.classList.toggle('on',k<=idoIdx));
+  AudioSys.play('flip');
+  if(st.final){ $('verdictA').classList.add('show'); $('verdictB').classList.add('show'); AudioSys.play('good'); $('idoBtn').innerHTML='↺ Ξανά από την αρχή'; }
+  else $('idoBtn').innerHTML='🧠 Βήμα '+(idoIdx+2)+'/4 ▶';
+});
+
+/* ============ We Do inspector ============ */
+const wdCfg=[
+  {btn:'wdC1',st:'wdS1',ex:'wdE1',reg:'wd-author',res:'oxi',lbl:'ΟΧΙ',pts:0,txt:'Άγνωστος συντάκτης — οποιοσδήποτε μπορεί να γράψει. Δεν ελέγχεται.'},
+  {btn:'wdC2',st:'wdS2',ex:'wdE2',reg:'wd-ad',res:'amfi',lbl:'ΑΜΦΙΒΟΛΟ',pts:.5,txt:'Ενημερωτικό άρθρο… αλλά δίπλα διαφήμιση πωλήσεων. Πιθανό συμφέρον.'},
+  {btn:'wdC3',st:'wdS3',ex:'wdE3',reg:'wd-date',res:'amfi',lbl:'ΠΑΛΙΑ',pts:.5,txt:'Υπάρχει ημερομηνία, αλλά 2019 — για τεχνολογία θέλουμε έως 2–3 ετών.'},
+  {btn:'wdC4',st:'wdS4',ex:'wdE4',reg:'wd-refs',res:'oxi',lbl:'ΟΧΙ',pts:0,txt:'Καμία παραπομπή, καμία βιβλιογραφία — «το ξέρω από χρόνια».'},
+  {btn:'wdC5',st:'wdS5',ex:'wdE5',reg:'wd-claim',res:'oxi',lbl:'ΟΧΙ',pts:0,txt:'Δεν διασταυρώθηκε ακόμη — πάτα «Διασταύρωσε» για έλεγχο!'}
+];
+let wdDone=[false,false,false,false,false], wdCrossed=false;
+function wdPaint(){
+  let pts=0,nai=0,all=true;
+  wdCfg.forEach((c,k)=>{ if(!wdDone[k]){all=false;return;} pts+=c.pts; if(c.res==='nai')nai++; });
+  $('wdMeterFill').style.width=(pts/5*100)+'%';
+  $('wdScore').textContent='Βαθμολογία: '+pts+'/5';
+  if(all){ $('wdVerdict').classList.add('show'); AudioSys.play('bad'); }
+}
+wdCfg.forEach((c,k)=>{
+  $(c.btn).addEventListener('click',()=>{
+    if(wdDone[k])return; wdDone[k]=true;
+    const st=$(c.st); st.textContent=c.lbl; st.className='cstat '+c.res;
+    $(c.ex).textContent=c.txt; $(c.btn).classList.add('done');
+    const reg=$(c.reg); reg.classList.add('hl'); setTimeout(()=>reg.classList.remove('hl'),2400);
+    AudioSys.play(c.res==='nai'?'good':c.res==='amfi'?'flip':'bad');
+    wdPaint();
+  });
+});
+$('wdLateral').addEventListener('click',()=>{ $('wdLatPanel').classList.toggle('show'); AudioSys.play('flip');
+  const r=$('wd-author'); r.classList.add('hl'); setTimeout(()=>r.classList.remove('hl'),2400); });
+$('wdCross').addEventListener('click',()=>{
+  $('wdProCard').classList.add('show'); wdCrossed=true; AudioSys.play('good');
+  const r=$('wd-claim'); r.classList.add('hl'); setTimeout(()=>r.classList.remove('hl'),2400);
+  wdCfg[4].txt='ΔΙΑΨΕΥΔΕΤΑΙ από επίσημη πηγή: Garlando 12 cm ≠ 5 cm. Η πληροφορία απορρίπτεται!';
+  wdCfg[4].lbl='ΔΙΑΨΕΥΣΗ';
+  if(wdDone[4]){ $('wdE5').textContent=wdCfg[4].txt; $('wdS5').textContent='ΔΙΑΨΕΥΣΗ'; }
+  else{ wdDone[4]=true; $('wdS5').textContent='ΔΙΑΨΕΥΣΗ'; $('wdS5').className='cstat oxi'; $('wdE5').textContent=wdCfg[4].txt; $('wdC5').classList.add('done'); }
+  wdPaint();
+});
+$('wdReset').addEventListener('click',()=>{
+  wdDone=[false,false,false,false,false]; wdCrossed=false;
+  wdCfg[4].txt='Δεν διασταυρώθηκε ακόμη — πάτα «Διασταύρωσε» για έλεγχο!'; wdCfg[4].lbl='ΟΧΙ';
+  wdCfg.forEach(c=>{ const st=$(c.st); st.textContent='—'; st.className='cstat'; $(c.ex).textContent=''; $(c.btn).classList.remove('done'); });
+  $('wdMeterFill').style.width='0%'; $('wdScore').textContent='Ναι: 0/5';
+  $('wdVerdict').classList.remove('show'); $('wdLatPanel').classList.remove('show'); $('wdProCard').classList.remove('show');
+  AudioSys.play('click');
+});
+
+/* ============ You Do vote cards ============ */
+$$('.vc').forEach(vc=>{
+  vc.querySelector('.vcflip').addEventListener('click',()=>{vc.classList.toggle('open');AudioSys.play('flip');});
+  const ok=vc.dataset.ok==='1', why=vc.dataset.why, res=vc.querySelector('.vcres');
+  const reveal=pick=>{
+    if(vc.classList.contains('answered-ok')||vc.classList.contains('answered-no'))return;
+    const correct=(pick===ok);
+    vc.classList.add(correct?'answered-ok':'answered-no');
+    res.className='vcres show '+(ok?'ok':'no');
+    res.innerHTML=(correct?'🎯 Σωστή ψήφος! ':'🔍 Η σωστή απάντηση: ')+(ok?'<b>✅ ΑΞΙΟΠΙΣΤΗ.</b> ':'<b>❌ ΟΧΙ αξιόπιστη.</b> ')+why;
+    vc.querySelectorAll('.vcvote button').forEach(b=>b.disabled=true);
+    AudioSys.play(correct?'good':'bad');
+  };
+  vc.querySelector('.vg').addEventListener('click',()=>reveal(true));
+  vc.querySelector('.vr').addEventListener('click',()=>reveal(false));
+});
+
+/* ============ keywords ============ */
+const KW=[
+  {t:'🔍 Διαστάσεις & ύψος πλευρών σε επαγγελματικά τραπέζια — υλικά κατασκευής',k:['foosball table dimensions','ITSF rules','side wall height'],n:'💡 Ξεκίνα από τους κανονισμούς ITSF — ορίζουν επίσημες διαστάσεις.'},
+  {t:'🔍 Είδη μπάλας & επιφάνειες παιχνιδιού (MDF, laminate, γυαλί)',k:['foosball ball types','cork ball vs ping pong','playfield material'],n:'💡 Σύγκρινε φελλό vs πινγκ-πονγκ — και δοκίμασε την προσομοίωση «Επιφάνειες»!'},
+  {t:'🔍 Τρόποι στήριξης ράβδων & τριβή',k:['foosball rod bearings','bushing vs bearing','friction'],n:'💡 Ψάξε τι χρησιμοποιούν τα επαγγελματικά — ρουλεμάν ή απλή τρύπα;'},
+  {t:'🔍 Υλικά & σχήματα παικτών (φιγούρες)',k:['foosball man material','player shape','resin vs wood'],n:'💡 Το σχήμα δεν είναι τυχαίο — επηρεάζει το χτύπημα της μπάλας.'},
+  {t:'🔍 Σύγκριση 3 επαγγελματικών τραπεζιών — ⭐ Φυλλάδιο 3!',k:['Garlando vs Tornado vs Bonzini','foosball table comparison','price'],n:'⭐ Ειδική αποστολή: πίνακας benchmark (διάσταση · υλικό · τιμή) για ΟΛΗ την τάξη.'}
+];
+function renderKW(g){
+  const d=KW[g]; $('kwTitle').textContent=d.t; $('kwNote').textContent=d.n;
+  const box=$('kwChips'); box.innerHTML='';
+  d.k.forEach(k=>{ const b=document.createElement('button'); b.className='kwchip'; b.innerHTML='🔎 '+k+' <span class="cp">⧉ αντιγραφή</span>';
+    b.addEventListener('click',()=>copyText(k)); box.appendChild(b); });
+}
+$$('#kwTabs .kwtab').forEach(b=>b.addEventListener('click',()=>{
+  $$('#kwTabs .kwtab').forEach(x=>x.classList.remove('on')); b.classList.add('on'); renderKW(+b.dataset.g); AudioSys.play('flip');
+}));
+renderKW(0);
+function copyText(txt){
+  const done=()=>{toast('📋','Αντιγράφηκε!','«'+txt+'» — επικόλλησέ το στη μηχανή αναζήτησης',2600);AudioSys.play('good');};
+  const fail=()=>{toast('📋','Λέξη-κλειδί','«'+txt+'» — γράψ’ τη手动 στη μηχανή αναζήτησης'.replace('手动',''),3000);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done).catch(()=>fallbackCopy(txt,done,fail)); }
+  else fallbackCopy(txt,done,fail);
+}
+function fallbackCopy(txt,done,fail){ try{ const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select(); const ok=document.execCommand('copy'); document.body.removeChild(ta); ok?done():fail(); }catch(e){fail();} }
+
+/* ============ phase 4 decision cards ============ */
+$$('.dec').forEach(d=>d.addEventListener('click',()=>{
+  const was=d.classList.contains('sel'); $$('.dec').forEach(x=>x.classList.remove('sel')); if(!was)d.classList.add('sel'); AudioSys.play('flip');
+}));
+
+/* ============ closing checks + confetti ============ */
+function ckPaint(){
+  const n=$$('.ck.done').length; $('ckCount').textContent=n+' / 4';
+  if(n===4&&!state.celebrated){ state.celebrated=true; $('celebrateMsg').classList.add('show'); confettiBurst(); AudioSys.play('fanfare'); }
+}
+$$('.ck').forEach(b=>b.addEventListener('click',()=>{ b.classList.toggle('done'); AudioSys.play(b.classList.contains('done')?'good':'click'); ckPaint(); }));
+$('ckReset').addEventListener('click',()=>{ $$('.ck').forEach(b=>b.classList.remove('done')); state.celebrated=false; $('celebrateMsg').classList.remove('show'); ckPaint(); AudioSys.play('click'); });
+const fx=$('fx'), fxCtx=fx.getContext('2d'); let fxParts=[];
+function confettiBurst(){
+  const d=Math.min(2,window.devicePixelRatio||1);
+  fx.width=innerWidth*d; fx.height=innerHeight*d; fx.style.width=innerWidth+'px'; fx.style.height=innerHeight+'px';
+  fxCtx.setTransform(d,0,0,d,0,0);
+  const cols=['#FF4B3E','#3D7BFF','#A6F431','#FFB020','#FF5EC8','#39C6FF','#2FD97B'];
+  fxParts=[]; for(let i=0;i<140;i++){ fxParts.push({x:innerWidth/2+(Math.random()-.5)*200,y:innerHeight*.35,vx:(Math.random()-.5)*720,vy:-Math.random()*640-160,r:Math.random()*7+4,c:cols[i%cols.length],a:Math.random()*6.28,va:(Math.random()-.5)*10,life:2.6+Math.random()*.8}); }
+}
+function fxFrame(dt){
+  if(!fxParts.length)return;
+  fxCtx.clearRect(0,0,innerWidth,innerHeight);
+  fxParts=fxParts.filter(p=>p.life>0);
+  fxParts.forEach(p=>{ p.life-=dt; p.vy+=1100*dt; p.x+=p.vx*dt; p.y+=p.vy*dt; p.a+=p.va*dt; p.vx*=.995;
+    fxCtx.save(); fxCtx.translate(p.x,p.y); fxCtx.rotate(p.a); fxCtx.globalAlpha=clamp(p.life,0,1); fxCtx.fillStyle=p.c;
+    fxCtx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.62); fxCtx.restore(); });
+  if(!fxParts.length)fxCtx.clearRect(0,0,innerWidth,innerHeight);
+}
+
+/* ============ canvas helpers ============ */
+function fit(cv){
+  const r=cv.parentElement.getBoundingClientRect(); if(r.width<10||r.height<10)return null;
+  const d=Math.min(2,window.devicePixelRatio||1);
+  cv.width=Math.round(r.width*d); cv.height=Math.round(r.height*d);
+  const ctx=cv.getContext('2d'); ctx.setTransform(d,0,0,d,0,0);
+  return {w:r.width,h:r.height,ctx};
+}
+
+/* ============ HERO (title) ============ */
+const hero={cv:$('heroCv'),W:0,H:0,ctx:null,t:0,ball:{x:100,y:80,vx:190,vy:150,r:9},rods:[],
+  resize(){ const f=fit(this.cv); if(!f)return; this.W=f.w; this.H=f.h; this.ctx=f.ctx;
+    this.rods=[.22,.42,.62,.82].map((p,i)=>({y:this.H*p,ph:i*1.7,team:i%2}));
+    this.ball.x=this.W*.5; this.ball.y=this.H*.5; this.draw(); },
+  frame(dt){ if(!this.ctx)return; this.t+=dt; const b=this.ball;
+    b.x+=b.vx*dt; b.y+=b.vy*dt;
+    if(b.x<b.r+8){b.x=b.r+8;b.vx=Math.abs(b.vx)} if(b.x>this.W-b.r-8){b.x=this.W-b.r-8;b.vx=-Math.abs(b.vx)}
+    if(b.y<b.r+8){b.y=b.r+8;b.vy=Math.abs(b.vy)} if(b.y>this.H-b.r-8){b.y=this.H-b.r-8;b.vy=-Math.abs(b.vy)}
+    this.rods.forEach(r=>{ const off=Math.sin(this.t*.9+r.ph)*this.W*.16;
+      for(let k=-1;k<=1;k++){ const px=this.W/2+off+k*this.W*.24;
+        const dx=b.x-px,dy=b.y-r.y,dist=Math.hypot(dx,dy);
+        if(dist<b.r+13&&dist>0){ const nx=dx/dist,ny=dy/dist; b.x=px+nx*(b.r+13); b.y=r.y+ny*(b.r+13);
+          const dot=b.vx*nx+b.vy*ny; b.vx-=2*dot*nx; b.vy-=2*dot*ny; } } });
+    const sp=Math.hypot(b.vx,b.vy),target=Math.min(this.W,this.H)*.55;
+    if(sp>0){const f=1+(target/sp-1)*.02; b.vx*=f; b.vy*=f;}
+    this.draw(); },
+  draw(){ const c=this.ctx,W=this.W,H=this.H; if(!c)return;
+    const g=c.createLinearGradient(0,0,W,H); g.addColorStop(0,'#0E5C36'); g.addColorStop(1,'#0A4527');
+    c.fillStyle=g; c.fillRect(0,0,W,H);
+    c.strokeStyle='rgba(255,255,255,.4)'; c.lineWidth=2;
+    c.strokeRect(8,8,W-16,H-16); c.beginPath(); c.moveTo(W/2,8); c.lineTo(W/2,H-8); c.stroke();
+    c.beginPath(); c.arc(W/2,H/2,Math.min(W,H)*.14,0,6.28); c.stroke();
+    c.strokeStyle='rgba(255,255,255,.12)';
+    for(let i=1;i<6;i++){c.beginPath();c.moveTo(8,H*i/6);c.lineTo(W-8,H*i/6);c.stroke();}
+    this.rods.forEach(r=>{ const off=Math.sin(this.t*.9+r.ph)*W*.16;
+      const rg=c.createLinearGradient(0,r.y-5,0,r.y+5); rg.addColorStop(0,'#E8EEF2'); rg.addColorStop(.5,'#8A98A4'); rg.addColorStop(1,'#5A6670');
+      c.fillStyle=rg; c.fillRect(0,r.y-4,W,8);
+      for(let k=-1;k<=1;k++){ const px=W/2+off+k*W*.24;
+        c.save(); c.translate(px,r.y);
+        c.fillStyle=r.team?'#3D7BFF':'#FF4B3E'; c.strokeStyle='rgba(0,0,0,.4)'; c.lineWidth=2;
+        c.beginPath(); c.roundRect(-9,-16,18,32,5); c.fill(); c.stroke();
+        c.fillStyle='rgba(255,255,255,.85)'; c.beginPath(); c.arc(0,-8,4,0,6.28); c.fill();
+        c.restore(); } });
+    const b=this.ball;
+    c.save(); c.shadowColor='rgba(0,0,0,.5)'; c.shadowBlur=8; c.shadowOffsetY=4;
+    const bg=c.createRadialGradient(b.x-3,b.y-3,1,b.x,b.y,b.r); bg.addColorStop(0,'#F3C784'); bg.addColorStop(1,'#B07A34');
+    c.fillStyle=bg; c.beginPath(); c.arc(b.x,b.y,b.r,0,6.28); c.fill(); c.restore();
+    c.strokeStyle='rgba(120,80,30,.6)'; c.lineWidth=1;
+    c.beginPath(); c.arc(b.x,b.y,b.r*.55,.4,2.6); c.stroke(); }
+};
+if(!CanvasRenderingContext2D.prototype.roundRect){ CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){ this.moveTo(x+r,y); this.arcTo(x+w,y,x+w,y+h,r); this.arcTo(x+w,y+h,x,y+h,r); this.arcTo(x,y+h,x,y,r); this.arcTo(x,y,x+w,y,r); this.closePath(); return this; }; }
+
+/* ============ SIM 1 — WALL ============ */
+const wall={cv:$('wallCv'),W:0,H:0,ctx:null,h:5,power:65,angle:32,ballType:'cork',trailOn:true,slow:false,
+  x0:12,y0:6,wallX:118,r:1.8,x:12,y:6,vx:0,vy:0,flying:false,out:false,counted:false,t:0,trail:[],crossY:null,
+  stats:{shots:0,inn:0,out:0},
+  resize(){ const f=fit(this.cv); if(!f)return; this.W=f.w;this.H=f.h;this.ctx=f.ctx; this.draw(); },
+  px(){return this.W/150},
+  X(cm){return cm*this.px()},
+  Y(cm){return this.H-34-cm*this.px()},
+  launch(){ const sp=this.power*7,a=this.angle*Math.PI/180;
+    this.x=this.x0; this.y=this.y0; this.vx=Math.cos(a)*sp; this.vy=Math.sin(a)*sp;
+    this.flying=true; this.out=false; this.counted=false; this.t=0; this.trail=[]; this.crossY=null;
+    this.verdict('',''); AudioSys.play('launch'); },
+  verdict(txt,cls){ const v=$('wallVerdict'); v.textContent=txt; v.className='sim-verdict'+(txt?' show '+cls:''); },
+  predict(){ const sp=this.power*7,a=this.angle*Math.PI/180,vx=Math.cos(a)*sp,vy=Math.sin(a)*sp;
+    const t=(this.wallX-this.x0)/vx; let y=this.y0+vy*t-490.5*t*t;
+    const el=$('wallPred');
+    if(y<0){ el.innerHTML='🔮 Πρόβλεψη: η μπάλα φτάνει <b>κυλώντας</b> στο τοίχωμα → αναπήδηση ✅ (δοκίμασε πιο δυνατό/ψηλό σουτ!)'; }
+    else{ const over=y-this.r>this.h;
+      el.innerHTML='🔮 Πρόβλεψη: στο τοίχωμα η μπάλα θα είναι στα <b>'+y.toFixed(1)+' cm</b> — τοίχωμα '+this.h+' cm → '+(over?'<b style="color:var(--red)">ΠΕΡΝΑΕΙ ΑΠΟ ΠΑΝΩ ❌</b>':'<b style="color:var(--green)">χτυπά & γυρίζει ✅</b>'); } },
+  frame(dt){ if(!this.ctx)return;
+    if(this.flying){ let d=this.slow?dt*.3:dt; const n=3,hh=d/n;
+      for(let k=0;k<n;k++){ const px=this.x,py=this.y;
+        this.vy-=981*hh; this.x+=this.vx*hh; this.y+=this.vy*hh; this.t+=hh;
+        if(this.y<this.r){ this.y=this.r; if(this.vy<0){this.vy=-this.vy*(this.ballType==='cork'?.42:.68); if(Math.abs(this.vy)>25)AudioSys.play('bounce');} this.vx*=.988; }
+        if(!this.out&&px+this.r<this.wallX&&this.x+this.r>=this.wallX){
+          const f=(this.wallX-this.r-px)/((this.x-px)||1e-6); const yc=py+(this.y-py)*f; this.crossY=yc;
+          if(yc-this.r>this.h){ this.out=true; this.verdict('❌ ΕΞΩ! Η μπάλα πέρασε πάνω από τα '+this.h+' cm','bad'); AudioSys.play('out'); }
+          else{ this.x=this.wallX-this.r; this.vx=-Math.abs(this.vx)*(this.ballType==='cork'?.5:.72);
+            if(!this.counted){this.counted=true; this.verdict('✅ ΜΕΣΑ! Αναπήδηση στα '+this.h+' cm — το παιχνίδι συνεχίζεται','good'); AudioSys.play('good');} } }
+        const sp=Math.hypot(this.vx,this.vy);
+        if(this.out&&this.x>152){this.finish();break}
+        if(!this.out&&sp<18&&this.y<=this.r+.3){this.finish();break}
+        if(this.t>8){this.finish();break} }
+      this.trail.push({x:this.x,y:this.y}); if(this.trail.length>130)this.trail.shift(); }
+    this.draw(); },
+  finish(){ this.flying=false; this.stats.shots++; this.out?this.stats.out++:this.stats.inn++;
+    $('wsShots').textContent=this.stats.shots; $('wsIn').textContent=this.stats.inn; $('wsOut').textContent=this.stats.out; },
+  draw(){ const c=this.ctx,W=this.W,H=this.H; if(!c)return;
+    const g=c.createLinearGradient(0,0,0,H); g.addColorStop(0,'#0B2417'); g.addColorStop(1,'#08170F');
+    c.fillStyle=g; c.fillRect(0,0,W,H);
+    c.strokeStyle='rgba(160,230,190,.07)'; c.lineWidth=1;
+    for(let cm=0;cm<=150;cm+=10){c.beginPath();c.moveTo(this.X(cm),0);c.lineTo(this.X(cm),H-34);c.stroke();}
+    for(let cm=0;cm<=30;cm+=5){c.beginPath();c.moveTo(0,this.Y(cm));c.lineTo(W,this.Y(cm));c.stroke();}
+    const fg=c.createLinearGradient(0,this.Y(0),0,H); fg.addColorStop(0,'#12854C'); fg.addColorStop(1,'#0A4527');
+    c.fillStyle=fg; c.fillRect(0,this.Y(0),W,H-this.Y(0));
+    c.strokeStyle='rgba(255,255,255,.7)'; c.lineWidth=2; c.beginPath(); c.moveTo(0,this.Y(0)); c.lineTo(W,this.Y(0)); c.stroke();
+    /* wall */
+    const wx=this.X(this.wallX),wy=this.Y(this.h),ww=this.X(9);
+    const wg=c.createLinearGradient(wx,0,wx+ww,0); wg.addColorStop(0,'#B07A34'); wg.addColorStop(.5,'#8A5A22'); wg.addColorStop(1,'#6B4418');
+    c.fillStyle=wg; c.fillRect(wx,wy,ww,this.Y(0)-wy);
+    c.strokeStyle='rgba(0,0,0,.4)'; c.strokeRect(wx,wy,ww,this.Y(0)-wy);
+    c.strokeStyle='rgba(255,255,255,.25)';
+    for(let cm=1;cm<=this.h;cm++){ const y=this.Y(cm); c.beginPath(); c.moveTo(wx,y); c.lineTo(wx+(cm%5===0?14:7),y); c.stroke();
+      if(cm%5===0){c.fillStyle='rgba(255,255,255,.75)';c.font='700 10px Inter';c.fillText(cm+'',wx+17,y+3);} }
+    c.setLineDash([6,6]); c.strokeStyle='rgba(255,176,32,.6)'; c.beginPath(); c.moveTo(0,wy); c.lineTo(wx,wy); c.stroke(); c.setLineDash([]);
+    c.fillStyle='#FFB020'; c.font='800 13px "Fira Sans Condensed",Inter'; c.fillText('🧱 '+this.h+' cm',wx-4,wy-8);
+    /* markers 5 & 12 */
+    [[5,'#FF4B3E','forum'],[12,'#2FD97B','επαγγ.']].forEach(m=>{ const y=this.Y(m[0]);
+      c.fillStyle=m[1]; c.beginPath(); c.moveTo(wx-6,y); c.lineTo(wx-16,y-5); c.lineTo(wx-16,y+5); c.closePath(); c.fill();
+      c.font='700 10px Inter'; c.fillText(m[0]+' '+m[2],wx-70,y+3); });
+    /* kicker */
+    const kx=this.X(this.x0-4),ky=this.Y(0);
+    c.save(); c.translate(kx,ky);
+    c.fillStyle='#FF4B3E'; c.beginPath(); c.roundRect(-7,-38,14,26,4); c.fill();
+    c.fillStyle='#F3C784'; c.beginPath(); c.arc(0,-44,6,0,6.28); c.fill();
+    c.strokeStyle='#C21F14'; c.lineWidth=5; c.lineCap='round';
+    c.beginPath(); c.moveTo(0,-12); c.lineTo(this.flying?12:6,this.flying?-16:-2); c.stroke(); c.restore();
+    /* preview trajectory */
+    if(!this.flying){ const sp=this.power*7,a=this.angle*Math.PI/180,vx=Math.cos(a)*sp,vy=Math.sin(a)*sp;
+      c.fillStyle='rgba(166,244,49,.5)';
+      for(let t=0;t<1.2;t+=.045){ const x=this.x0+vx*t,y=this.y0+vy*t-490.5*t*t;
+        if(y<0||x>this.wallX)break; c.beginPath(); c.arc(this.X(x),this.Y(y),2.4,0,6.28); c.fill(); } }
+    /* trail */
+    if(this.trailOn){ this.trail.forEach((p,i)=>{ c.fillStyle='rgba(57,198,255,'+(i/this.trail.length*.5)+')';
+      c.beginPath(); c.arc(this.X(p.x),this.Y(p.y),2,0,6.28); c.fill(); }); }
+    /* crossing marker */
+    if(this.crossY!=null){ c.setLineDash([4,4]); c.strokeStyle='rgba(255,255,255,.5)';
+      c.beginPath(); c.moveTo(wx-30,this.Y(this.crossY)); c.lineTo(wx,this.Y(this.crossY)); c.stroke(); c.setLineDash([]);
+      c.fillStyle='#fff'; c.font='800 11px "JetBrains Mono"'; c.fillText(this.crossY.toFixed(1)+'cm',wx-76,this.Y(this.crossY)-4); }
+    /* ball */
+    const bx=this.X(this.x),by=this.Y(this.y),br=this.X(this.r);
+    c.save(); c.shadowColor='rgba(0,0,0,.5)'; c.shadowBlur=6; c.shadowOffsetY=3;
+    const bg=c.createRadialGradient(bx-br*.3,by-br*.3,1,bx,by,br);
+    if(this.ballType==='cork'){bg.addColorStop(0,'#F3C784');bg.addColorStop(1,'#B07A34');}
+    else{bg.addColorStop(0,'#FFFFFF');bg.addColorStop(1,'#D8D2C4');}
+    c.fillStyle=bg; c.beginPath(); c.arc(bx,by,br,0,6.28); c.fill(); c.restore(); }
+};
+function wallBind(){
+  const upd=()=>{ wall.h=+$('wH').value; wall.power=+$('wP').value; wall.angle=+$('wA').value;
+    $('wHout').textContent=wall.h+' cm'; $('wPout').textContent=wall.power; $('wAout').textContent=wall.angle+'°'; wall.predict(); };
+  ['wH','wP','wA'].forEach(id=>$(id).addEventListener('input',upd));
+  $('wBallCork').addEventListener('click',()=>{wall.ballType='cork';$('wBallCork').classList.add('on');$('wBallPing').classList.remove('on');wall.predict();AudioSys.play('flip');});
+  $('wBallPing').addEventListener('click',()=>{wall.ballType='ping';$('wBallPing').classList.add('on');$('wBallCork').classList.remove('on');wall.predict();AudioSys.play('flip');});
+  $('wTrail').addEventListener('change',e=>wall.trailOn=e.target.checked);
+  $('wSlow').addEventListener('change',e=>wall.slow=e.target.checked);
+  $('wLaunch').addEventListener('click',()=>wall.launch());
+  wall.cv.addEventListener('pointerdown',()=>wall.launch());
+  $('wReset').addEventListener('click',()=>{wall.stats={shots:0,inn:0,out:0};$('wsShots').textContent='0';$('wsIn').textContent='0';$('wsOut').textContent='0';wall.flying=false;wall.trail=[];wall.crossY=null;wall.verdict('','');AudioSys.play('click');});
+  $('wPre5').addEventListener('click',()=>{$('wH').value=5;upd();setTimeout(()=>wall.launch(),160);});
+  $('wPre12').addEventListener('click',()=>{$('wH').value=12;upd();setTimeout(()=>wall.launch(),160);});
+  upd();
+}
+
+/* ============ SIM 2 — RACE ============ */
+const race={cv:$('raceCv'),W:0,H:0,ctx:null,ballType:'cork',imp:62,rulers:true,slow:false,running:false,t:0,place:0,
+  MU:{MDF:{cork:42,ping:130},Laminate:{cork:66,ping:72},Glass:{cork:125,ping:34},Felt:{cork:92,ping:150}},
+  NAMES:{MDF:'MDF',Laminate:'Laminate',Glass:'Γυαλί',Felt:'Τσόχα'},
+  lanes:[{surf:'MDF'},{surf:'Laminate'},{surf:'Glass'}],
+  resize(){ const f=fit(this.cv); if(!f)return; this.W=f.w;this.H=f.h;this.ctx=f.ctx; this.draw(); },
+  start(){ this.t=0; this.place=0; this.running=true; const v0=this.imp*2.6;
+    this.lanes.forEach((L,i)=>{ L.surf=$('rS'+(i+1)).value; L.x=0; L.v=v0; L.a=this.MU[L.surf][this.ballType];
+      L.done=false; L.fin=false; L.time=null; L.spin=0; });
+    $('raceVerdict').className='sim-verdict'; AudioSys.play('launch'); this.stats(); },
+  reset(){ this.running=false; this.lanes.forEach(L=>{L.x=0;L.v=0;L.done=false;L.fin=false;L.time=null;});
+    $('raceVerdict').className='sim-verdict'; this.stats(); this.draw(); },
+  stats(){ this.lanes.forEach((L,i)=>{ const el=$('rs'+(i+1));
+    el.innerHTML=(i+1)+' '+this.NAMES[L.surf||$('rS'+(i+1)).value]+': <b>'+(L.x!=null?L.x.toFixed(0):0)+' cm</b>'+(L.fin?' · '+L.time.toFixed(2)+'s 🏁':(L.done?' · ⛔ στάση':'')); }); },
+  frame(dt){ if(!this.ctx)return;
+    if(this.running){ const d=this.slow?dt*.3:dt; this.t+=d; let all=true;
+      this.lanes.forEach(L=>{ if(L.done)return; all=false;
+        L.v-=L.a*d; if(L.v<=0){L.v=0;L.done=true;}
+        L.x+=L.v*d; L.spin+=L.v*d/2;
+        if(!L.fin&&L.x>=90){L.fin=true;L.time=this.t;this.place++;L.rank=this.place;
+          if(this.place===1){ const v=$('raceVerdict'); v.textContent='🏆 Νικητής: '+this.NAMES[L.surf]+' με '+(this.ballType==='cork'?'φελλό':'πινγκ-πονγκ')+'!';
+            v.className='sim-verdict show good'; AudioSys.play('good'); } } });
+      this.stats();
+      if(all){ this.running=false;
+        if(!this.lanes.some(L=>L.fin)){ const v=$('raceVerdict'); v.textContent='⛔ Καμία μπάλα δεν έφτασε στα 90 cm — αύξησε την ώθηση!'; v.className='sim-verdict show bad'; AudioSys.play('bad'); } } }
+    this.draw(); },
+  draw(){ const c=this.ctx,W=this.W,H=this.H; if(!c)return;
+    c.fillStyle='#08170F'; c.fillRect(0,0,W,H);
+    const x0=110,x1=W-24,laneH=(H-46)/3,sc=(x1-x0)/100;
+    const tex={MDF:['#B07A34','#8A5A22'],Laminate:['#8A98A4','#5F6C78'],Glass:['#7FD4E8','#3A8CA8'],Felt:['#12854C','#0A4527']};
+    this.lanes.forEach((L,i)=>{ const surf=L.surf||$('rS'+(i+1)).value; const y=14+i*laneH,h=laneH-10;
+      const t=tex[surf],g=c.createLinearGradient(0,y,0,y+h); g.addColorStop(0,t[0]); g.addColorStop(1,t[1]);
+      c.fillStyle=g; c.beginPath(); c.roundRect(x0,y,x1-x0,h,10); c.fill();
+      c.save(); c.beginPath(); c.roundRect(x0,y,x1-x0,h,10); c.clip();
+      if(surf==='MDF'||surf==='Felt'){ c.strokeStyle='rgba(0,0,0,.14)'; for(let k=0;k<26;k++){c.beginPath();c.moveTo(x0+k*(x1-x0)/26,y);c.lineTo(x0+k*(x1-x0)/26+10,y+h);c.stroke();} }
+      if(surf==='Glass'){ c.fillStyle='rgba(255,255,255,.25)'; c.beginPath(); c.moveTo(x0+40,y); c.lineTo(x0+120,y); c.lineTo(x0+60,y+h); c.lineTo(x0-20,y+h); c.closePath(); c.fill(); }
+      if(surf==='Laminate'){ c.fillStyle='rgba(255,255,255,.1)'; c.fillRect(x0,y+h*.2,x1-x0,3); }
+      c.restore();
+      if(this.rulers){ c.strokeStyle='rgba(255,255,255,.4)'; c.fillStyle='rgba(255,255,255,.65)'; c.font='700 9px "JetBrains Mono"';
+        for(let cm=0;cm<=100;cm+=10){ const x=x0+cm*sc; c.beginPath(); c.moveTo(x,y+h-7); c.lineTo(x,y+h); c.stroke(); c.fillText(cm+'',x-5,y+h-10); } }
+      const fx=x0+90*sc; c.setLineDash([5,5]); c.strokeStyle='rgba(255,255,255,.85)'; c.lineWidth=2;
+      c.beginPath(); c.moveTo(fx,y); c.lineTo(fx,y+h); c.stroke(); c.setLineDash([]);
+      c.fillStyle='#fff'; c.font='800 12px Inter'; c.fillText((i+1)+' · '+this.NAMES[surf],10,y+h/2+4);
+      const bx=x0+(L.x||0)*sc,by=y+h/2,br=Math.min(13,h*.28);
+      c.save(); c.shadowColor='rgba(0,0,0,.45)'; c.shadowBlur=5; c.shadowOffsetY=3;
+      const bg=c.createRadialGradient(bx-br*.3,by-br*.3,1,bx,by,br);
+      if(this.ballType==='cork'){bg.addColorStop(0,'#F3C784');bg.addColorStop(1,'#B07A34');}else{bg.addColorStop(0,'#FFFFFF');bg.addColorStop(1,'#D8D2C4');}
+      c.fillStyle=bg; c.beginPath(); c.arc(bx,by,br,0,6.28); c.fill(); c.restore();
+      c.strokeStyle='rgba(0,0,0,.3)'; c.lineWidth=1.5; c.beginPath();
+      c.arc(bx,by,br*.55,L.spin||0,(L.spin||0)+2.2); c.stroke();
+      if(L.fin&&L.rank===1){ c.font='16px Inter'; c.fillText('🏆',bx-8,by-br-6); }
+      if(L.done&&!L.fin){ c.font='13px Inter'; c.fillText('⛔',bx-6,by-br-5); } });
+    c.fillStyle='rgba(255,255,255,.6)'; c.font='800 11px Inter'; c.fillText('ΤΕΡΜΑ 90 cm →',x0+90*sc-30,H-8); }
+};
+function raceBind(){
+  $('rBallCork').addEventListener('click',()=>{race.ballType='cork';$('rBallCork').classList.add('on');$('rBallPing').classList.remove('on');AudioSys.play('flip');});
+  $('rBallPing').addEventListener('click',()=>{race.ballType='ping';$('rBallPing').classList.add('on');$('rBallCork').classList.remove('on');AudioSys.play('flip');});
+  $('rImp').addEventListener('input',e=>{race.imp=+e.target.value;$('rImpOut').textContent=race.imp;});
+  ['rS1','rS2','rS3'].forEach((id,i)=>$(id).addEventListener('change',e=>{race.lanes[i].surf=e.target.value;race.stats();race.draw();}));
+  $('rRulers').addEventListener('change',e=>{race.rulers=e.target.checked;race.draw();});
+  $('rSlow').addEventListener('change',e=>race.slow=e.target.checked);
+  $('rGo').addEventListener('click',()=>race.start());
+  race.cv.addEventListener('pointerdown',()=>race.start());
+  $('rReset2').addEventListener('click',()=>{race.reset();AudioSys.play('click');});
+  race.reset();
+}
+
+/* ============ SIM 3 — ROD ============ */
+const rod={cv:$('rodCv'),W:0,H:0,ctx:null,imp:70,mu:1,trace:true,slow:false,drag:null,
+  MU:{hole:1,brass:.55,bearing:.14},NAMES:{hole:'Τρύπα 13mm',brass:'Δακτύλιος',bearing:'Ρουλεμάν'},
+  rods:[{sup:'hole',off:0,v:0,a:0,w:0,dist:0,spinT:0,ghosts:[],col:'#FF4B3E'},{sup:'bearing',off:0,v:0,a:0,w:0,dist:0,spinT:0,ghosts:[],col:'#3D7BFF'}],
+  resize(){ const f=fit(this.cv); if(!f)return; this.W=f.w;this.H=f.h;this.ctx=f.ctx; this.draw(); },
+  push(){ const v=this.imp*4,w=this.imp*.25;
+    this.rods.forEach(r=>{r.v=v;r.w=w;r.dist=0;r.spinT=0;r.ghosts=[];});
+    $('rodVerdict').className='sim-verdict'; AudioSys.play('launch'); },
+  reset(){ this.rods.forEach(r=>{r.off=0;r.v=0;r.a=0;r.w=0;r.dist=0;r.spinT=0;r.ghosts=[];});
+    $('rodVerdict').className='sim-verdict'; this.stats(); this.draw(); },
+  stats(){ $('ro1').innerHTML='🔴 '+this.NAMES[this.rods[0].sup]+': <b>'+this.rods[0].spinT.toFixed(1)+'s</b> περιστροφή · '+(this.rods[0].dist*.12).toFixed(0)+' cm';
+    $('ro2').innerHTML='🔵 '+this.NAMES[this.rods[1].sup]+': <b>'+this.rods[1].spinT.toFixed(1)+'s</b> περιστροφή · '+(this.rods[1].dist*.12).toFixed(0)+' cm'; },
+  frame(dt){ if(!this.ctx)return; const d=this.slow?dt*.3:dt; const maxOff=Math.min(70,this.W*.09);
+    let moving=false;
+    this.rods.forEach((r,i)=>{ if(this.drag&&this.drag.i===i)return;
+      const mu=this.MU[r.sup]*this.mu;
+      if(Math.abs(r.v)>0.5){ moving=true; r.off+=r.v*d; r.dist+=Math.abs(r.v)*d;
+        const dec=mu*220*d; if(Math.abs(r.v)<=dec)r.v=0; else r.v-=Math.sign(r.v)*dec;
+        if(r.off>maxOff){r.off=maxOff;r.v=-Math.abs(r.v)*.35;AudioSys.play('bounce');}
+        if(r.off<-maxOff){r.off=-maxOff;r.v=Math.abs(r.v)*.35;AudioSys.play('bounce');} }
+      if(Math.abs(r.w)>.15){ moving=true; r.a+=r.w*d; r.spinT+=d;
+        const dec=mu*6*d; if(Math.abs(r.w)<=dec)r.w=0; else r.w-=Math.sign(r.w)*dec; }
+      if(this.trace&&(Math.abs(r.v)>20||Math.abs(r.w)>2)){ r.ghosts.push({off:r.off,a:r.a}); if(r.ghosts.length>7)r.ghosts.shift(); }
+      else if(r.ghosts.length)r.ghosts.shift(); });
+    this.stats();
+    if(!moving&&this.rods.some(r=>r.spinT>0)&&!this.verdictShown){
+      this.verdictShown=true;
+      const a=this.rods[0].spinT,b=this.rods[1].spinT;
+      if(Math.abs(a-b)>.3){ const win=a>b?0:1;
+        const v=$('rodVerdict'); v.textContent='🏆 '+(win===0?'🔴':'🔵')+' '+this.NAMES[this.rods[win].sup]+' — περιστράφηκε '+Math.max(a,b).toFixed(1)+'s (vs '+Math.min(a,b).toFixed(1)+'s)';
+        v.className='sim-verdict show good'; AudioSys.play('good'); } }
+    this.draw(); },
+  draw(){ const c=this.ctx,W=this.W,H=this.H; if(!c)return;
+    c.fillStyle='#08170F'; c.fillRect(0,0,W,H);
+    c.strokeStyle='rgba(160,230,190,.07)';
+    for(let x=0;x<W;x+=40){c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke();}
+    const cx=W/2, wallW=64;
+    this.rods.forEach((r,i)=>{ const y=H*(i===0?.3:.72), len=W-90;
+      /* ghosts */
+      r.ghosts.forEach((gh,k)=>{ c.globalAlpha=.06*(k+1); this.player(c,cx+gh.off-70,y,gh.a,r.col,true); this.player(c,cx+gh.off+70,y,gh.a,r.col,true); c.globalAlpha=1; });
+      /* rod */
+      const rg=c.createLinearGradient(0,y-6,0,y+6); rg.addColorStop(0,'#F0F4F8'); rg.addColorStop(.5,'#98A6B2'); rg.addColorStop(1,'#5A6670');
+      c.fillStyle=rg; c.beginPath(); c.roundRect(cx-len/2+r.off,y-5,len,10,5); c.fill();
+      /* handle */
+      c.fillStyle='#2A2018'; c.beginPath(); c.roundRect(cx-len/2+r.off-26,y-9,30,18,7); c.fill();
+      c.strokeStyle='rgba(255,255,255,.2)'; c.strokeRect(cx-len/2+r.off-20,y-6,18,12);
+      /* wall + support */
+      const wg=c.createLinearGradient(cx-wallW/2,0,cx+wallW/2,0); wg.addColorStop(0,'#8A5A22'); wg.addColorStop(.5,'#B07A34'); wg.addColorStop(1,'#6B4418');
+      c.fillStyle=wg; c.beginPath(); c.roundRect(cx-wallW/2,y-46,wallW,92,8); c.fill();
+      c.strokeStyle='rgba(0,0,0,.4)'; c.stroke();
+      if(r.sup==='hole'){ c.fillStyle='#1A1208'; c.beginPath(); c.arc(cx,y,11,0,6.28); c.fill(); }
+      else if(r.sup==='brass'){ c.strokeStyle='#D8A848'; c.lineWidth=5; c.beginPath(); c.arc(cx,y,12,0,6.28); c.stroke(); c.lineWidth=1;
+        c.fillStyle='#1A1208'; c.beginPath(); c.arc(cx,y,8,0,6.28); c.fill(); }
+      else{ c.strokeStyle='#C8D4DC'; c.lineWidth=5; c.beginPath(); c.arc(cx,y,13,0,6.28); c.stroke(); c.lineWidth=1;
+        c.fillStyle='#E8EEF2'; for(let k=0;k<6;k++){ const a=k*1.047+r.a*.5; c.beginPath(); c.arc(cx+Math.cos(a)*13,y+Math.sin(a)*13,2.4,0,6.28); c.fill(); }
+        c.fillStyle='#1A1208'; c.beginPath(); c.arc(cx,y,7,0,6.28); c.fill(); }
+      /* players */
+      this.player(c,cx+r.off-70,y,r.a,r.col,false); this.player(c,cx+r.off+70,y,r.a,r.col,false);
+      /* label */
+      c.fillStyle='rgba(255,255,255,.85)'; c.font='800 13px "Fira Sans Condensed",Inter';
+      c.fillText((i===0?'🔴 Α · ':'🔵 Β · ')+this.NAMES[r.sup],14,y-30);
+      if(Math.abs(r.v)>60){ c.strokeStyle='rgba(255,255,255,.3)'; c.lineWidth=2;
+        c.beginPath(); c.moveTo(cx+r.off-110,y); c.lineTo(cx+r.off-110-Math.sign(r.v)*22,y); c.stroke(); c.lineWidth=1; } }); },
+  player(c,x,y,a,col,ghost){ const co=Math.cos(a), h=Math.max(6,44*Math.abs(co));
+    c.save(); c.translate(x,y);
+    c.fillStyle=co>=0?col:this.shade(col);
+    c.strokeStyle='rgba(0,0,0,.4)'; c.lineWidth=2;
+    c.beginPath(); c.roundRect(-8,-h/2,16,h,4); c.fill(); if(!ghost)c.stroke();
+    if(Math.abs(co)>.35){ c.fillStyle='rgba(255,255,255,.85)'; c.beginPath(); c.arc(0,-h/2+7*Math.sign(co),4*Math.abs(co),0,6.28); c.fill();
+      c.fillStyle='rgba(0,0,0,.25)'; c.fillRect(-8,h/2-8*Math.abs(co),16,5*Math.abs(co)); }
+    c.restore(); },
+  shade(hex){ const n=parseInt(hex.slice(1),16),r=(n>>16)&255,g=(n>>8)&255,b=n&255;
+    return 'rgb('+Math.round(r*.55)+','+Math.round(g*.55)+','+Math.round(b*.55)+')'; }
+};
+function rodBind(){
+  $('rodA').addEventListener('change',e=>{rod.rods[0].sup=e.target.value;rod.verdictShown=false;rod.stats();rod.draw();});
+  $('rodB').addEventListener('change',e=>{rod.rods[1].sup=e.target.value;rod.verdictShown=false;rod.stats();rod.draw();});
+  $('rodImp').addEventListener('input',e=>{rod.imp=+e.target.value;$('rodImpOut').textContent=rod.imp;});
+  $('rodMu').addEventListener('input',e=>{rod.mu=+e.target.value;$('rodMuOut').textContent=rod.mu.toFixed(1);});
+  $('rodTrace').addEventListener('change',e=>rod.trace=e.target.checked);
+  $('rodSlow').addEventListener('change',e=>rod.slow=e.target.checked);
+  $('rodPush').addEventListener('click',()=>{rod.verdictShown=false;rod.push();});
+  $('rodReset3').addEventListener('click',()=>{rod.verdictShown=false;rod.reset();AudioSys.play('click');});
+  rod.cv.addEventListener('pointerdown',e=>{ const r=rod.cv.getBoundingClientRect(),y=e.clientY-r.top;
+    const i=Math.abs(y-rod.H*.3)<Math.abs(y-rod.H*.72)?0:1;
+    rod.drag={i,x:e.clientX,t:performance.now(),v:0}; rod.verdictShown=false;
+    rod.cv.setPointerCapture(e.pointerId); });
+  rod.cv.addEventListener('pointermove',e=>{ if(!rod.drag)return; const r=rod.rods[rod.drag.i];
+    const dx=e.clientX-rod.drag.x, now=performance.now(), dt=Math.max(8,now-rod.drag.t)/1000;
+    const maxOff=Math.min(70,rod.W*.09);
+    r.off=clamp(r.off+dx,-maxOff,maxOff); rod.drag.v=dx/dt; rod.drag.x=e.clientX; rod.drag.t=now; r.dist+=Math.abs(dx); });
+  const endDrag=()=>{ if(!rod.drag)return; const r=rod.rods[rod.drag.i];
+    r.v=clamp(rod.drag.v,-500,500); if(Math.abs(r.v)>80){r.w=Math.abs(r.v)*.05;r.spinT=0;} rod.drag=null; };
+  rod.cv.addEventListener('pointerup',endDrag); rod.cv.addEventListener('pointercancel',endDrag);
+  rod.reset();
+}
+
+/* ============ lab tabs & main loop ============ */
+const lab={active:'wall',sims:{wall,race,rod},
+  resizeActive(){ const s=this.sims[this.active]; if(s)s.resize(); },
+  show(name){ this.active=name;
+    $$('#labTabs .labtab').forEach(b=>b.classList.toggle('on',b.dataset.sim===name));
+    $('paneWall').classList.toggle('on',name==='wall');
+    $('paneRace').classList.toggle('on',name==='race');
+    $('paneRod').classList.toggle('on',name==='rod');
+    requestAnimationFrame(()=>this.resizeActive()); AudioSys.play('flip'); }
+};
+$$('#labTabs .labtab').forEach(b=>b.addEventListener('click',()=>lab.show(b.dataset.sim)));
+wallBind(); raceBind(); rodBind();
+let lastFrame=performance.now();
+function loop(t){
+  const dt=Math.min(.05,(t-lastFrame)/1000); lastFrame=t;
+  try{
+    if(state.i===0)hero.frame(dt);
+    if(state.i===15){ const s=lab.sims[lab.active]; if(s&&s.ctx)s.frame(dt); }
+    fxFrame(dt);
+  }catch(e){}
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+let rsT=null;
+window.addEventListener('resize',()=>{ clearTimeout(rsT); rsT=setTimeout(()=>{ if(state.i===0)hero.resize(); if(state.i===15)lab.resizeActive(); },140); });
+if(window.ResizeObserver){ const ro=new ResizeObserver(()=>{ if(state.i===0)hero.resize(); if(state.i===15)lab.resizeActive(); });
+  ro.observe($('heroCv').parentElement); ro.observe($('wallCv').parentElement); ro.observe($('raceCv').parentElement); ro.observe($('rodCv').parentElement); }
+
+/* ============ init ============ */
+setSound(state.sound);
+clock.paint(); research.paint(); present.paint();
+let startIdx=0;
+const hash=parseInt((location.hash||'').replace('#',''),10);
+if(hash>=1&&hash<=N)startIdx=hash-1;
+else{ const saved=LS.get('f2.slide',0); if(saved>=0&&saved<N)startIdx=saved; }
+go(startIdx);
+window.addEventListener('load',()=>{ hero.resize(); lab.resizeActive(); });
+</script>
+</body>
+</html>
